@@ -2,13 +2,13 @@ server:
   port: 8868
 
 tencentcloudapi:
-  # 你的 secretId
-  secretId: AKIDkRwOjpp7C2jCVaR4oeOv56tYQ5tbFHBc
-  # 你的 secretKey
-  secretKey: PaXGq33rFYhdOIIPOispkRwDGCuQjpiR
-  # 请求官方地址 不变
+  # secretId
+  secretId:
+  # secretKey
+  secretKey:
+  # 请求官方地址
   endpoint: iai.tencentcloudapi.com
-  #地域 可不变
+  #地域
   region: ap-shanghai
 
 spring:
