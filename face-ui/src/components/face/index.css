@@ -1,0 +1,57 @@
+.page-row{
+    margin-top: 20px;
+    text-align: center;
+}
+.savevideoCamera-canvasCamera{
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+.saveface-special-effects,.saveface-special-effects-2{
+    width:  300px;
+    height: 300px;
+    position: absolute;
+    z-index: 99999999999!important;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 0;
+    margin-left: 100px;
+}
+.saveface-special-effects{
+    background: url(~@/assets/login/face.gif) no-repeat;
+    background-size: 300px 300px;
+}
+.saveface-special-effects-2{
+    background: url(~@/assets/login/face_detection.gif) no-repeat;
+    background-size: 300px 300px;
+}
+.saveface-btn{
+    width: 100%;
+    height: 50px;
+    z-index: 999999999999!important;
+    margin-top: 45px;
+    text-align: left;
+}
+.saveface-btn button{
+    background-color: #ffffff;
+    border: 1px solid #dcdfe6;
+    width: 200px;
+    height: 40px;
+    color: #333333;
+    cursor: pointer;
+}
+
+.savefaceBase{
+    width:  200px;
+    height: 200px;
+    position: absolute;
+    z-index: 99999999999!important;
+    transform: translate(-50%,-50%);
+    top: 34%;
+    left: 75%;
+    border: 1px solid #dcdfe6;
+}
+.savefaceBase img{
+    width: 100%;
+    height: 100%;
+}

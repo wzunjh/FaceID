@@ -1,0 +1,128 @@
+.login{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top:0px;
+    background: url(~@/assets/login/login-bg.png) no-repeat;
+    background-size: cover;
+    filter: blur(10px);
+
+}
+.login-mid{
+    position: absolute;
+    width: 45%;
+    height: 65%;
+    background-color: rgba(37, 76, 102,0.5);
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+    cursor: pointer;
+}
+.login-mid-top,.login-mid-bot{
+    width: 100%;
+    height: 10%;
+}
+.shadow-top-left{
+    float: left;
+    width: 50px;
+    height: 100%;
+    border-top: 2px solid #00ffff;
+    border-left: 2px solid #00ffff;
+    filter: blur(2px);
+}
+.shadow-top-right{
+    float: right;
+    width: 50px;
+    height: 100%;
+    border-top: 2px solid #00ffff;
+    border-right: 2px solid #00ffff;
+    filter: blur(2px);
+}
+.shadow-bot-left{
+    float: left;
+    width: 50px;
+    height: 100%;
+    border-bottom: 2px solid #00ffff;
+    border-left: 2px solid #00ffff;
+    filter: blur(2px);
+}
+.shadow-bot-right{
+    float: right;
+    width: 50px;
+    height: 100%;
+    border-bottom: 2px solid #00ffff;
+    border-right: 2px solid #00ffff;
+    filter: blur(2px);
+}
+.login-mid-mid{
+    width: 100%;
+    height: 80%;
+}
+.login-mid:hover .shadow-top-left,
+.login-mid:hover .shadow-top-right,
+.login-mid:hover .shadow-bot-left,
+.login-mid:hover .shadow-bot-right{
+    border-color: #fff;
+    filter: blur(1px);
+}
+.videoCamera-canvasCamera{
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+}
+.face-special-effects,.face-special-effects-2{
+    width:  300px;
+    height: 300px;
+    position: absolute;
+    z-index: 99999999999!important;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+}
+.face-special-effects{
+    background: url(~@/assets/login/face.gif) no-repeat;
+    background-size: 300px 300px;
+}
+.face-special-effects-2{
+    background: url(~@/assets/login/face_detection.gif) no-repeat;
+    background-size: 300px 300px;
+}
+.face-btn{
+    width: 100%;
+    height: 50px;
+    z-index: 999999999999!important;
+    margin-top: 45px;
+    text-align: center;
+}
+.face-btn button{
+    background-color: #00ffff;
+    border: none;
+    outline: none;
+    width: 200px;
+    height: 40px;
+    border-radius: 6px;
+    color: #ffffff;
+    cursor: pointer;
+}
+.msg{
+    width: 100%;
+    height: 75px;
+    color: #ffffff;
+}
+.server-msg{
+    width: 100%;
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+}
+.welcome{
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 20px;
+    font-family: "Baskerville Old Face";
+    color: white;
+}
