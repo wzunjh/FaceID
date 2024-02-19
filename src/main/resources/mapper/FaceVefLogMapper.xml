@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.face.mapper.FaceVefLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.face.bean.FaceVefLog">
+            <id property="lid" column="lid" jdbcType="INTEGER"/>
+            <result property="vefTime" column="vef_time" jdbcType="TIMESTAMP"/>
+            <result property="vefCode" column="vef_code" jdbcType="INTEGER"/>
+            <result property="vefMsg" column="vef_msg" jdbcType="VARCHAR"/>
+            <result property="loginName" column="login_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        lid,vef_time,vef_code,
+        vef_msg,login_name
+    </sql>
+</mapper>

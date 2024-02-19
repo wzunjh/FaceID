@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.face.mapper.FaceMapper">
+
+    <resultMap id="BaseResultMap" type="com.face.bean.Face">
+            <id property="fid" column="fid" jdbcType="INTEGER"/>
+            <result property="faceBase" column="face_base" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="vefNum" column="vef_num" jdbcType="INTEGER"/>
+            <result property="faceName" column="face_name" jdbcType="VARCHAR"/>
+            <result property="remark" column="remark" jdbcType="VARCHAR"/>
+            <result property="faceStatus" column="face_status" jdbcType="INTEGER"/>
+            <result property="updateExtend1" column="update_extend1" jdbcType="VARCHAR"/>
+            <result property="updateExtend2" column="update_extend2" jdbcType="VARCHAR"/>
+            <result property="updateExtend3" column="update_extend3" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        fid,face_base,create_time,
+        vef_num,face_name,remark,
+        face_status,update_extend1,update_extend2,
+        update_extend3
+    </sql>
+</mapper>
