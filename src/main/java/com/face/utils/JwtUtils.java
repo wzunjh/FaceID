@@ -9,10 +9,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author tanyongpeng
- * <p>des</p>
- **/
+
 public class JwtUtils {
 
     //properties
@@ -27,14 +24,11 @@ public class JwtUtils {
         //生成token
         JWTCreator.Builder builder = JWT.create();
         //添加payload
-        mapinfo.forEach((k,v)->{
-            builder.withClaim(k,v);
-        });
+        mapinfo.forEach(builder::withClaim);
         //指定令牌过期时间
         builder.withExpiresAt(instance.getTime());
         //指定算法-生成token
-        String token = builder.sign(Algorithm.HMAC256(SIGN));
-        return token;
+        return builder.sign(Algorithm.HMAC256(SIGN));
     }
 
     /**
@@ -53,8 +47,7 @@ public class JwtUtils {
      * throw 抛出异常-表示验证失败
      */
     public synchronized static DecodedJWT getTokenInfo(String token){
-        DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(SIGN)).build().verify(token);
-        return decodedJWT;
+        return JWT.require(Algorithm.HMAC256(SIGN)).build().verify(token);
     }
 
 }

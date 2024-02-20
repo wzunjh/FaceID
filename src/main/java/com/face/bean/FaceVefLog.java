@@ -6,14 +6,10 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-/**
- * 
- * @TableName face_vef_log
- */
+
 @TableName(value ="face_vef_log")
 @Data
 public class FaceVefLog implements Serializable {

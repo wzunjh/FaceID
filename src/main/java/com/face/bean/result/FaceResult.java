@@ -1,13 +1,8 @@
 package com.face.bean.result;
 
-import com.face.bean.Face;
-import io.swagger.models.auth.In;
 import lombok.Data;
 
-/**
- * @author tanyongpeng
- * <p>des</p>
- **/
+
 @Data
 public class FaceResult {
 

@@ -3,10 +3,7 @@ package com.face.utils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * @author tanyongpeng
- * <p>des</p>
- **/
+
 public class TimeUtils {
 
     public static String timeQuantum(){

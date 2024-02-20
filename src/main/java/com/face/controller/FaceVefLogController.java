@@ -4,7 +4,6 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.face.bean.Face;
 import com.face.bean.FaceVefLog;
 import com.face.bean.result.FaceResult;
 import com.face.service.FaceVefLogService;
@@ -17,10 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * @author tanyongpeng
- * <p>des</p>
- **/
+
 @RestController
 @RequestMapping("/face/log")
 @Api("人脸日志接口")

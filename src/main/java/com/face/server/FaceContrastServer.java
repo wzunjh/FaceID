@@ -1,7 +1,6 @@
 package com.face.server;
 
 import com.face.bean.result.FaceResult;
-import com.face.utils.TimeUtils;
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.common.profile.ClientProfile;
@@ -14,11 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * @author tanyongpeng
  * <p>调用腾讯接口</p>
  **/
 @Component

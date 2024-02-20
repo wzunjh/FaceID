@@ -9,18 +9,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author tanyongpeng
- * <p>des</p>
- **/
+
 @Component
 @Slf4j
 public class FaceConfig implements HandlerInterceptor {

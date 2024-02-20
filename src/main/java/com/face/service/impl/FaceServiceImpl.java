@@ -2,7 +2,6 @@ package com.face.service.impl;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
 import com.face.bean.Face;
 import com.face.bean.result.FaceResult;
 import com.face.mapper.FaceMapper;
@@ -12,17 +11,12 @@ import com.face.utils.JwtUtils;
 import com.face.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
-* @author typsusan
-* @description 针对表【face】的数据库操作Service实现
-* @createDate 2022-07-17 03:33:50
-*/
+
 @Service
 public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
     implements FaceService {

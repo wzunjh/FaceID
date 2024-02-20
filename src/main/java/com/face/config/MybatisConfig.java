@@ -8,10 +8,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-/**
- * @author tanyongpeng
- * <p>des</p>
- **/
+
 @Component
 @MapperScan("com.face.mapper")
 public class MybatisConfig {
