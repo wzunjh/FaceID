@@ -18,7 +18,7 @@
                 <el-select v-model="searchFace.vefCode" placeholder="请选择">
                   <el-option label="请选择" value=""></el-option>
                   <el-option label="成功" value="200"></el-option>
-                  <el-option label="腾讯云接口发生的异常" value="-1"></el-option>
+                  <el-option label="py接口发生的异常" value="-1"></el-option>
                   <el-option label="数据库没有该人脸" value="-2"></el-option>
                   <el-option label="人脸数据为空" value="-3"></el-option>
                   <el-option label="当前人脸被禁用" value="-4"></el-option>
