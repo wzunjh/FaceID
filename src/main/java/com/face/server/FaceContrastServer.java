@@ -23,12 +23,20 @@ public class FaceContrastServer {
     @Value("${python.service.url}")
     private String pythonServiceUrl;
 
+    @Value("${python.service.id}")
+    private String serviceSecretId;
+
+    @Value("${python.service.key}")
+    private String serviceSecretKey;
+
     public FaceResult faceContrast(String imageA, String imageB) {
         FaceResult faceResult = new FaceResult();
         try {
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Secret-ID", serviceSecretId); // 添加Secret-ID
+            headers.set("Secret-Key", serviceSecretKey); // 添加Secret-Key
 
             Map<String, String> map = new HashMap<>();
             map.put("imageA", imageA);

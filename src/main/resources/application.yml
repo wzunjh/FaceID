@@ -4,6 +4,8 @@ server:
 python:
   service:
     url: http://127.0.0.1:2024
+    id: wzunjh
+    key: GcJypclbi1t1lTFzCQ
 
 spring:
   datasource:
