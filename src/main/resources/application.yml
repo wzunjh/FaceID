@@ -1,15 +1,9 @@
 server:
   port: 8868
 
-tencentcloudapi:
-  # secretId
-  secretId:
-  # secretKey
-  secretKey:
-  # 请求官方地址
-  endpoint: iai.tencentcloudapi.com
-  #地域
-  region: ap-shanghai
+python:
+  service:
+    url: http://127.0.0.1:2024
 
 spring:
   datasource:
@@ -17,6 +11,7 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
+
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
