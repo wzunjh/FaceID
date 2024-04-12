@@ -17,6 +17,6 @@ public interface FaceService extends IService<Face> {
     /**
      * 身份证二要素校验
      */
-    FaceResult authenticateId(Integer fid,String idNo);
+    FaceResult authId(Integer fid,String idNo);
 
 }

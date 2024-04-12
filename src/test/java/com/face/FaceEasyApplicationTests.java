@@ -1,6 +1,7 @@
 package com.face;
 
 import com.face.server.IdAuthenticationServer;
+import com.face.service.FaceService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.face.bean.result.FaceResult;
@@ -12,6 +13,9 @@ class FaceEasyApplicationTests {
 
     @Autowired
     private IdAuthenticationServer idAuthenticationServer;
+
+    @Autowired
+    FaceService faceService;
 
 
     @Test
@@ -34,6 +38,21 @@ class FaceEasyApplicationTests {
         System.out.println("Code: " + faceResult.getCode());
         System.out.println("Message: " + faceResult.getMsg());
 
+    }
+
+    @Test
+    public void testAuthId() {
+
+        // 准备测试数据
+        Integer fid = 1;
+        String idNo = "1234567890";
+
+        // 调用待测试的方法
+        FaceResult result = faceService.authId(fid, idNo);
+
+        // 输出结果
+        System.out.println("Code: " + result.getCode());
+        System.out.println("Msg: " + result.getMsg());
     }
 
 }

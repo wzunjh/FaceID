@@ -105,7 +105,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
 
 
     @Override
-    public FaceResult authenticateId(Integer fid, String idNo){
+    public FaceResult authId(Integer fid, String idNo){
         FaceResult faceResult = new FaceResult();
         Face face = lambdaQuery().eq(Face::getFid, fid).one();
         if (face == null) {
@@ -118,6 +118,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             if (faceResult.getCode() == 0){
                 // 只有在认证成功的情况下才更新ID信息
                 face.setIdNo(idNo);
+                face.setId2_status("1");
                 faceResult.setMsg("认证成功！");
             }
         }
