@@ -41,7 +41,7 @@
             </router-link>
             <router-link class="router-link-active" to="/auth">
               <el-menu-item index="1-3">
-                身份证号码认证
+                身份证号码核验
               </el-menu-item>
             </router-link>
           </el-submenu>
