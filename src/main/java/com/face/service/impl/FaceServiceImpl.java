@@ -118,6 +118,9 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         } else if (face.getId_no() != null && face.getId_no().equals(idNo)) {
             faceResult.setCode(202); // 已认证成功
             faceResult.setMsg("已认证成功");
+        } else if (idNo.length() !=18){
+            faceResult.setCode(400);
+            faceResult.setMsg("身份证号码格式错误");
         } else {
             String faceName = face.getFaceName();
             faceResult = idAuthenticationServer.authenticateId(faceName, idNo);
