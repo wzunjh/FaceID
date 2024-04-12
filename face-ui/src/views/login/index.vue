@@ -102,6 +102,7 @@ export default {
             this.faceOption.thisVideo.srcObject.getTracks()[0].stop();
             localStorage.setItem("face_token",res.data.token);
             localStorage.setItem("username",res.data.name);
+            localStorage.setItem("user_id",res.data.fid);
             this.$message.success(res.data.msg)
             this.$router.push("/home")
           }

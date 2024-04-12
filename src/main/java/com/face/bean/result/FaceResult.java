@@ -22,6 +22,11 @@ public class FaceResult {
     private String name;
 
     /**
+     * 人脸主键
+     */
+    private String fid;
+
+    /**
      * 返回token
      */
     private String token;

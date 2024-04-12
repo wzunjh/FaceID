@@ -49,6 +49,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
                             lambdaUpdate().set(Face::getVefNum,face.getVefNum()+1).eq(Face::getFid,face.getFid()).update();
                             faceResult.setMsg(TimeUtils.timeQuantum()+"好,"+face.getFaceName());
                             faceResult.setName(face.getFaceName());
+                            faceResult.setFid(String.valueOf(face.getFid()));
                             Map<String,String> map = new HashMap<>();
                             map.put("score",String.valueOf(faceResult.getScore()));
                             map.put("faceName",faceResult.getName());
