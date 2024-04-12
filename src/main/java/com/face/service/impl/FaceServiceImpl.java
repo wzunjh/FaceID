@@ -109,7 +109,6 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
     public FaceResult authId(Integer fid, String idNo) {
         FaceResult faceResult = new FaceResult();
         Face face = lambdaQuery().eq(Face::getFid, fid).one();
-        System.out.println(face.getIdNo().toString());
         if (face == null) {
             faceResult.setCode(404); // 用户不存在
             faceResult.setMsg("用户不存在，请重新输入");

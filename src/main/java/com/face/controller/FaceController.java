@@ -84,7 +84,7 @@ public class FaceController {
     }
 
     @GetMapping("/orAuth/{fid}")
-    @ApiOperation(value = "查询是否认证",notes = "根据id进行查询")
+    @ApiOperation(value = "查询是否认证过",notes = "根据id进行查询")
     public FaceResult orAuth(@PathVariable Integer fid){
         return faceService.orAuth(fid);
     }
