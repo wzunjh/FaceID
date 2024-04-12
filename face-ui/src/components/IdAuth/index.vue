@@ -2,11 +2,11 @@
   <div>
     <el-card v-if="!authenticated" header="身份证认证">
       <el-form ref="form" :model="authForm" label-width="120px">
-        <el-form-item label="身份证号码" prop="idNo">
+        <el-form-item label="18位身份证号码" prop="idNo">
           <el-input v-model="authForm.idNo" clearable></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('form')">提交</el-button>
+          <el-button type="primary" @click="submitForm('form')">立即认证</el-button>
         </el-form-item>
       </el-form>
     </el-card>
