@@ -10,7 +10,14 @@
         </el-form-item>
       </el-form>
     </el-card>
-    <div v-else style="color: green;">您已认证成功</div>
+    <div v-else style="color: green;">
+      您已认证成功
+      <div>
+        <p>用户ID: {{ faceData.fid }}</p>
+        <p>姓名: {{ faceData.faceName }}</p>
+        <p>身份证号码: {{ faceData.idNo }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -19,40 +26,49 @@ export default {
   data() {
     return {
       authForm: {
-        idNo: '', // 身份证号码
-        fid: ''   // 用户ID
+        idNo: '',
+        fid: ''
       },
       dialogVisible: false,
-      authMsg: '',     // 认证消息
-      authenticated: false // 是否已认证
+      authMsg: '',
+      authenticated: false,
+      faceData: { fid: '', faceName: '', idNo: '' }
     };
   },
   mounted() {
-    // Retrieve fid from localStorage
     this.authForm.fid = localStorage.getItem('user_id');
-    // 发送查询是否认证过的请求
     this.checkAuthentication();
   },
   methods: {
     checkAuthentication() {
       this.$http.get(`/face/orAuth/${this.authForm.fid}`).then(response => {
         if (response.data.code === 200) {
-          // 如果已认证成功，则不显示表单
           this.authenticated = true;
+          this.fetchAuthInfo();
         }
       }).catch(error => {
         console.error('Error checking authentication:', error);
       });
     },
+    fetchAuthInfo() {
+      this.$http.get(`/face/authUser/${this.authForm.fid}`).then(response => {
+        if (response.data.code === 200) {
+          this.faceData.fid = response.data.fid;
+          this.faceData.faceName = response.data.name;
+          this.faceData.idNo = response.data.idNo;
+        }
+      }).catch(error => {
+        console.error('Error fetching user info:', error);
+      });
+    },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          // 使用GET请求发送数据
           this.$http.get('/face/auth', { params: this.authForm }).then(response => {
             if (response.data.code === 200 || response.data.code === 202) {
               this.authMsg = response.data.msg;
-              // 认证成功后跳转到对应的消息显示部分
               this.authenticated = true;
+              this.fetchAuthInfo();
             } else {
               this.authMsg = response.data.msg || '认证请求失败';
             }

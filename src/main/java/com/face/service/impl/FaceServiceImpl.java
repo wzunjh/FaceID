@@ -154,6 +154,19 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         }
         return faceResult;
     }
+
+    @Override
+    public FaceResult authUser(Integer fid) {
+        FaceResult faceResult = new FaceResult();
+        Face face = lambdaQuery().eq(Face::getFid, fid).one();
+        faceResult.setFid(String.valueOf(face.getFid()));
+        faceResult.setName(face.getFaceName());
+        faceResult.setIdNo(face.getIdNo());
+        faceResult.setCode(200);
+        return faceResult;
+    }
+
+
 }
 
 

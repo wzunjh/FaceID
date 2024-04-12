@@ -26,6 +26,12 @@ public class FaceResult {
      */
     private String fid;
 
+
+    /**
+     * 身份证号码
+     */
+    private String idNo;
+
     /**
      * 返回token
      */

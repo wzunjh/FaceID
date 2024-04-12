@@ -20,4 +20,7 @@ public interface FaceService extends IService<Face> {
     //查验是否认证成功
     FaceResult orAuth(Integer fid);
 
+    //查寻指定fid人物信息
+    FaceResult authUser(Integer fid);
+
 }

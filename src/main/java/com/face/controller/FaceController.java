@@ -89,4 +89,12 @@ public class FaceController {
         return faceService.orAuth(fid);
     }
 
+
+    @GetMapping("/authUser/{fid}")
+    @ApiOperation(value = "查询认证信息",notes = "根据id进行查询")
+    public FaceResult authUser(@PathVariable Integer fid){
+        return faceService.authUser(fid);
+    }
+
+
 }
