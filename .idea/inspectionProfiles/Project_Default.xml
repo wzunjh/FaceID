@@ -2,7 +2,7 @@
   <profile version="1.0">
     <option name="myName" value="Project Default" />
     <inspection_tool class="AutoCloseableResource" enabled="true" level="WARNING" enabled_by_default="true">
-      <option name="METHOD_MATCHER_CONFIG" value="java.util.Formatter,format,java.io.Writer,append,com.google.common.base.Preconditions,checkNotNull,org.hibernate.Session,close,java.io.PrintWriter,printf,java.io.PrintStream,printf,okhttp3.Response,body" />
+      <option name="METHOD_MATCHER_CONFIG" value="java.util.Formatter,format,java.io.Writer,append,com.google.common.base.Preconditions,checkNotNull,org.hibernate.Session,close,java.io.PrintWriter,printf,java.io.PrintStream,printf,okhttp3.Response,body,okhttp3.Call,execute" />
     </inspection_tool>
     <inspection_tool class="HttpUrlsUsage" enabled="true" level="WEAK WARNING" enabled_by_default="true">
       <option name="ignoredUrls">
@@ -33,6 +33,66 @@
           <option value="http://tiles.apache.org/" />
           <option value="http://127.0.0" />
           <option value="http://www.apache.org" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="VulnerableLibrariesLocal" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="isIgnoringEnabled" value="true" />
+      <option name="ignoredModules">
+        <list>
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
+        </list>
+      </option>
+      <option name="ignoredPackages">
+        <list>
+          <option value="ch.qos.logback:logback-classic:1.2.7" />
+          <option value="ch.qos.logback:logback-core:1.2.7" />
+          <option value="com.baomidou:mybatis-plus-core:3.4.2" />
+          <option value="com.google.guava:guava:20.0" />
+          <option value="com.jayway.jsonpath:json-path:2.6.0" />
+          <option value="net.minidev:json-smart:2.4.7" />
+          <option value="com.baomidou:mybatis-plus-extension:3.4.2" />
+          <option value="com.fasterxml.jackson.core:jackson-databind:2.13.0" />
+          <option value="org.apache.tomcat.embed:tomcat-embed-core:9.0.55" />
+          <option value="org.springframework.boot:spring-boot-autoconfigure:2.6.0" />
+          <option value="org.springframework.boot:spring-boot:2.6.0" />
+          <option value="org.springframework:spring-beans:5.3.13" />
+          <option value="org.springframework:spring-context:5.3.13" />
+          <option value="com.squareup.okhttp3:okhttp:3.2.0" />
+          <option value="com.squareup.okhttp3:okhttp:3.12.13" />
+        </list>
+      </option>
+      <option name="ignoredReasons">
+        <list>
+          <option value="不可利用" />
+          <option value="处理中" />
+          <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="不可利用" />
         </list>
       </option>
     </inspection_tool>

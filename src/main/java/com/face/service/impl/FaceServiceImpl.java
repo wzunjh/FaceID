@@ -30,7 +30,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         List<Face> faceList = lambdaQuery().orderByDesc(Face::getVefNum).list();
         FaceResult faceState = null;
         // 如果人脸库为空,则第一次登录为录入人脸
-        if (faceList.size() == 0){
+        if (faceList.isEmpty()){
             return initFace(imageBase);
         }else {
             int faceLength = faceList.size();
