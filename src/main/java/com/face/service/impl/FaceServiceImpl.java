@@ -117,7 +117,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             faceResult = idAuthenticationServer.authenticateId(faceName, idNo);
             if (faceResult.getCode() == 0){
                 // 只有在认证成功的情况下才更新ID信息
-                face.setIdNo(idNo);
+                face.setId_no(idNo);
                 face.setId2_status("1");
                 faceResult.setMsg("认证成功！");
             }

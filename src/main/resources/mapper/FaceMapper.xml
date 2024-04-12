@@ -12,7 +12,7 @@
             <result property="faceName" column="face_name" jdbcType="VARCHAR"/>
             <result property="remark" column="remark" jdbcType="VARCHAR"/>
             <result property="faceStatus" column="face_status" jdbcType="INTEGER"/>
-            <result property="idNo" column="idNo" jdbcType="VARCHAR"/>
+            <result property="id_no" column="id_no" jdbcType="VARCHAR"/>
             <result property="id2_status" column="id2_status" jdbcType="VARCHAR"/>
             <result property="updateExtend3" column="update_extend3" jdbcType="VARCHAR"/>
     </resultMap>
@@ -20,7 +20,7 @@
     <sql id="Base_Column_List">
         fid,face_base,create_time,
         vef_num,face_name,remark,
-        face_status,idNo,id2_status,
+        face_status,id_no,id2_status,
         update_extend3
     </sql>
 </mapper>

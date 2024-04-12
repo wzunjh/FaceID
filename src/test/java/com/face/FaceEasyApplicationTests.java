@@ -45,7 +45,7 @@ class FaceEasyApplicationTests {
 
         // 准备测试数据
         Integer fid = 1;
-        String idNo = "1234567890";
+        String idNo = "432503200204098770";
 
         // 调用待测试的方法
         FaceResult result = faceService.authId(fid, idNo);
