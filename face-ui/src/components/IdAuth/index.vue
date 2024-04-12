@@ -28,6 +28,11 @@
             <p>身份证号码: {{ faceData.idNo }}</p>
           </el-col>
         </el-row>
+        <el-row>
+          <el-col :span="24">
+            <p>您的身份证所在城市地区: {{ faceData.city }}</p>
+          </el-col>
+        </el-row>
       </div>
     </div>
   </div>
@@ -44,7 +49,7 @@ export default {
       dialogVisible: false,
       authMsg: '',
       authenticated: false,
-      faceData: { fid: '', faceName: '', idNo: '' }
+      faceData: { fid: '', faceName: '', idNo: '',city: '' }
     };
   },
   mounted() {
@@ -68,6 +73,7 @@ export default {
           this.faceData.fid = response.data.fid;
           this.faceData.faceName = response.data.name;
           this.faceData.idNo = response.data.idNo;
+          this.faceData.city = response.data.city;
         }
       }).catch(error => {
         console.error('Error fetching user info:', error);

@@ -45,12 +45,14 @@ public class IdAuthenticationServer {
             ResponseEntity<Map> response = restTemplate.postForEntity(idenAuthUrl, request, Map.class);
             Map<String, Object> responseBody = response.getBody();
 
-            if (responseBody != null && responseBody.containsKey("respMessage") && responseBody.containsKey("respCode")) {
-                faceResult.setMsg(responseBody.get("respMessage").toString());
-                faceResult.setCode(Integer.parseInt(responseBody.get("respCode").toString()));
+            if (responseBody != null && responseBody.containsKey("province") && responseBody.containsKey("city")) {
+                String province = responseBody.get("province").toString();
+                String city = responseBody.get("city").toString();
+                String concatenatedCity = province + "-" + city; // 拼接省份和城市，中间用"-"分隔
+                faceResult.setCity(concatenatedCity); // 存放拼接后的字符串到faceResult的city属性中
             } else {
                 faceResult.setCode(FaceResult.FACE_ERROR);
-                faceResult.setMsg("No response code or message found in the response");
+                faceResult.setMsg("No 'province' or 'city' found in the response");
             }
         } catch (Exception e) {
             faceResult.setCode(FaceResult.FACE_ERROR);
@@ -59,4 +61,5 @@ public class IdAuthenticationServer {
         }
         return faceResult;
     }
+
 }

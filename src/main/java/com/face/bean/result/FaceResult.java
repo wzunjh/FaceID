@@ -33,6 +33,12 @@ public class FaceResult {
     private String idNo;
 
     /**
+     * 身份证所在城市地区
+     */
+    private String city;
+
+
+    /**
      * 返回token
      */
     private String token;

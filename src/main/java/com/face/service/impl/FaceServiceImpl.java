@@ -128,6 +128,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
                 // 认证成功
                 face.setIdNo(idNo);
                 face.setId2Status("1");
+                face.setCity(faceResult.getCity());
                 updateById(face);
                 faceResult.setCode(200); // 认证成功
                 faceResult.setMsg("认证成功");
@@ -162,6 +163,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         faceResult.setFid(String.valueOf(face.getFid()));
         faceResult.setName(face.getFaceName());
         faceResult.setIdNo(face.getIdNo());
+        faceResult.setCity(face.getCity());
         faceResult.setCode(200);
         return faceResult;
     }

@@ -60,9 +60,9 @@ public class Face implements Serializable {
     private String id2Status;
 
     /**
-     * 扩展字段3
+     * 城市地区
      */
-    private String updateExtend3;
+    private String city;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

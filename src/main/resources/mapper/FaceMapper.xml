@@ -14,13 +14,13 @@
             <result property="faceStatus" column="face_status" jdbcType="INTEGER"/>
             <result property="idNo" column="id_no" jdbcType="VARCHAR"/>
             <result property="id2Status" column="id2_status" jdbcType="VARCHAR"/>
-            <result property="updateExtend3" column="update_extend3" jdbcType="VARCHAR"/>
+            <result property="city" column="city" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         fid,face_base,create_time,
         vef_num,face_name,remark,
         face_status,id_no,id2_status,
-        update_extend3
+        city
     </sql>
 </mapper>
