@@ -45,10 +45,10 @@ public class IdAuthenticationServer {
             if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
                 result = response.getBody();
             } else {
-                log.error("Request failed----" + "返回状态码: " + response.getStatusCode() + ", message: " + response.getStatusCode().getReasonPhrase());
+                log.error("Request failed----返回状态码: {}, message: {}", response.getStatusCode(), response.getStatusCode().getReasonPhrase());
             }
         } catch (Exception e) {
-            log.error("Authentication request failed, message: " + e.getMessage());
+            log.error("Authentication request failed, message: {}", e.getMessage());
         }
         return result;
     }
