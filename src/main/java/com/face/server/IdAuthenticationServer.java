@@ -1,5 +1,6 @@
 package com.face.server;
 
+import com.face.bean.result.FaceResult;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,8 +27,8 @@ public class IdAuthenticationServer {
     @Value("${idenauth.service.appcode}")
     private String appCode;
 
-    public String authenticateId(String faceName, String idNo) {
-        String result = "";
+    public FaceResult authenticateId(String faceName, String idNo) {
+        FaceResult faceResult = new FaceResult();
         try {
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
@@ -40,16 +41,21 @@ public class IdAuthenticationServer {
 
             HttpEntity<Map<String, String>> request = new HttpEntity<>(map, headers);
 
-            ResponseEntity<String> response = restTemplate.postForEntity(idenAuthUrl, request, String.class);
+            ResponseEntity<Map> response = restTemplate.postForEntity(idenAuthUrl, request, Map.class);
+            Map<String, Object> responseBody = response.getBody();
 
-            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
-                result = response.getBody();
+            if (responseBody != null && responseBody.containsKey("respMessage") && responseBody.containsKey("respCode")) {
+                faceResult.setMsg(responseBody.get("respMessage").toString());
+                faceResult.setCode(Integer.parseInt(responseBody.get("respCode").toString()));
             } else {
-                log.error("Request failed----返回状态码: {}, message: {}", response.getStatusCode(), response.getStatusCode().getReasonPhrase());
+                faceResult.setCode(FaceResult.FACE_ERROR);
+                faceResult.setMsg("No response code or message found in the response");
             }
         } catch (Exception e) {
+            faceResult.setCode(FaceResult.FACE_ERROR);
+            faceResult.setMsg(e.getMessage());
             log.error("Authentication request failed, message: {}", e.getMessage());
         }
-        return result;
+        return faceResult;
     }
 }

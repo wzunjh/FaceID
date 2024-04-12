@@ -36,10 +36,22 @@
         </list>
       </option>
     </inspection_tool>
+    <inspection_tool class="IncorrectHttpHeaderInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="customHeaders">
+        <set>
+          <option value="Secret-Key" />
+        </set>
+      </option>
+    </inspection_tool>
     <inspection_tool class="VulnerableLibrariesLocal" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="isIgnoringEnabled" value="true" />
       <option name="ignoredModules">
         <list>
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
           <option value="FaceID" />
           <option value="FaceID" />
           <option value="FaceID" />
@@ -74,6 +86,11 @@
           <option value="org.springframework:spring-context:5.3.13" />
           <option value="com.squareup.okhttp3:okhttp:3.2.0" />
           <option value="com.squareup.okhttp3:okhttp:3.12.13" />
+          <option value="org.springframework:spring-core:5.3.13" />
+          <option value="org.springframework:spring-expression:5.3.13" />
+          <option value="org.springframework:spring-web:5.3.13" />
+          <option value="org.springframework:spring-webmvc:5.3.13" />
+          <option value="org.yaml:snakeyaml:1.29" />
         </list>
       </option>
       <option name="ignoredReasons">
@@ -91,6 +108,11 @@
           <option value="不可利用" />
           <option value="不可利用" />
           <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="处理中" />
           <option value="不可利用" />
           <option value="不可利用" />
         </list>
