@@ -17,4 +17,7 @@ public interface FaceService extends IService<Face> {
      */
     FaceResult authId(Integer fid,String idNo);
 
+    //查验是否认证成功
+    FaceResult orAuth(Integer fid);
+
 }

@@ -40,6 +40,11 @@
                   日志列表
                 </el-menu-item>
             </router-link>
+            <router-link class="router-link-active" to="/auth">
+              <el-menu-item index="1-3">
+                身份证认证
+              </el-menu-item>
+            </router-link>
 
           </el-submenu>
         </el-menu>

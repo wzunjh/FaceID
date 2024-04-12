@@ -30,7 +30,12 @@ const routes = [
         path: '/faceLog',
         name: 'log',
         component: () => import('@/components/faceLog/index.vue')
-      }
+      },
+      {
+        path: '/auth',
+        name: 'auth',
+        component: () => import('@/components/IdAuth/index.vue')
+      },
     ]
   }
 ]

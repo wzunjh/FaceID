@@ -76,5 +76,17 @@ public class FaceController {
         return FaceResult.success("修改成功");
     }
 
+    @GetMapping("/auth")
+    @ApiOperation(value = "身份证认证", notes = "根据id和身份证号码进行认证")
+    public FaceResult authenticate(@RequestParam String fid, @RequestParam String idNo) {
+        // 调用接口实现身份验证逻辑
+        return faceService.authId(Integer.parseInt(fid), idNo);
+    }
+
+    @GetMapping("/orAuth/{fid}")
+    @ApiOperation(value = "查询是否认证",notes = "根据id进行查询")
+    public FaceResult orAuth(@PathVariable Integer fid){
+        return faceService.orAuth(fid);
+    }
 
 }
