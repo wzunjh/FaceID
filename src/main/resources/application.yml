@@ -7,6 +7,12 @@ python:
     id: wzunjh
     key: GcJypclbi1t1lTFzCQ
 
+idenauth:
+  service:
+    url: https://idenauthen.market.alicloudapi.com/idenAuthentication
+    appcode: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/faceDB?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
