@@ -11,29 +11,18 @@
       </el-form>
     </el-card>
     <div v-else class="success-message">
-      <p>您已认证成功</p>
-      <div>
-        <el-row>
-          <el-col :span="24">
-            <p>用户ID: {{ faceData.fid }}</p>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <p>姓名: {{ faceData.faceName }}</p>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <p>身份证号码: {{ faceData.idNo }}</p>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <p>您的身份证所在城市地区: {{ faceData.city }}</p>
-          </el-col>
-        </el-row>
-      </div>
+      <el-alert title="您已认证成功" type="success" center show-icon />
+      <el-descriptions title="您的认证信息">
+        <el-descriptions-item label="姓名">{{ faceData.faceName }}</el-descriptions-item>
+        <el-descriptions-item label="用户ID">{{ faceData.fid }}</el-descriptions-item>
+        <el-descriptions-item label="身份证所在城市地区">{{ faceData.city }}</el-descriptions-item>
+        <el-descriptions-item label="认证状态">
+          <el-tag size="small">已认证</el-tag>
+        </el-descriptions-item>
+        <el-descriptions-item label="18位身份证号码"
+        >{{ faceData.idNo }}</el-descriptions-item
+        >
+      </el-descriptions>
     </div>
   </div>
 </template>
