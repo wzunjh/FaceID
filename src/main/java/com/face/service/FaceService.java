@@ -9,8 +9,6 @@ public interface FaceService extends IService<Face> {
 
     /**
      * 人脸校验
-     * @param imageBase
-     * @return
      */
     FaceResult vef(String imageBase);
 
