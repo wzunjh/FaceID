@@ -50,14 +50,14 @@ public class Face implements Serializable {
     private Integer faceStatus;
 
     /**
-     * 扩展字段1
+     * 身份证号码
      */
-    private String updateExtend1;
+    private String idNo;
 
     /**
-     * 扩展字段2
+     * 认证状态
      */
-    private String updateExtend2;
+    private String id2_status;
 
     /**
      * 扩展字段3

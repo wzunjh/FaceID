@@ -12,15 +12,15 @@
             <result property="faceName" column="face_name" jdbcType="VARCHAR"/>
             <result property="remark" column="remark" jdbcType="VARCHAR"/>
             <result property="faceStatus" column="face_status" jdbcType="INTEGER"/>
-            <result property="updateExtend1" column="update_extend1" jdbcType="VARCHAR"/>
-            <result property="updateExtend2" column="update_extend2" jdbcType="VARCHAR"/>
+            <result property="idNo" column="idNo" jdbcType="VARCHAR"/>
+            <result property="id2_status" column="id2_status" jdbcType="VARCHAR"/>
             <result property="updateExtend3" column="update_extend3" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         fid,face_base,create_time,
         vef_num,face_name,remark,
-        face_status,update_extend1,update_extend2,
+        face_status,idNo,id2_status,
         update_extend3
     </sql>
 </mapper>
