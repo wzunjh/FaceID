@@ -119,6 +119,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
                 // 只有在认证成功的情况下才更新ID信息
                 face.setId_no(idNo);
                 face.setId2_status("1");
+                updateById(face);
                 faceResult.setMsg("认证成功！");
             }
         }
