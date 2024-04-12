@@ -9,8 +9,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -35,11 +36,11 @@ public class IdAuthenticationServer {
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
             headers.set("Authorization", "APPCODE " + appCode);
 
-            Map<String, String> map = new HashMap<>();
-            map.put("name", faceName);
-            map.put("idNo", idNo);
+            MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+            map.add("name", faceName);
+            map.add("idNo", idNo);
 
-            HttpEntity<Map<String, String>> request = new HttpEntity<>(map, headers);
+            HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
 
             ResponseEntity<Map> response = restTemplate.postForEntity(idenAuthUrl, request, Map.class);
             Map<String, Object> responseBody = response.getBody();

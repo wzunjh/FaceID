@@ -13,10 +13,10 @@ public class id2 {
     public static void main(String[] args) throws IOException {
 
         String url = "https://idenauthen.market.alicloudapi.com/idenAuthentication";
-        String appCode = "";
+        String appCode = "03f04ace87a44e548cfab16f04a9743c";
 
-        String name = "张三";
-        String idNo = "434545345341218880";
+        String name = "聂家辉";
+        String idNo = "432503200204098770";
 
         System.out.println(postData(appCode, url, name, idNo));
     }
