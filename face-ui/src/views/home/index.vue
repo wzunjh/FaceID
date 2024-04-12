@@ -22,33 +22,33 @@
 
       <!--侧边栏-->
       <el-aside style="width: 200px">
-        <el-menu text-color="#008390"  active-text-color="#ade2e0" class="el-menu-vertical-demo" >
+        <el-menu text-color="#008390" active-text-color="#ade2e0" class="el-menu-vertical-demo" default-openeds="['1']">
           <el-submenu index="1">
-
             <template slot="title">
               <i class="el-icon-user" style="color: #008390"></i>
-              <span slot="title">人脸管理</span>
+              <span slot="title">身份认证</span>
             </template>
 
-            <router-link class="router-link-active"  to="/faceList">
-                <el-menu-item index="1-1">
-                  人脸列表
-                </el-menu-item>
+            <router-link class="router-link-active" to="/faceList">
+              <el-menu-item index="1-1">
+                人脸信息列表
+              </el-menu-item>
             </router-link>
             <router-link class="router-link-active" to="/faceLog">
-                <el-menu-item index="1-2">
-                  日志列表
-                </el-menu-item>
+              <el-menu-item index="1-2">
+                日志信息列表
+              </el-menu-item>
             </router-link>
             <router-link class="router-link-active" to="/auth">
               <el-menu-item index="1-3">
-                身份证认证
+                身份证号码认证
               </el-menu-item>
             </router-link>
-
           </el-submenu>
         </el-menu>
       </el-aside>
+
+
 
 
       <!--右侧内容主体-->
