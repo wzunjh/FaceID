@@ -111,13 +111,13 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         Face face = lambdaQuery().eq(Face::getFid, fid).one();
         if (face == null) {
             faceResult.setCode(404); // 用户不存在
-            faceResult.setMsg("用户不存在，请重新输入");
+            faceResult.setMsg("用户不存在,请重新输入");
         } else if (face.getFaceName() == null || face.getFaceName().isEmpty()) {
             faceResult.setCode(400); // 用户姓名为空
-            faceResult.setMsg("用户姓名为空，请重新输入");
+            faceResult.setMsg("用户姓名为空,请重新输入");
         } else if (face.getId2Status().equals("1")) {
             faceResult.setCode(202); // 已认证成功
-            faceResult.setMsg("已认证成功");
+            faceResult.setMsg("该用户已认证成功");
         } else if (idNo.length() != 18) {
             faceResult.setCode(400); // 身份证号码格式错误
             faceResult.setMsg("身份证号码格式错误");
@@ -133,7 +133,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
                 faceResult.setMsg("认证成功");
             } else {
                 faceResult.setCode(401); // 信息不匹配
-                faceResult.setMsg("信息不匹配，认证失败");
+                faceResult.setMsg("信息不匹配,认证失败");
             }
         }
 
