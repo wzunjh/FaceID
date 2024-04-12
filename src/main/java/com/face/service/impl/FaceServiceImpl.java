@@ -149,7 +149,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             faceResult.setCode(200);
             faceResult.setMsg("已认证");
         }else {
-            faceResult.setCode(202);
+            faceResult.setCode(208);
             faceResult.setMsg("未认证");
         }
         return faceResult;
