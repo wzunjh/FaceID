@@ -10,12 +10,24 @@
         </el-form-item>
       </el-form>
     </el-card>
-    <div v-else style="color: green;">
-      您已认证成功
+    <div v-else class="success-message">
+      <p>您已认证成功</p>
       <div>
-        <p>用户ID: {{ faceData.fid }}</p>
-        <p>姓名: {{ faceData.faceName }}</p>
-        <p>身份证号码: {{ faceData.idNo }}</p>
+        <el-row>
+          <el-col :span="24">
+            <p>用户ID: {{ faceData.fid }}</p>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <p>姓名: {{ faceData.faceName }}</p>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <p>身份证号码: {{ faceData.idNo }}</p>
+          </el-col>
+        </el-row>
       </div>
     </div>
   </div>
@@ -86,3 +98,23 @@ export default {
   }
 };
 </script>
+<style scoped>
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.success-message {
+  color: green;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.success-message p {
+  margin: 0;
+}
+</style>
