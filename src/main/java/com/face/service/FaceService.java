@@ -13,4 +13,12 @@ public interface FaceService extends IService<Face> {
      * @return
      */
     FaceResult vef(String imageBase);
+
+    /**
+     * 人脸校验
+     * @param imageBase
+     * @return
+     */
+    FaceResult vef(String imageBase);
+
 }
