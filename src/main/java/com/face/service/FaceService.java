@@ -15,10 +15,8 @@ public interface FaceService extends IService<Face> {
     FaceResult vef(String imageBase);
 
     /**
-     * 人脸校验
-     * @param imageBase
-     * @return
+     * 身份证二要素校验
      */
-    FaceResult vef(String imageBase);
+    FaceResult authenticateId(Integer fid,String idNo);
 
 }

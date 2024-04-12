@@ -6,6 +6,7 @@ import com.face.bean.Face;
 import com.face.bean.result.FaceResult;
 import com.face.mapper.FaceMapper;
 import com.face.server.FaceContrastServer;
+import com.face.server.IdAuthenticationServer;
 import com.face.service.FaceService;
 import com.face.utils.JwtUtils;
 import com.face.utils.TimeUtils;
@@ -23,6 +24,9 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
 
     @Autowired
     FaceContrastServer faceContrastServer;
+
+    @Autowired
+    private IdAuthenticationServer idAuthenticationServer;
 
     @Override
     public FaceResult vef(String imageBase) {
@@ -96,6 +100,27 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         faceResult.setCode(FaceResult.INIT_FACE);
         faceResult.setMsg("人脸初始化"+(save?"成功":"失败")+","+(save?"请验证登录":"请稍后再试"));
         faceResult.setName(face.getFaceName());
+        return faceResult;
+    }
+
+
+    @Override
+    public FaceResult authenticateId(Integer fid, String idNo){
+        FaceResult faceResult = new FaceResult();
+        Face face = lambdaQuery().eq(Face::getFid, fid).one();
+        if (face == null) {
+            faceResult.setMsg("用户不存在，请重新输入");
+        } else if (face.getFaceName() == null || face.getFaceName().isEmpty()) {
+            faceResult.setMsg("用户姓名为空，请重新输入");
+        } else {
+            String faceName = face.getFaceName();
+            faceResult = idAuthenticationServer.authenticateId(faceName, idNo);
+            if (faceResult.getCode() == 0){
+                // 只有在认证成功的情况下才更新ID信息
+                face.setIdNo(idNo);
+                faceResult.setMsg("认证成功！");
+            }
+        }
         return faceResult;
     }
 
