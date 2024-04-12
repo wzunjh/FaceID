@@ -52,12 +52,12 @@ public class Face implements Serializable {
     /**
      * 身份证号码
      */
-    private String id_no;
+    private String idNo;
 
     /**
      * 认证状态
      */
-    private String id2_status;
+    private String id2Status;
 
     /**
      * 扩展字段3

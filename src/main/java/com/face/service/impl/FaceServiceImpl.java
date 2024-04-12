@@ -106,28 +106,29 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
 
 
     @Override
-    public FaceResult authId(Integer fid, String idNo){
+    public FaceResult authId(Integer fid, String idNo) {
         FaceResult faceResult = new FaceResult();
         Face face = lambdaQuery().eq(Face::getFid, fid).one();
+        System.out.println(face.getIdNo().toString());
         if (face == null) {
             faceResult.setCode(404); // 用户不存在
             faceResult.setMsg("用户不存在，请重新输入");
         } else if (face.getFaceName() == null || face.getFaceName().isEmpty()) {
             faceResult.setCode(400); // 用户姓名为空
             faceResult.setMsg("用户姓名为空，请重新输入");
-        } else if (face.getId_no() != null && face.getId_no().equals(idNo)) {
+        } else if (face.getId2Status().equals("1")) {
             faceResult.setCode(202); // 已认证成功
             faceResult.setMsg("已认证成功");
-        } else if (idNo.length() !=18){
-            faceResult.setCode(400);
+        } else if (idNo.length() != 18) {
+            faceResult.setCode(400); // 身份证号码格式错误
             faceResult.setMsg("身份证号码格式错误");
         } else {
-            String faceName = face.getFaceName();
-            faceResult = idAuthenticationServer.authenticateId(faceName, idNo);
-            if (faceResult.getCode() == 0){
+            faceResult = idAuthenticationServer.authenticateId(face.getFaceName(), idNo);
+
+            if (faceResult.getCode() == 0) {
                 // 认证成功
-                face.setId_no(idNo);
-                face.setId2_status("1");
+                face.setIdNo(idNo);
+                face.setId2Status("1");
                 updateById(face);
                 faceResult.setCode(200); // 认证成功
                 faceResult.setMsg("认证成功");
@@ -136,14 +137,16 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
                 faceResult.setMsg("信息不匹配，认证失败");
             }
         }
+
         return faceResult;
     }
+
 
     @Override
     public FaceResult orAuth(Integer fid) {
         FaceResult faceResult = new FaceResult();
         Face face = lambdaQuery().eq(Face::getFid, fid).one();
-        if (face.getId2_status().equals("1")) {
+        if (face.getId2Status().equals("1")) {
             faceResult.setCode(200);
             faceResult.setMsg("已认证");
         }else {

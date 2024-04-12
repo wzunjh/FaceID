@@ -12,8 +12,8 @@
             <result property="faceName" column="face_name" jdbcType="VARCHAR"/>
             <result property="remark" column="remark" jdbcType="VARCHAR"/>
             <result property="faceStatus" column="face_status" jdbcType="INTEGER"/>
-            <result property="id_no" column="id_no" jdbcType="VARCHAR"/>
-            <result property="id2_status" column="id2_status" jdbcType="VARCHAR"/>
+            <result property="idNo" column="id_no" jdbcType="VARCHAR"/>
+            <result property="id2Status" column="id2_status" jdbcType="VARCHAR"/>
             <result property="updateExtend3" column="update_extend3" jdbcType="VARCHAR"/>
     </resultMap>
 
