@@ -176,24 +176,54 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         if(face.getId2Status() == null || face.getId2Status().isEmpty()){
           faceResult.setCode(202);
           faceResult.setMsg("请先完成身份证核验");
-        } else if (face.getApiKey() == null || face.getApiKey().isEmpty()) {
-            String generatedKey = getString();
-            // 这里可以将生成的密钥设置给 face 对象的 apiKey 属性
-            face.setApiKey(generatedKey);
-            updateById(face);
-            faceResult.setMsg("apiKey创建成功");
-            faceResult.setCode(200);
-            faceResult.setApiKey(generatedKey);
-        } else {
-
+        } else if(face.getApiKey() == null || face.getApiKey().isEmpty()) {
+            faceResult.setCode(202);
+            faceResult.setMsg("未查询到,请新建或更新 ApiKey");
+        }
+        else {
             faceResult.setApiKey(face.getApiKey());
-            faceResult.setMsg("apiKey查询成功");
+            faceResult.setMsg("apiKey 查询成功");
             faceResult.setCode(200);
         }
 
            return faceResult;
 
     }
+
+    @Override
+    public FaceResult updateApiKey(Integer fid){
+        FaceResult faceResult = new FaceResult();
+        Face face = lambdaQuery().eq(Face::getFid, fid).one();
+        if(face.getId2Status() == null || face.getId2Status().isEmpty()){
+            faceResult.setCode(202);
+            faceResult.setMsg("请先完成身份证核验");
+        } else if (face.getApiKey() == null || face.getApiKey().isEmpty()) {
+
+            String generatedKey = getString();
+            // 这里可以将生成的密钥设置给 face 对象的 apiKey 属性
+            face.setApiKey(generatedKey);
+            updateById(face);
+            faceResult.setMsg("apiKey 创建成功");
+            faceResult.setCode(200);
+            faceResult.setApiKey(generatedKey);
+        } else {
+
+            String generatedKey = getString();
+            // 这里可以将生成的密钥设置给 face 对象的 apiKey 属性
+            face.setApiKey(generatedKey);
+            updateById(face);
+            faceResult.setMsg("apiKey 更新成功");
+            faceResult.setCode(200);
+            faceResult.setApiKey(generatedKey);
+        }
+
+        return faceResult;
+
+    }
+
+
+
+
     //随机生成密钥算法
     private static @NotNull String getString() {
         StringBuilder sb = new StringBuilder();

@@ -66,5 +66,14 @@ class FaceEasyApplicationTests {
         System.out.println("Msg: " + faceResult.getMsg());
     }
 
+    @Test
+    public void testUpdateApi(){
+
+        FaceResult faceResult = faceService.updateApiKey(1);
+
+        System.out.println("apiKey: " + faceResult.getApiKey());
+        System.out.println("Msg: " + faceResult.getMsg());
+    }
+
 
 }

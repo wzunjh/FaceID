@@ -26,4 +26,7 @@ public interface FaceService extends IService<Face> {
     //查询并新建ApiKey
     FaceResult apiKey(Integer fid);
 
+    //更新ApiKey
+    FaceResult updateApiKey(Integer fid);
+
 }
