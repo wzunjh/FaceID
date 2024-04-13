@@ -16,6 +16,12 @@
             v-else>
         </el-alert>
 
+        <el-button
+            icon="el-icon-copy-document"
+            type="text"
+            v-if="apiKey"
+            @click="copyApiKey">复制</el-button>
+
         <el-popconfirm
             title="Are you sure you want to update the API key?"
             confirm-button-text="Yes, update it"
@@ -88,6 +94,17 @@ export default {
       }).catch(error => {
         console.error('Error updating API key:', error);
       });
+    },
+    copyApiKey() {
+      navigator.clipboard.writeText(this.apiKey).then(() => {
+        this.$message({
+          message: 'API Key copied to clipboard!',
+          type: 'success',
+          duration: 1500
+        });
+      }).catch(err => {
+        console.error('Failed to copy API key: ', err);
+      });
     }
   }
 };
@@ -103,6 +120,6 @@ export default {
 .api-key-container {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* 根据需要可以调整为 flex-start, flex-end 或其他 */
+  justify-content: space-between; /* This can be adjusted to flex-start, flex-end, or others as needed */
 }
 </style>
