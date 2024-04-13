@@ -173,7 +173,10 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
     public FaceResult apiKey(Integer fid){
         FaceResult faceResult = new FaceResult();
         Face face = lambdaQuery().eq(Face::getFid, fid).one();
-        if (face.getApiKey() == null || face.getApiKey().isEmpty()) {
+        if(face.getId2Status() == null || face.getId2Status().isEmpty()){
+          faceResult.setCode(202);
+          faceResult.setMsg("请先完成身份证核验");
+        } else if (face.getApiKey() == null || face.getApiKey().isEmpty()) {
             String generatedKey = getString();
             // 这里可以将生成的密钥设置给 face 对象的 apiKey 属性
             face.setApiKey(generatedKey);
@@ -191,7 +194,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
            return faceResult;
 
     }
-//随机生成密钥算法
+    //随机生成密钥算法
     private static @NotNull String getString() {
         StringBuilder sb = new StringBuilder();
         sb.append("sk-");
