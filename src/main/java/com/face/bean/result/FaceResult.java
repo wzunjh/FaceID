@@ -74,7 +74,7 @@ public class FaceResult {
     /*成功*/
     public static final Integer SUCCESS_CODE = 200;
     /*相似匹配度*/
-    public static final Integer SATISFY_SCORE = 80;
+    public static final Integer SATISFY_SCORE = 70;
     /*调用腾讯云接口发生的异常*/
     public static final Integer FACE_ERROR = -1;
     /*数据库没有该人脸*/
