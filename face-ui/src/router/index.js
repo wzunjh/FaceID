@@ -36,6 +36,11 @@ const routes = [
         name: 'auth',
         component: () => import('@/components/IdAuth/index.vue')
       },
+      {
+        path: '/apikey',
+        name: 'apikey',
+        component: () => import('@/components/apiKey/index.vue')
+      }
     ]
   }
 ]

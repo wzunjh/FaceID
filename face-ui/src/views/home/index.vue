@@ -44,6 +44,11 @@
                 身份证号码核验
               </el-menu-item>
             </router-link>
+            <router-link class="router-link-active" to="/apikey">
+              <el-menu-item index="1-4">
+                API 信息中心
+              </el-menu-item>
+            </router-link>
           </el-submenu>
         </el-menu>
       </el-aside>

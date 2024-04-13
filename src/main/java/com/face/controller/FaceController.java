@@ -96,5 +96,15 @@ public class FaceController {
         return faceService.authUser(fid);
     }
 
+    @GetMapping("/apiKey/{fid}")
+    @ApiOperation(value = "查询apikey",notes = "根据id进行查询")
+    public FaceResult apiKey(@PathVariable Integer fid){
+        return faceService.apiKey(fid);
+    }
 
+    @GetMapping("/updateApiKey/{fid}")
+    @ApiOperation(value = "更新ApiKey信息",notes = "根据id进行更新")
+    public FaceResult UpdateApiKey(@PathVariable Integer fid){
+        return faceService.updateApiKey(fid);
+    }
 }
