@@ -107,4 +107,18 @@ public class FaceController {
     public FaceResult UpdateApiKey(@PathVariable Integer fid){
         return faceService.updateApiKey(fid);
     }
+
+    @PostMapping("/api")
+    @ApiOperation(value="人脸验证接口", notes="根据传入的两个base64编码进行对比")
+    public FaceResult faceApi(@RequestParam(required = false) String imageBase1, @RequestParam(required = false) String imageBase2) {
+        FaceResult faceResult = new FaceResult();
+        if(imageBase1 == null || imageBase1.isEmpty() ||imageBase2 == null || imageBase2.isEmpty() ) {
+            faceResult.setMsg("两张图片都不能为空");
+            faceResult.setCode(400); // Bad Request
+            return faceResult;
+        }
+
+        return faceService.faceApi(imageBase1, imageBase2);
+    }
+
 }
