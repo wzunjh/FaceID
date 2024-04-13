@@ -1,39 +1,33 @@
 <template>
   <div>
     <el-card header="API信息中心">
-      <!-- 将接口请求地址信息放入API信息中心，并用圆角边框包围 -->
       <el-descriptions title="接口请求地址" border>
         <el-descriptions-item label="URL">{{ apiBaseUrl }}</el-descriptions-item>
       </el-descriptions>
 
-      <div v-if="apiKey">
-        <p>当前ApiKey:</p>
-        <el-tag
-            type="success"
-            show-icon>{{ apiKey }}
-        </el-tag>
-      </div>
-      <div v-else>
+      <div class="api-key-container">
+        <el-descriptions title="API Key" border v-if="apiKey">
+          <el-descriptions-item label="当前Key">{{ apiKey }}</el-descriptions-item>
+        </el-descriptions>
         <el-alert
             title="您没有可用的ApiKey"
             type="error"
-            show-icon>
+            show-icon
+            v-else>
         </el-alert>
-      </div>
 
-      <!-- 使用el-popconfirm组件确认操作 -->
-      <el-popconfirm
-          title="Are you sure you want to update the API key?"
-          confirm-button-text="Yes, update it"
-          cancel-button-text="Cancel"
-          @confirm="updateApiKey">
-        <template #reference>
-          <el-button type="primary">新建/更新ApiKey</el-button>
-        </template>
-      </el-popconfirm>
+        <el-popconfirm
+            title="Are you sure you want to update the API key?"
+            confirm-button-text="Yes, update it"
+            cancel-button-text="Cancel"
+            @confirm="updateApiKey">
+          <template #reference>
+            <el-button type="primary">新建/更新ApiKey</el-button>
+          </template>
+        </el-popconfirm>
+      </div>
     </el-card>
 
-    <!-- 弹窗显示msg信息 -->
     <el-dialog
         :visible.sync="dialogVisible"
         :title="'操作消息'"
@@ -51,7 +45,7 @@ export default {
       apiKey: null,
       apiBaseUrl: 'http://localhost:8868/api',
       msg: '',
-      dialogVisible: false  // 控制弹窗显示
+      dialogVisible: false
     };
   },
   mounted() {
@@ -105,5 +99,10 @@ export default {
 }
 .el-descriptions {
   margin-bottom: 20px;
+}
+.api-key-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 根据需要可以调整为 flex-start, flex-end 或其他 */
 }
 </style>
