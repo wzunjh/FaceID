@@ -33,8 +33,7 @@ export default {
         };
         reader.readAsDataURL(file);
       } else {
-        // Clear the corresponding imageBase if no file is selected
-        this[imageBaseKey] = '';
+        this[imageBaseKey] = ''; // Clear the corresponding imageBase if no file is selected
       }
     },
     submitImages() {
@@ -43,28 +42,48 @@ export default {
         return;
       }
       this.submitting = true;
-      let formData = new FormData();
-      formData.append('imageBase1', this.imageBase1);
-      formData.append('imageBase2', this.imageBase2 || '');
 
-      this.$http.post('/face/api', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }).then(response => {
-        this.message = response.data.msg;
-        if (response.data.code === 200) {
-          // Additional success actions
-        }
-      }).catch(error => {
-        this.message = "Error submitting images: " + error.response.data.msg;
-      }).finally(() => {
-        this.submitting = false;
-      });
+      if (this.imageBase2) {
+        let formData = new FormData();
+        formData.append('imageBase1', this.imageBase1);
+        formData.append('imageBase2', this.imageBase2);
+
+        this.$http.post('/face/api', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(response => {
+          this.message = response.data.msg;
+          if (response.data.code === 200) {
+            // Additional success actions
+          }
+        }).catch(error => {
+          this.message = "Error submitting images: " + error.response.data.msg;
+        }).finally(() => {
+          this.submitting = false;
+        });
+      } else {
+        // 当只上传一张图片时，调用的是第一个接口，且使用RequestBody传递JSON数据
+        this.$http.post('/face/vef', JSON.stringify({ imageBase: this.imageBase1 }), {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).then(response => {
+          this.message = response.data.msg;
+          if (response.data.code === 200) {
+            // Additional success actions
+          }
+        }).catch(error => {
+          this.message = "Error submitting image: " + error.response.data.msg;
+        }).finally(() => {
+          this.submitting = false;
+        });
+      }
     }
   }
 };
 </script>
+
 
 <style>
 /* Add necessary styles */
