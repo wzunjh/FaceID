@@ -10,13 +10,14 @@ import com.face.server.IdAuthenticationServer;
 import com.face.service.FaceService;
 import com.face.utils.JwtUtils;
 import com.face.utils.TimeUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Random;
 
 @Service
 public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
@@ -168,6 +169,52 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         return faceResult;
     }
 
+    @Override
+    public FaceResult apiKey(Integer fid){
+        FaceResult faceResult = new FaceResult();
+        Face face = lambdaQuery().eq(Face::getFid, fid).one();
+        if (face.getApiKey() == null || face.getApiKey().isEmpty()) {
+            String generatedKey = getString();
+            // 这里可以将生成的密钥设置给 face 对象的 apiKey 属性
+            face.setApiKey(generatedKey);
+            updateById(face);
+            faceResult.setMsg("apiKey创建成功");
+            faceResult.setCode(200);
+            faceResult.setApiKey(generatedKey);
+        } else {
+
+            faceResult.setApiKey(face.getApiKey());
+            faceResult.setMsg("apiKey查询成功");
+            faceResult.setCode(200);
+        }
+
+           return faceResult;
+
+    }
+//随机生成密钥算法
+    private static @NotNull String getString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("sk-");
+
+        Random random = new Random();
+        for (int i = 0; i < 18; i++) {
+            int type = random.nextInt(3); // 0 for digit, 1 for uppercase letter, 2 for lowercase letter
+
+            switch (type) {
+                case 0:
+                    sb.append(random.nextInt(10)); // digit
+                    break;
+                case 1:
+                    sb.append((char) (random.nextInt(26) + 'A')); // uppercase letter
+                    break;
+                case 2:
+                    sb.append((char) (random.nextInt(26) + 'a')); // lowercase letter
+                    break;
+            }
+        }
+
+        return sb.toString();
+    }
 
 }
 

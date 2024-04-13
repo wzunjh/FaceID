@@ -15,12 +15,13 @@
             <result property="idNo" column="id_no" jdbcType="VARCHAR"/>
             <result property="id2Status" column="id2_status" jdbcType="VARCHAR"/>
             <result property="city" column="city" jdbcType="VARCHAR"/>
+            <result property="apiKey" column="api_key" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         fid,face_base,create_time,
         vef_num,face_name,remark,
         face_status,id_no,id2_status,
-        city
+        city,api_key
     </sql>
 </mapper>

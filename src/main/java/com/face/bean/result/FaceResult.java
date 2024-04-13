@@ -37,6 +37,10 @@ public class FaceResult {
      */
     private String city;
 
+    /**
+     * 身份证所在城市地区
+     */
+    private String apiKey;
 
     /**
      * 返回token

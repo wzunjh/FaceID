@@ -64,6 +64,12 @@ public class Face implements Serializable {
      */
     private String city;
 
+    /**
+     * apikey
+     */
+    private String apiKey;
+
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

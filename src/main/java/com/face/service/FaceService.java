@@ -23,4 +23,7 @@ public interface FaceService extends IService<Face> {
     //查寻指定fid人物信息
     FaceResult authUser(Integer fid);
 
+    //查询并新建ApiKey
+    FaceResult apiKey(Integer fid);
+
 }

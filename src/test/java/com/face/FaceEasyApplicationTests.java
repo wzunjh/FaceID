@@ -1,5 +1,6 @@
 package com.face;
 
+import com.face.bean.Face;
 import com.face.server.IdAuthenticationServer;
 import com.face.service.FaceService;
 import org.junit.jupiter.api.Test;
@@ -7,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.face.bean.result.FaceResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 @SpringBootTest
 class FaceEasyApplicationTests {
@@ -54,5 +56,15 @@ class FaceEasyApplicationTests {
         System.out.println("Code: " + result.getCode());
         System.out.println("Msg: " + result.getMsg());
     }
+
+    @Test
+    public void testApi(){
+
+        FaceResult faceResult = faceService.apiKey(1);
+
+        System.out.println("apiKey: " + faceResult.getApiKey());
+        System.out.println("Msg: " + faceResult.getMsg());
+    }
+
 
 }
