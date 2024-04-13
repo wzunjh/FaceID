@@ -229,7 +229,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         sb.append("sk-");
 
         Random random = new Random();
-        for (int i = 0; i < 18; i++) {
+        for (int i = 1; i < 36; i++) {
             int type = random.nextInt(3); // 0 for digit, 1 for uppercase letter, 2 for lowercase letter
 
             switch (type) {
