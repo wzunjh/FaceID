@@ -202,7 +202,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             // 这里可以将生成的密钥设置给 face 对象的 apiKey 属性
             face.setApiKey(generatedKey);
             updateById(face);
-            faceResult.setMsg("apiKey 创建成功");
+            faceResult.setMsg("API Key 创建成功");
             faceResult.setCode(200);
             faceResult.setApiKey(generatedKey);
         } else {
@@ -211,7 +211,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             // 这里可以将生成的密钥设置给 face 对象的 apiKey 属性
             face.setApiKey(generatedKey);
             updateById(face);
-            faceResult.setMsg("apiKey 更新成功");
+            faceResult.setMsg("API Key 更新成功");
             faceResult.setCode(200);
             faceResult.setApiKey(generatedKey);
         }
