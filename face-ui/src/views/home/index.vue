@@ -31,12 +31,12 @@
 
             <router-link class="router-link-active" to="/faceList">
               <el-menu-item index="1-1">
-                人脸信息列表
+                人脸库信息
               </el-menu-item>
             </router-link>
             <router-link class="router-link-active" to="/faceLog">
               <el-menu-item index="1-2">
-                日志信息列表
+                识别登录日志
               </el-menu-item>
             </router-link>
             <router-link class="router-link-active" to="/auth">
