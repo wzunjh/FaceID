@@ -1,12 +1,17 @@
 <template>
   <div>
     <el-card header="API信息中心">
+      <!-- 将接口请求地址信息放入API信息中心，并用圆角边框包围 -->
+      <el-descriptions title="接口请求地址" border>
+        <el-descriptions-item label="URL">{{ apiBaseUrl }}</el-descriptions-item>
+      </el-descriptions>
+
       <div v-if="apiKey">
-        <el-alert
-            :title="'当前ApiKey: ' + apiKey"
+        <p>当前ApiKey:</p>
+        <el-tag
             type="success"
-            show-icon>
-        </el-alert>
+            show-icon>{{ apiKey }}
+        </el-tag>
       </div>
       <div v-else>
         <el-alert
@@ -15,11 +20,19 @@
             show-icon>
         </el-alert>
       </div>
-      <el-button type="primary" @click="updateApiKey">新建/更新ApiKey</el-button>
-      <el-descriptions title="接口请求地址">
-        <el-descriptions-item label="URL">{{ apiBaseUrl }}</el-descriptions-item>
-      </el-descriptions>
+
+      <!-- 使用el-popconfirm组件确认操作 -->
+      <el-popconfirm
+          title="Are you sure you want to update the API key?"
+          confirm-button-text="Yes, update it"
+          cancel-button-text="Cancel"
+          @confirm="updateApiKey">
+        <template #reference>
+          <el-button type="primary">新建/更新ApiKey</el-button>
+        </template>
+      </el-popconfirm>
     </el-card>
+
     <!-- 弹窗显示msg信息 -->
     <el-dialog
         :visible.sync="dialogVisible"
@@ -50,9 +63,12 @@ export default {
       this.$http.get(`/face/apiKey/${fid}`).then(response => {
         if (response.data.code === 200) {
           this.apiKey = response.data.apiKey;
-          if (response.data.msg) {  // 仅当存在msg时显示弹窗
+          if (response.data.msg) {
             this.msg = response.data.msg;
             this.dialogVisible = true;
+            setTimeout(() => {
+              this.dialogVisible = false;
+            }, 700);
           }
         } else {
           this.apiKey = null;
@@ -67,9 +83,12 @@ export default {
       this.$http.get(`/face/updateApiKey/${fid}`).then(response => {
         if (response.data.code === 200) {
           this.apiKey = response.data.apiKey;
-          if (response.data.msg) {  // 仅当存在msg时显示弹窗
+          if (response.data.msg) {
             this.msg = response.data.msg;
             this.dialogVisible = true;
+            setTimeout(() => {
+              this.dialogVisible = false;
+            }, 1000);
           }
         }
       }).catch(error => {
@@ -82,6 +101,9 @@ export default {
 
 <style scoped>
 .el-alert {
+  margin-bottom: 20px;
+}
+.el-descriptions {
   margin-bottom: 20px;
 }
 </style>

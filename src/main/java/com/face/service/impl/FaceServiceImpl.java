@@ -182,7 +182,6 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         }
         else {
             faceResult.setApiKey(face.getApiKey());
-            faceResult.setMsg("apiKey 查询成功");
             faceResult.setCode(200);
         }
 
