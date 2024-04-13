@@ -7,7 +7,13 @@
 
       <div class="api-key-container">
         <el-descriptions title="API Key" border v-if="apiKey">
-          <el-descriptions-item label="当前Key">{{ apiKey }}</el-descriptions-item>
+          <el-descriptions-item label="当前Key">
+            {{ apiKey }}
+            <el-button
+                icon="el-icon-copy-document"
+                type="text"
+                @click="copyApiKey">复制</el-button>
+          </el-descriptions-item>
         </el-descriptions>
         <el-alert
             title="您没有可用的ApiKey"
@@ -15,12 +21,6 @@
             show-icon
             v-else>
         </el-alert>
-
-        <el-button
-            icon="el-icon-copy-document"
-            type="text"
-            v-if="apiKey"
-            @click="copyApiKey">复制</el-button>
 
         <el-popconfirm
             title="Are you sure you want to update the API key?"
@@ -120,6 +120,6 @@ export default {
 .api-key-container {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* This can be adjusted to flex-start, flex-end, or others as needed */
+  justify-content: space-between;
 }
 </style>
