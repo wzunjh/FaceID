@@ -69,6 +69,18 @@ public class Face implements Serializable {
      */
     private String apiKey;
 
+    /**
+     * 接口调用次数
+     */
+    private Integer apiNum;
+
+    /**
+     * 接口调用时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date apiTime;
+
+
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

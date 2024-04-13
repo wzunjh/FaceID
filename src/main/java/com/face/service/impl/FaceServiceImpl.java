@@ -201,6 +201,8 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             String generatedKey = getString();
             // 这里可以将生成的密钥设置给 face 对象的 apiKey 属性
             face.setApiKey(generatedKey);
+            face.setApiNum(0);
+            face.setApiTime(new Date());
             updateById(face);
             faceResult.setMsg("API Key 创建成功");
             faceResult.setCode(200);
