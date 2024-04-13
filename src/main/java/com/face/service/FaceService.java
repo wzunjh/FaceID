@@ -29,4 +29,7 @@ public interface FaceService extends IService<Face> {
     //更新ApiKey
     FaceResult updateApiKey(Integer fid);
 
+    //人脸识别用户API
+    FaceResult faceApi(String imageBase1, String imageBase2);
+
 }
