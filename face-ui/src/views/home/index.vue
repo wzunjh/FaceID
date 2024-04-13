@@ -49,6 +49,11 @@
                 API 信息中心
               </el-menu-item>
             </router-link>
+            <router-link class="router-link-active" to="/faceApi">
+              <el-menu-item index="1-5">
+                API在线识别
+              </el-menu-item>
+            </router-link>
           </el-submenu>
         </el-menu>
       </el-aside>

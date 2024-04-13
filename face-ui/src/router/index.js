@@ -40,6 +40,11 @@ const routes = [
         path: '/apikey',
         name: 'apikey',
         component: () => import('@/components/apiKey/index.vue')
+      },
+      {
+        path: '/faceApi',
+        name: 'faceApi',
+        component: () => import('@/components/faceApi/index.vue')
       }
     ]
   }
