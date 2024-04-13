@@ -7,13 +7,15 @@
 
       <div class="api-key-container">
         <el-descriptions title="API Key" border v-if="apiKey">
-          <el-descriptions-item label="当前Key">
+          <el-descriptions-item label="当前Key" class="key-item">
             {{ apiKey }}
             <el-button
                 icon="el-icon-copy-document"
                 type="text"
                 @click="copyApiKey">复制</el-button>
           </el-descriptions-item>
+          <el-descriptions-item label="累计使用次数" class="num-item">{{ apiNum }}</el-descriptions-item>
+          <el-descriptions-item label="最新使用时间" class="time-item">{{ apiTime }}</el-descriptions-item>
         </el-descriptions>
         <el-alert
             title="您没有可用的ApiKey"
@@ -49,6 +51,8 @@ export default {
   data() {
     return {
       apiKey: null,
+      apiNum: 0,
+      apiTime: '',
       apiBaseUrl: 'http://localhost:8868/api',
       msg: '',
       dialogVisible: false
@@ -63,6 +67,8 @@ export default {
       this.$http.get(`/face/apiKey/${fid}`).then(response => {
         if (response.data.code === 200) {
           this.apiKey = response.data.apiKey;
+          this.apiNum = response.data.apiNum;
+          this.apiTime = response.data.apiTime;
           if (response.data.msg) {
             this.msg = response.data.msg;
             this.dialogVisible = true;
@@ -72,10 +78,14 @@ export default {
           }
         } else {
           this.apiKey = null;
+          this.apiNum = 0;
+          this.apiTime = '';
         }
       }).catch(error => {
         console.error('Error fetching API key:', error);
         this.apiKey = null;
+        this.apiNum = 0;
+        this.apiTime = '';
       });
     },
     updateApiKey() {
@@ -83,6 +93,8 @@ export default {
       this.$http.get(`/face/updateApiKey/${fid}`).then(response => {
         if (response.data.code === 200) {
           this.apiKey = response.data.apiKey;
+          this.apiNum = response.data.apiNum;
+          this.apiTime = response.data.apiTime;
           if (response.data.msg) {
             this.msg = response.data.msg;
             this.dialogVisible = true;
@@ -121,5 +133,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+.key-item {
+  flex: 1 1 30%;
+}
+.num-item {
+  flex: 1 1 35%;
+}
+.time-item {
+  flex: 1 1 35%;
 }
 </style>

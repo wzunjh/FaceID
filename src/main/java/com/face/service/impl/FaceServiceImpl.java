@@ -182,6 +182,8 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         }
         else {
             faceResult.setApiKey(face.getApiKey());
+            faceResult.setApiNum(face.getApiNum());
+            faceResult.setApiTime(face.getApiTime());
             faceResult.setCode(200);
         }
 
@@ -207,6 +209,8 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             faceResult.setMsg("API Key 创建成功");
             faceResult.setCode(200);
             faceResult.setApiKey(generatedKey);
+            faceResult.setApiNum(face.getApiNum());
+            faceResult.setApiTime(face.getApiTime());
         } else {
 
             String generatedKey = getString();
@@ -214,6 +218,8 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             face.setApiKey(generatedKey);
             updateById(face);
             faceResult.setMsg("API Key 更新成功");
+            faceResult.setApiNum(face.getApiNum());
+            faceResult.setApiTime(face.getApiTime());
             faceResult.setCode(200);
             faceResult.setApiKey(generatedKey);
         }

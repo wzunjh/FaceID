@@ -1,6 +1,9 @@
 package com.face.bean.result;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+
+import java.util.Date;
 
 
 @Data
@@ -51,6 +54,17 @@ public class FaceResult {
      * 数据集
      */
     private Object data;
+
+    /**
+     * 接口调用次数
+     */
+    private int apiNum;
+
+    /**
+     * 接口调用最新时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date apiTime;
 
     /**
      * 相似度
