@@ -115,7 +115,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         } else if (face.getFaceName() == null || face.getFaceName().isEmpty()) {
             faceResult.setCode(400); // 用户姓名为空
             faceResult.setMsg("用户姓名为空,请重新输入");
-        } else if (face.getId2Status().equals("1")) {
+        } else if (face.getId2Status() !=null && face.getId2Status().equals("1")) {
             faceResult.setCode(202); // 已认证成功
             faceResult.setMsg("该用户已认证成功");
         } else if (idNo.length() != 18) {
