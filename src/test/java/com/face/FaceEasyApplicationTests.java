@@ -59,7 +59,7 @@ class FaceEasyApplicationTests {
     public void testApi(){
 
         FaceResult faceResult = faceService.apiKey(1);
-
+        System.out.println(faceResult.getApiTime());
         System.out.println("apiKey: " + faceResult.getApiKey());
         System.out.println("Msg: " + faceResult.getMsg());
     }
