@@ -342,10 +342,10 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
     //随机生成密钥算法
     private static @NotNull String getString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("sk-");
+        sb.append("Auth-");
 
         Random random = new Random();
-        for (int i = 1; i < 36; i++) {
+        for (int i = 0; i < 50; i++) {
             int type = random.nextInt(3); // 0 for digit, 1 for uppercase letter, 2 for lowercase letter
 
             switch (type) {
