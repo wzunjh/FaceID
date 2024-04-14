@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     checkPhoneBinding() {
-      this.$http.get(`/face/SmsVef/${this.phoneAuthForm.fid}`).then(response => {
+      this.$http.get(`/face/SmsC/${this.phoneAuthForm.fid}`).then(response => {
         if (response.data.code === 200) {
           this.phoneBound = true;
           this.phoneData.phone = response.data.phone;

@@ -38,5 +38,8 @@ public interface FaceService extends IService<Face> {
     // 短信核验并绑定
     FaceResult  phoneVef(Integer fid,String phone,String code);
 
+    // 查询手机绑定信息
+    FaceResult  SmsC(Integer fid);
+
 
 }

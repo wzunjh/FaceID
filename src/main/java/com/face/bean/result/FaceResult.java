@@ -51,6 +51,11 @@ public class FaceResult {
     private String token;
 
     /**
+     * 返回手机号
+     */
+    private String phone;
+
+    /**
      * 数据集
      */
     private Object data;

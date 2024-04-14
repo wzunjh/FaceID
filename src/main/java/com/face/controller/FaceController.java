@@ -135,4 +135,10 @@ public class FaceController {
         return faceService.phoneVef(fid, phone, code);
     }
 
+    @GetMapping("/SmsC/{fid}")
+    @ApiOperation(value = "查询绑定信息",notes = "根据id进行查询")
+    public FaceResult SmsC(@PathVariable Integer fid){
+        return faceService.SmsC(fid);
+    }
+
 }

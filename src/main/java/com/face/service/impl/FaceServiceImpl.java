@@ -318,6 +318,25 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
     }
 
 
+    @Override
+    public FaceResult SmsC(Integer fid){
+        FaceResult faceResult = new FaceResult();
+        Face face = lambdaQuery().eq(Face::getFid, fid).one();
+        if (face.getPhone() == null || face.getPhone().isEmpty()){
+            faceResult.setCode(208);
+            faceResult.setMsg("未绑定手机号");
+        }else {
+            faceResult.setPhone(face.getPhone());
+            faceResult.setFid(String.valueOf(fid));
+            faceResult.setCode(200);
+            faceResult.setMsg("绑定成功");
+        }
+
+        return faceResult;
+
+    }
+
+
 
 
     //随机生成密钥算法
