@@ -1,5 +1,8 @@
 <template>
   <div class="face-verification">
+    <!-- Page Title -->
+    <h1 class="page-title">API在线识别</h1>
+
     <el-upload
         class="upload-demo"
         :action="fakeUploadUrl"
@@ -13,17 +16,23 @@
       <i class="el-icon-plus"></i>
     </el-upload>
     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb,最多上传两张</div>
+
     <el-steps :active="stepActive" finish-status="success" simple style="margin-top: 20px">
       <el-step title="上传图片"></el-step>
       <el-step title="正在识别"></el-step>
       <el-step title="识别结果"></el-step>
     </el-steps>
-    <div class="buttons">
+
+    <!-- Button centered below steps -->
+    <div class="button-container">
       <el-button @click="submitImages" :disabled="submitting" type="primary" round>开始识别</el-button>
     </div>
+
+    <!-- Message enlarged and centered below button -->
     <div class="message-area">
-      <el-tag v-if="message" :type="messageType">{{ message }}</el-tag>
+      <el-tag v-if="message" :type="messageType" class="message-content">{{ message }}</el-tag>
     </div>
+
     <div class="upload-instructions">
       <p>当上传为一张图片时，接口会与人脸库数据对比（仅在线识别支持）。两张图片，则对比这两张。</p>
     </div>
@@ -123,6 +132,24 @@ export default {
 };
 </script>
 
-<style>
-/* Add necessary styles */
+<style scoped>
+/* Additional styles for layout */
+.page-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.message-area {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.message-content {
+  font-size: 18px;
+}
 </style>
