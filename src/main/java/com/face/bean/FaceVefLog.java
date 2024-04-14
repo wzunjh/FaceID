@@ -22,7 +22,7 @@ public class FaceVefLog implements Serializable {
     /**
      * 验证时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     private Date vefTime;
 
     /**
