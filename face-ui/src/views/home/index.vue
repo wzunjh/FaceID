@@ -31,7 +31,7 @@
 
             <router-link class="router-link-active" to="/faceList">
               <el-menu-item index="1-1">
-                人脸库信息
+                人脸信息库
               </el-menu-item>
             </router-link>
             <router-link class="router-link-active" to="/faceLog">
@@ -46,7 +46,7 @@
             </router-link>
             <router-link class="router-link-active" to="/apikey">
               <el-menu-item index="1-4">
-                API 信息中心
+                Auth令牌信息
               </el-menu-item>
             </router-link>
             <router-link class="router-link-active" to="/faceApi">
