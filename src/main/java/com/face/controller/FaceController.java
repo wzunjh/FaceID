@@ -121,4 +121,18 @@ public class FaceController {
         return faceService.faceApi(imageBase1, imageBase2);
     }
 
+    @GetMapping("/Sms")
+    @ApiOperation(value = "手机短信验证", notes = "根据手机号码进行认证")
+    public FaceResult phoneSms( @RequestParam String phone) {
+        // 调用接口实现身份验证逻辑
+        return faceService.phoneSms(phone);
+    }
+
+    @GetMapping("/SmsVef")
+    @ApiOperation(value = "手机核验绑定", notes = "根据验证码进行认证")
+    public FaceResult phoneVef(@RequestParam Integer fid, @RequestParam String phone,@RequestParam String code) {
+        // 调用接口实现身份验证逻辑
+        return faceService.phoneVef(fid, phone, code);
+    }
+
 }

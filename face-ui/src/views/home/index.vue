@@ -39,18 +39,23 @@
                 识别登录日志
               </el-menu-item>
             </router-link>
-            <router-link class="router-link-active" to="/auth">
+            <router-link class="router-link-active" to="/phone">
               <el-menu-item index="1-3">
+                手机号核验绑定
+              </el-menu-item>
+            </router-link>
+            <router-link class="router-link-active" to="/auth">
+              <el-menu-item index="1-4">
                 身份证号码核验
               </el-menu-item>
             </router-link>
             <router-link class="router-link-active" to="/apikey">
-              <el-menu-item index="1-4">
+              <el-menu-item index="1-5">
                 Auth令牌信息
               </el-menu-item>
             </router-link>
             <router-link class="router-link-active" to="/faceApi">
-              <el-menu-item index="1-5">
+              <el-menu-item index="1-6">
                 API在线识别
               </el-menu-item>
             </router-link>

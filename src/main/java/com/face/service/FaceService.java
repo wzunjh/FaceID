@@ -32,4 +32,11 @@ public interface FaceService extends IService<Face> {
     //人脸识别用户API
     FaceResult faceApi(String imageBase1, String imageBase2);
 
+    // 手机号请求验证码
+    FaceResult phoneSms(String phone);
+
+    // 短信核验并绑定
+    FaceResult  phoneVef(Integer fid,String phone,String code);
+
+
 }

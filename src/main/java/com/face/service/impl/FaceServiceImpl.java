@@ -1,5 +1,6 @@
 package com.face.service.impl;
 
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.face.bean.Face;
@@ -9,16 +10,17 @@ import com.face.server.FaceContrastServer;
 import com.face.server.IdAuthenticationServer;
 import com.face.service.FaceService;
 import com.face.utils.JwtUtils;
+import com.face.utils.RegexUtils;
 import com.face.utils.SmsUtils;
 import com.face.utils.TimeUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+
+import javax.annotation.Resource;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
@@ -29,6 +31,9 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
 
     @Autowired
     private IdAuthenticationServer idAuthenticationServer;
+
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
 
     @Override
     public FaceResult vef(String imageBase) {
@@ -260,6 +265,57 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             }
             return faceResult;
         }
+
+
+    @Override
+    public FaceResult phoneSms(String phone){
+        FaceResult faceResult = new FaceResult();
+
+        //校验手机号
+        if (RegexUtils.isPhoneInvalid(phone)) {
+            faceResult.setCode(400);
+            faceResult.setMsg("手机号码格式错误");
+        }
+
+        String code = RandomUtil.randomNumbers(6);  //六位随机验证码
+
+        stringRedisTemplate.opsForValue().set(phone,code,5L, TimeUnit.MINUTES);  //将验证码存入redis，5分钟有效
+        SmsUtils.sendSms(phone,code);   //发送验证码
+        System.out.println(code);
+        faceResult.setMsg("短信发送成功");
+        faceResult.setCode(200);
+        return faceResult;
+
+    }
+
+    @Override
+    public FaceResult phoneVef(Integer fid,String phone,String code){
+        FaceResult faceResult = new FaceResult();
+        Face face = lambdaQuery().eq(Face::getFid, fid).one();
+        String codeVef = stringRedisTemplate.opsForValue().get(phone);  //从redis中取出验证码
+
+        //校验手机号
+        if (RegexUtils.isPhoneInvalid(phone)) {
+            faceResult.setCode(400);
+            faceResult.setMsg("手机号码格式错误");
+            return faceResult;
+        } else if (code==null){
+            faceResult.setCode(400);
+            faceResult.setMsg("请先获取验证码");
+            return faceResult;
+        } else if (Objects.equals(code, codeVef)){
+            face.setPhone(phone);
+            updateById(face);
+            stringRedisTemplate.delete(phone);
+            faceResult.setCode(200);
+            faceResult.setMsg("手机号绑定成功");
+            return faceResult;
+        }
+        faceResult.setMsg("验证码错误");
+        faceResult.setCode(208);
+        return faceResult;
+
+    }
 
 
 

@@ -45,6 +45,11 @@ const routes = [
         path: '/faceApi',
         name: 'faceApi',
         component: () => import('@/components/faceApi/index.vue')
+      },
+      {
+        path: '/phone',
+        name: 'phone',
+        component: () => import('@/components/phoneVef/index.vue')
       }
     ]
   }
