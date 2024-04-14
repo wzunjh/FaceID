@@ -235,10 +235,10 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             if (faceResult.getCode() == FaceResult.SUCCESS_CODE) {
                 if (faceResult.getScore() > FaceResult.SATISFY_SCORE) {
                     // 相似度大于70%，认为是同一个人
-                    faceResult.setMsg("两张人脸匹配成功，相似度为：" + faceResult.getScore());
+                    faceResult.setMsg("两张人脸匹配成功,相似度为:" + faceResult.getScore());
                 } else {
                     // 相似度小于70%，认为不是同一个人
-                    faceResult.setMsg("两张人脸匹配失败，相似度为：" + faceResult.getScore());
+                    faceResult.setMsg("两张人脸匹配失败,相似度为:" + faceResult.getScore());
                 }
             }
             return faceResult;
