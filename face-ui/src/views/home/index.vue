@@ -26,7 +26,7 @@
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-user" style="color: #008390"></i>
-              <span slot="title">身份认证</span>
+              <span slot="title">Auth身份鉴权中心</span>
             </template>
 
             <router-link class="router-link-active" to="/faceList">
