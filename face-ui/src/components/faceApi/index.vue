@@ -20,7 +20,7 @@
     </el-upload>
 
     <!-- Tip below the upload box -->
-    <div class="upload-tip">只能上传jpg/png文件，且不超过500kb,最多上传两张</div>
+    <div class="upload-tip">请上传jpg/png文件,单张图片不超过500kb,最多上传两张</div>
 
     <!-- Steps Progress -->
     <el-steps :active="stepActive" finish-status="success" simple style="margin-top: 20px">
@@ -42,9 +42,10 @@
     <!-- Interface Usage Instructions -->
     <div class="interface-instructions">
       <h2>接口使用说明</h2>
-      <p>1.当上传为一张图片时，系统将该图片与存储在人脸库中的数据进行比对，以验证身份（该功能仅在在线识别模式下支持）</p>
-      <p>2.当上传为两张图片时，系统则通过API比较两者特征并计算出相似度以确定是否为同一人</p>
-      <p>3.当请求完成以后,请务必清空图片上传处的所有图片再进行下一轮的请求,以免导致接口异常</p>
+      <p>1.当上传为一张图片时，系统将该图片与存储在人脸库中的数据进行比对，以验证身份(为了确保数据安全,此功能仅支持在线识别模式使用)</p>
+      <p>2.当上传为两张图片时，系统则通过API比较两者特征并计算出相似度以确定是否为同一人(支持使用ApiKey进行接口远程调用)</p>
+      <p>3.当请求完成以后,请务必清空图片上传处的所有图片再进行下一轮的请求,以免导致接口请求数据异常</p>
+      <p>4.用户登录并使用API在线识别功能,不会记录当前用户ApiKey的使用次数和最新使用时间</p>
     </div>
   </div>
 </template>
