@@ -14,16 +14,10 @@ import org.springframework.beans.factory.annotation.Value;
  * Utility class for sending SMS using Aliyun (Alibaba Cloud SMS Service).
  */
 public class SmsUtils {
-    @Value("${aliyun.service.id}")
-    private static String AliyunSecretId;
-
-    @Value("${aliyun.service.key}")
-    private static String AliyunSecretKey;
-
 
 
     private static IAcsClient initializeClient() {
-        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", AliyunSecretId, AliyunSecretKey);
+        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI5tBAxmhWHCJhkjjqtyMx", "KusWsHR9kvuRfZ2Jhr2XI5wKTuRWXq");
         return new DefaultAcsClient(profile);
     }
 
@@ -58,7 +52,7 @@ public class SmsUtils {
 
     public static void ApiKey(String phone) {
         IAcsClient client = initializeClient();
-        SendSmsRequest request = createSmsRequest(phone, "SMS_465580443", null);
+        SendSmsRequest request = createSmsRequest(phone, "SMS_465635350", null);
         printSmsResponse(request, client);
     }
 
