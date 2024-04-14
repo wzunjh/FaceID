@@ -6,8 +6,8 @@
       </el-descriptions>
 
       <div class="api-key-container">
-        <el-descriptions title="API Key" border v-if="apiKey">
-          <el-descriptions-item label="当前Key" class="key-item">
+        <el-descriptions title="API Key/Auth 令牌" border v-if="apiKey">
+          <el-descriptions-item label="当前为" class="key-item">
             {{ apiKey }}
             <el-button
                 icon="el-icon-copy-document"
