@@ -10,7 +10,7 @@ python:
 idenauth:
   service:
     url: https://idenauthen.market.alicloudapi.com/idenAuthentication
-    appcode: 03f04ace87a44e548cfab16f04a9743c
+    appcode:
 
 
 spring:
@@ -19,6 +19,14 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    jedis:
+      pool:
+        min-idle: 10
+        max-idle: 20
+        max-active: 50
 
 mybatis-plus:
   configuration:
