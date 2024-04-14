@@ -12,7 +12,7 @@
         multiple>
       <i class="el-icon-plus"></i>
     </el-upload>
-    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb,最多上传两张</div>
     <el-steps :active="stepActive" finish-status="success" simple style="margin-top: 20px">
       <el-step title="上传图片"></el-step>
       <el-step title="正在识别"></el-step>
