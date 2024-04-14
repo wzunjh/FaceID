@@ -137,6 +137,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
                 face.setId2Status("1");
                 face.setCity(faceResult.getCity());
                 updateById(face);
+                SmsUtils.id2Auth(face.getPhone());
                 faceResult.setCode(200); // 认证成功
                 faceResult.setMsg("认证成功");
             } else {
@@ -230,8 +231,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             // 这里可以将生成的密钥设置给 face 对象的 apiKey 属性
             face.setApiKey(generatedKey);
             face.setApiTime(new Date());
-            String phone = face.getPhone();
-            SmsUtils.ApiKey(phone);
+            SmsUtils.ApiKey(face.getPhone());
             updateById(face);
             Face faceNew = lambdaQuery().eq(Face::getFid, fid).one();
             faceResult.setMsg("API Key 更新成功");
