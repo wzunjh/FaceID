@@ -3,6 +3,9 @@
     <!-- Page Title -->
     <h1 class="page-title">API在线识别</h1>
 
+    <!-- Divider line -->
+    <hr class="divider">
+
     <el-upload
         class="upload-demo"
         :action="fakeUploadUrl"
@@ -33,8 +36,9 @@
       <el-tag v-if="message" :type="messageType" class="message-content">{{ message }}</el-tag>
     </div>
 
+    <!-- Revised Upload Instructions -->
     <div class="upload-instructions">
-      <p>当上传为一张图片时，接口会与人脸库数据对比（仅在线识别支持）。两张图片，则对比这两张。</p>
+      <p>接口使用说明: 当上传单张图片时，系统将该图片与存储在人脸库中的数据进行比对，以验证身份(该功能仅在在线识别模式下支持)。若上传两张图片，系统则比较两者以确定是否为同一人。</p>
     </div>
   </div>
 </template>
@@ -151,5 +155,14 @@ export default {
 
 .message-content {
   font-size: 18px;
+}
+
+.upload-instructions {
+  margin-top: 20px;
+}
+
+.divider {
+  border-top: 1px solid #ccc;
+  margin: 20px 0;
 }
 </style>
