@@ -9,16 +9,19 @@
           <el-input v-model="phoneAuthForm.code" clearable></el-input>
         </el-form-item>
         <el-form-item>
+          <el-button @click="sendCode" :disabled="countdown > 0">发送验证码{{countdown ? `(${countdown}s)` : ''}}</el-button>
           <el-button type="primary" @click="submitPhoneForm('phoneForm')">提交核验</el-button>
-          <el-button @click="sendCode">发送验证码</el-button>
         </el-form-item>
       </el-form>
     </el-card>
     <div v-else class="success-message">
       <el-alert title="手机号绑定成功" type="success" center show-icon />
-      <el-descriptions title="您的核验信息">
+      <el-descriptions title="您的绑定信息">
         <el-descriptions-item label="用户ID">{{ phoneData.fid }}</el-descriptions-item>
         <el-descriptions-item label="绑定手机号码">{{ phoneData.phone }}</el-descriptions-item>
+        <el-descriptions-item label="绑定状态">
+          <el-tag size="small">已绑定</el-tag>
+        </el-descriptions-item>
       </el-descriptions>
     </div>
   </div>
@@ -34,7 +37,8 @@ export default {
         fid: ''
       },
       phoneBound: false,
-      phoneData: { fid: '', phone: '' }
+      phoneData: { fid: '', phone: '' },
+      countdown: 0
     };
   },
   mounted() {
@@ -47,12 +51,20 @@ export default {
         if (response.data.code === 200) {
           this.phoneBound = true;
           this.phoneData.phone = response.data.phone;
+          this.phoneData.fid = response.data.fid;
         }
       }).catch(error => {
         console.error('Error checking phone binding:', error);
       });
     },
     sendCode() {
+      if (this.countdown > 0) return;
+      this.countdown = 60;
+      let interval = setInterval(() => {
+        this.countdown--;
+        if (this.countdown === 0) clearInterval(interval);
+      }, 1000);
+
       this.$http.get('/face/Sms', { params: { phone: this.phoneAuthForm.phone } })
           .then(response => {
             alert(response.data.msg);

@@ -31,7 +31,7 @@
 
     <!-- Button centered below steps -->
     <div class="button-container">
-      <el-button @click="submitImages" :disabled="submitting" type="primary" round>开始识别</el-button>
+      <el-button @click="submitImages" :disabled="submitting || !authenticated" type="primary" round>开始识别</el-button>
     </div>
 
     <!-- Message enlarged and centered below button -->
@@ -61,10 +61,35 @@ export default {
       messageType: 'success',
       submitting: false,
       stepActive: 0,
+      authenticated: false,
       fakeUploadUrl: 'https://jsonplaceholder.typicode.com/posts/' // Placeholder to satisfy <el-upload>
     };
   },
+  mounted() {
+    this.authForm = { fid: localStorage.getItem('user_id') };
+    this.checkAuthentication();
+  },
   methods: {
+    checkAuthentication() {
+      this.$http.get(`/face/orAuth/${this.authForm.fid}`).then(response => {
+        if (response.data.code === 200) {
+          this.authenticated = true;
+          this.fetchAuthInfo();
+        } else {
+          this.authenticated = false;
+          this.message = 'Authentication failed. Please try again later.';
+          this.messageType = 'error';
+        }
+      }).catch(error => {
+        console.error('未查询到认证信息:', error);
+        this.authenticated = false;
+        this.message = '未查询到认证信息: ' + error.message;
+        this.messageType = 'error';
+      });
+    },
+    fetchAuthInfo() {
+      // Fetch additional authentication information if needed
+    },
     beforeUpload(file) {
       const isJPGorPNG = (file.type === 'image/jpeg' || file.type === 'image/png');
       const isLt500KB = file.size / 1024 / 1024 < 0.5;
