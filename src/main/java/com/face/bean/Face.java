@@ -80,6 +80,11 @@ public class Face implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date apiTime;
 
+    /**
+     * phone
+     */
+    private String phone;
+
 
 
     @TableField(exist = false)
