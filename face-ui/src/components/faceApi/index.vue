@@ -145,7 +145,7 @@ export default {
 <style scoped>
 /* Additional styles for layout */
 .page-title {
-  font-size: 24px;
+  font-size: 18px;
   margin-bottom: 20px;
 }
 

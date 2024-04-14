@@ -10,7 +10,7 @@ python:
 idenauth:
   service:
     url: https://idenauthen.market.alicloudapi.com/idenAuthentication
-    appcode: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    appcode: 03f04ace87a44e548cfab16f04a9743c
 
 
 spring:
