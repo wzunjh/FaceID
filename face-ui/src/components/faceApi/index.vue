@@ -167,6 +167,12 @@ export default {
   margin-top: 10px;
 }
 
+.upload-demo {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
 .interface-instructions {
   margin-top: 40px;
   padding: 20px;
