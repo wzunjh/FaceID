@@ -13,11 +13,16 @@
       <i class="el-icon-plus"></i>
     </el-upload>
     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+    <el-steps :active="stepActive" finish-status="success" simple style="margin-top: 20px">
+      <el-step title="上传图片"></el-step>
+      <el-step title="正在识别"></el-step>
+      <el-step title="识别结果"></el-step>
+    </el-steps>
     <div class="buttons">
-      <button @click="submitImages" :disabled="submitting">开始识别</button>
+      <el-button @click="submitImages" :disabled="submitting" type="primary" round>开始识别</el-button>
     </div>
     <div class="message-area">
-      <p v-if="message">{{ message }}</p>
+      <el-tag v-if="message" :type="messageType">{{ message }}</el-tag>
     </div>
     <div class="upload-instructions">
       <p>当上传为一张图片时，接口会与人脸库数据对比（仅在线识别支持）。两张图片，则对比这两张。</p>
@@ -33,7 +38,9 @@ export default {
       imageBase1: '',
       imageBase2: '',
       message: '',
+      messageType: 'success',
       submitting: false,
+      stepActive: 0,
       fakeUploadUrl: 'https://jsonplaceholder.typicode.com/posts/' // Placeholder to satisfy <el-upload>
     };
   },
@@ -44,14 +51,18 @@ export default {
 
       if (!isJPGorPNG) {
         this.message = 'Only JPG/PNG files are allowed!';
+        this.messageType = 'error';
       }
       if (!isLt500KB) {
         this.message = 'File size cannot exceed 500KB!';
+        this.messageType = 'error';
+      }
+      if (isJPGorPNG && isLt500KB) {
+        this.stepActive = 1;
       }
       return isJPGorPNG && isLt500KB;
     },
     handleUpload(file) {
-      // We handle the upload manually to integrate with existing logic
       const reader = new FileReader();
       reader.onload = (e) => {
         if (this.imageBase1 === '') {
@@ -69,9 +80,11 @@ export default {
     },
     submitImages() {
       if (!this.imageBase1) {
-        this.message = "ImageBase1 is required";
+        this.message = "第一张图片不能为空";
+        this.messageType = 'error';
         return;
       }
+      this.stepActive = 2;
       this.submitting = true;
 
       if (this.imageBase2) {
@@ -85,9 +98,7 @@ export default {
           }
         }).then(response => {
           this.message = response.data.msg;
-          if (response.data.code === 200) {
-            // Additional success actions
-          }
+          this.stepActive = 3;
         }).catch(error => {
           this.message = "Error submitting images: " + error.response.data.msg;
         }).finally(() => {
@@ -100,9 +111,7 @@ export default {
           }
         }).then(response => {
           this.message = response.data.msg;
-          if (response.data.code === 200) {
-            // Additional success actions
-          }
+          this.stepActive = 3;
         }).catch(error => {
           this.message = "Error submitting image: " + error.response.data.msg;
         }).finally(() => {
