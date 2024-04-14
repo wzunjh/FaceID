@@ -41,7 +41,7 @@
             </router-link>
             <router-link class="router-link-active" to="/phone">
               <el-menu-item index="1-3">
-                手机号核验绑定
+                手机号绑定
               </el-menu-item>
             </router-link>
             <router-link class="router-link-active" to="/auth">
