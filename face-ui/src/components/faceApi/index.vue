@@ -18,8 +18,11 @@
         multiple>
       <i class="el-icon-plus"></i>
     </el-upload>
-    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb,最多上传两张</div>
 
+    <!-- Tip below the upload box -->
+    <div class="upload-tip">只能上传jpg/png文件，且不超过500kb,最多上传两张</div>
+
+    <!-- Steps Progress -->
     <el-steps :active="stepActive" finish-status="success" simple style="margin-top: 20px">
       <el-step title="上传图片"></el-step>
       <el-step title="正在识别"></el-step>
@@ -36,9 +39,10 @@
       <el-tag v-if="message" :type="messageType" class="message-content">{{ message }}</el-tag>
     </div>
 
-    <!-- Revised Upload Instructions -->
-    <div class="upload-instructions">
-      <p>接口使用说明: 当上传单张图片时，系统将该图片与存储在人脸库中的数据进行比对，以验证身份(该功能仅在在线识别模式下支持)。若上传两张图片，系统则比较两者以确定是否为同一人。</p>
+    <!-- Interface Usage Instructions -->
+    <div class="interface-instructions">
+      <h2>接口使用说明</h2>
+      <p>当上传单张图片时，系统将该图片与存储在人脸库中的数据进行比对，以验证身份（该功能仅在在线识别模式下支持）。若上传两张图片，系统则比较两者以确定是否为同一人。</p>
     </div>
   </div>
 </template>
@@ -157,8 +161,17 @@ export default {
   font-size: 18px;
 }
 
-.upload-instructions {
-  margin-top: 20px;
+.upload-tip {
+  text-align: center;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.interface-instructions {
+  margin-top: 40px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .divider {
