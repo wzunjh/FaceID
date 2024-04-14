@@ -9,6 +9,7 @@ import com.face.server.FaceContrastServer;
 import com.face.server.IdAuthenticationServer;
 import com.face.service.FaceService;
 import com.face.utils.JwtUtils;
+import com.face.utils.SmsUtils;
 import com.face.utils.TimeUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,7 +123,12 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         } else if (idNo.length() != 18) {
             faceResult.setCode(400); // 身份证号码格式错误
             faceResult.setMsg("身份证号码格式错误");
-        } else {
+
+        } else if (face.getPhone() == null || face.getPhone().isEmpty()){
+            faceResult.setCode(208);
+            faceResult.setMsg("请先完成手机号核验绑定");
+        }
+        else {
             faceResult = idAuthenticationServer.authenticateId(face.getFaceName(), idNo);
 
             if (faceResult.getCode() == 0) {
@@ -195,6 +201,13 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
     public FaceResult updateApiKey(Integer fid){
         FaceResult faceResult = new FaceResult();
         Face face = lambdaQuery().eq(Face::getFid, fid).one();
+        // Check if the API key was updated within the last minute
+        if (face.getApiTime() != null && new Date().getTime() - face.getApiTime().getTime() < 60000) {
+            faceResult.setCode(429); // HTTP status code for Too Many Requests
+            faceResult.setMsg("API Key 更新太频繁，请等待一分钟");
+            return faceResult;
+        }
+
         if(face.getId2Status() == null || face.getId2Status().isEmpty()){
             faceResult.setCode(202);
             faceResult.setMsg("请先完成身份证核验");
@@ -216,10 +229,14 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             String generatedKey = getString();
             // 这里可以将生成的密钥设置给 face 对象的 apiKey 属性
             face.setApiKey(generatedKey);
+            face.setApiTime(new Date());
+            String phone = face.getPhone();
+            SmsUtils.ApiKey(phone);
             updateById(face);
+            Face faceNew = lambdaQuery().eq(Face::getFid, fid).one();
             faceResult.setMsg("API Key 更新成功");
-            faceResult.setApiNum(face.getApiNum());
-            faceResult.setApiTime(face.getApiTime());
+            faceResult.setApiNum(faceNew.getApiNum());
+            faceResult.setApiTime(faceNew.getApiTime());
             faceResult.setCode(200);
             faceResult.setApiKey(generatedKey);
         }
