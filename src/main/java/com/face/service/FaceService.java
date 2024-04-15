@@ -41,5 +41,8 @@ public interface FaceService extends IService<Face> {
     // 查询手机绑定信息
     FaceResult  SmsC(Integer fid);
 
+    //令牌一键登录
+    FaceResult token(String AuthToken);
+
 
 }
