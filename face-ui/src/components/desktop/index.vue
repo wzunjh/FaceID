@@ -2,10 +2,10 @@
   <div class="desktop">
     <div class="desktop-main"></div>
     <el-steps :active="activeStep" align-center class="custom-steps">
-      <el-step title="人脸信息完善" :description="stepDescriptions[0]" :status="stepStatus[0]"></el-step>
-      <el-step title="手机号绑定" :description="stepDescriptions[1]" :status="stepStatus[1]"></el-step>
-      <el-step title="身份证号码核验" :description="stepDescriptions[2]" :status="stepStatus[2]"></el-step>
-      <el-step title="Auth令牌创建" :description="stepDescriptions[3]" :status="stepStatus[3]"></el-step>
+      <el-step title="①人脸信息完善" :description="stepDescriptions[0]" :status="stepStatus[0]"></el-step>
+      <el-step title="②手机号绑定" :description="stepDescriptions[1]" :status="stepStatus[1]"></el-step>
+      <el-step title="③身份证号码核验" :description="stepDescriptions[2]" :status="stepStatus[2]"></el-step>
+      <el-step title="④Auth令牌创建" :description="stepDescriptions[3]" :status="stepStatus[3]"></el-step>
     </el-steps>
     <div class="author-title">
       <p>基于InsightFace与SpringBoot的身份认证系统</p>
