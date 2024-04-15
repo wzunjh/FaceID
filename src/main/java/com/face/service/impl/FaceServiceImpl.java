@@ -81,7 +81,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
                         if (faceLength == 1){
                             // 判断当前人脸是否被禁用，如被禁用，提示被禁用
                             // 禁用优先级大于 没有检测到人脸
-                            return faceState != null?faceState:FaceResult.error(FaceResult.NOT_FOUND_FACE,"人脸库不存在该人脸",faceResult.getScore());
+                            return faceState != null?faceState:RegFace(imageBase);
                         }
                         faceLength --;
                     }
@@ -108,6 +108,19 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         faceResult.setCode(FaceResult.INIT_FACE);
         faceResult.setMsg("人脸初始化"+(save?"成功":"失败")+","+(save?"请验证登录":"请稍后再试"));
         faceResult.setName(face.getFaceName());
+        return faceResult;
+    }
+
+    public FaceResult RegFace(String imageBase){
+        FaceResult faceResult = new FaceResult();
+        Face face = new Face();
+        face.setFaceBase(imageBase);
+        face.setCreateTime(new Date());
+        face.setVefNum(0);
+        face.setFaceStatus(0);
+        boolean save = save(face);
+        faceResult.setCode(FaceResult.INIT_FACE);
+        faceResult.setMsg("人脸初始化"+(save?"成功":"失败")+","+(save?"请验证登录":"请稍后再试"));
         return faceResult;
     }
 
