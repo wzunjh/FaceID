@@ -80,9 +80,15 @@ export default {
   height: 63%;
   transform: translate(-50%, -50%);
   left: 50%;
-  top: 40%;
+  top: 35%; /* 修改位置往上移动 */
   background: url(~@/assets/desktop/desktop.gif) no-repeat;
   background-size: 100% 100%;
+}
+.el-steps {
+  position: absolute;
+  width: 100%;
+  transform: translate(0, -50%);
+  bottom: 10%; /* 将进度条放在底部 */
 }
 .author-title {
   width: 100%;
