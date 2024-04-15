@@ -51,7 +51,7 @@ export default {
         try {
           const response = await axios.get(urls[index], config);
           if (response.data.code === 200) {
-            this.stepStatus[index] = 'finish';
+            this.stepStatus[index] = 'success';
           } else {
             this.stepStatus[index] = 'error';
           }
