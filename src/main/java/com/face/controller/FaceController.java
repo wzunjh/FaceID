@@ -32,6 +32,14 @@ public class FaceController {
         return faceService.vef(imageBase);
     }
 
+    @PostMapping("/vefOne")
+    @ApiOperation(value="人脸API", notes="根据传入的base64编码和数据的base64编码进行对比")
+    @FaceLog
+    public FaceResult faceVefOne(@RequestBody String imageBase){
+        return faceService.vefOne(imageBase);
+    }
+
+
     @GetMapping("/faceList")
     @ApiOperation(value = "人脸列表",notes = "查询所有的人脸信息")
     public FaceResult faceList(

@@ -150,7 +150,7 @@ export default {
           this.submitting = false;
         });
       } else {
-        this.$http.post('/face/vef', JSON.stringify({ imageBase: this.imageBase1 }), {
+        this.$http.post('/face/vefOne', JSON.stringify({ imageBase: this.imageBase1 }), {
           headers: {
             'Content-Type': 'application/json'
           }

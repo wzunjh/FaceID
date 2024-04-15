@@ -44,5 +44,8 @@ public interface FaceService extends IService<Face> {
     //令牌一键登录
     FaceResult token(String AuthToken);
 
+    // 查询单个照片
+    FaceResult vefOne(String imageBase);
+
 
 }
