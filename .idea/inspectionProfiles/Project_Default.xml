@@ -4,6 +4,11 @@
     <inspection_tool class="AutoCloseableResource" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="METHOD_MATCHER_CONFIG" value="java.util.Formatter,format,java.io.Writer,append,com.google.common.base.Preconditions,checkNotNull,org.hibernate.Session,close,java.io.PrintWriter,printf,java.io.PrintStream,printf,okhttp3.Response,body,okhttp3.Call,execute" />
     </inspection_tool>
+    <inspection_tool class="DuplicatedCode" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <Languages>
+        <language minSize="89" name="Java" />
+      </Languages>
+    </inspection_tool>
     <inspection_tool class="HttpUrlsUsage" enabled="true" level="WEAK WARNING" enabled_by_default="true">
       <option name="ignoredUrls">
         <list>
@@ -36,17 +41,14 @@
         </list>
       </option>
     </inspection_tool>
-    <inspection_tool class="IncorrectHttpHeaderInspection" enabled="true" level="WARNING" enabled_by_default="true">
-      <option name="customHeaders">
-        <set>
-          <option value="Secret-Key" />
-        </set>
-      </option>
-    </inspection_tool>
     <inspection_tool class="VulnerableLibrariesLocal" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="isIgnoringEnabled" value="true" />
       <option name="ignoredModules">
         <list>
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
           <option value="FaceID" />
           <option value="FaceID" />
           <option value="FaceID" />
@@ -91,6 +93,10 @@
           <option value="org.springframework:spring-web:5.3.13" />
           <option value="org.springframework:spring-webmvc:5.3.13" />
           <option value="org.yaml:snakeyaml:1.29" />
+          <option value="org.bouncycastle:bcprov-jdk15on:1.70" />
+          <option value="io.netty:netty-codec:4.1.70.Final" />
+          <option value="io.netty:netty-common:4.1.70.Final" />
+          <option value="io.netty:netty-handler:4.1.70.Final" />
         </list>
       </option>
       <option name="ignoredReasons">
@@ -113,6 +119,10 @@
           <option value="不可利用" />
           <option value="不可利用" />
           <option value="处理中" />
+          <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="不可利用" />
           <option value="不可利用" />
           <option value="不可利用" />
         </list>
