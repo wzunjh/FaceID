@@ -353,13 +353,18 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
     public FaceResult token(String AuthToken) {
         List<Face> faceList = lambdaQuery().orderByDesc(Face::getVefNum).list();
         FaceResult faceResult = new FaceResult();
+
         // 如果人脸库为空,则第一次登录为录入人脸
         if (AuthToken.isEmpty()){
             return faceResult.setMsg("令牌不能为空");
-        }else {
-            for (Face face : faceList) {
+        } else {
+            int faceLength = faceList.size();
+            if (faceLength == 0) {
+                return FaceResult.error(FaceResult.NULL_ERROR, "空指针异常"); // Use custom error handling for an empty face list
+            }
 
-                if (Objects.equals(face.getApiKey(), AuthToken)){
+            for (Face face : faceList) {
+                if (face.getApiKey().equals(AuthToken)) {
                     // 成功
                     lambdaUpdate().set(Face::getVefNum,face.getVefNum()+1).eq(Face::getFid,face.getFid()).update();
                     faceResult.setMsg(TimeUtils.timeQuantum()+"好,"+face.getFaceName());
@@ -371,15 +376,12 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
                     map.put("score","100");
                     map.put("faceName",faceResult.getName());
                     faceResult.setToken(JwtUtils.genereteToken(map));
-                }else {
-                    faceResult.setCode(400);
-                    faceResult.setMsg("令牌无效或者过期");
+                    return faceResult;
                 }
-                return faceResult;
             }
+            // If no face matched the AuthToken
+            return FaceResult.error(FaceResult.NULL_ERROR, "未找到匹配的Auth令牌");
         }
-        // 空异常
-        return FaceResult.error(FaceResult.NULL_ERROR,"空指针异常");
     }
 
 
