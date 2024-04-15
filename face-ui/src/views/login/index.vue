@@ -32,10 +32,13 @@
         </div>
 
         <!-- Auth Token Input Section -->
-        <div class="auth-token">
-          <input v-model="authToken" placeholder="Enter Auth Token" />
-          <button @click="authLogin()">登录</button>
+        <div class="auth-token" style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+          <el-input v-model="authToken" placeholder="请输入您的Auth令牌" style="flex-grow: 1; max-width: 400px;"></el-input>
+          <el-button type="primary" @click="authLogin"><i class="el-icon-key"></i>一键登录</el-button>
         </div>
+
+
+
 
         <div class="msg">
           <div class="server-msg">{{ msg }}</div>
