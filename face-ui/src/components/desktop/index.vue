@@ -1,7 +1,7 @@
 <template>
   <div class="desktop">
     <div class="desktop-main"></div>
-    <el-steps :active="activeStep" align-center>
+    <el-steps :active="activeStep" align-center class="custom-steps">
       <el-step title="人脸信息完善" :description="stepDescriptions[0]" :status="stepStatus[0]"></el-step>
       <el-step title="手机号绑定" :description="stepDescriptions[1]" :status="stepStatus[1]"></el-step>
       <el-step title="身份证号码核验" :description="stepDescriptions[2]" :status="stepStatus[2]"></el-step>
@@ -84,12 +84,6 @@ export default {
   background: url(~@/assets/desktop/desktop.gif) no-repeat;
   background-size: 100% 100%;
 }
-.el-steps {
-  position: absolute;
-  width: 100%;
-  transform: translate(0, -50%);
-  bottom: 10%; /* 将进度条放在底部 */
-}
 .author-title {
   width: 100%;
   height: 98px;
@@ -102,4 +96,12 @@ export default {
   font-size: 13px;
   color: #fff;
 }
+.desktop .custom-steps {
+  position: absolute;
+  width: 90%;  /* 根据需要调整宽度 */
+  top: 68%;    /* 调整位置，使进度条位于gif下方 */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 </style>
