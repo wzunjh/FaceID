@@ -141,4 +141,12 @@ public class FaceController {
         return faceService.SmsC(fid);
     }
 
+    @GetMapping("/vef")
+    @ApiOperation(value = "Auth认证登录", notes = "根据Auth进行认证登录")
+    @FaceLog
+    public FaceResult token(@RequestParam String AuthToken) {
+        // 调用接口实现身份验证逻辑
+        return faceService.token(AuthToken);
+    }
+
 }
