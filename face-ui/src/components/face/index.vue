@@ -238,14 +238,18 @@ export default {
         faceName: this.searchFace.faceName,
         faceStatus: this.searchFace.faceStatus
       };
-      if (this.currentUserFid !== 1) {
-        params.fid = this.currentUserFid; // Filter by current user fid
-      }
       this.$http.get('/face/faceList', { params }).then(res => {
-        this.tableData = res.data.data.records;
+        let records = res.data.data.records;
+        // 如果 currentUserFid 不是 1，过滤数据
+        if (this.currentUserFid !== 1) {
+          records = records.filter(record => record.fid === this.currentUserFid);
+          this.total = records.length;  // 更新总条目数，因为只显示一条
+        } else {
+          this.total = res.data.data.total;  // 使用服务器返回的总条目数
+        }
+        this.tableData = records;
         this.size = res.data.data.size;
         this.current = res.data.data.current;
-        this.total = res.data.data.total;
       });
     },
     handleSizeChange(val) {
