@@ -15,8 +15,8 @@
                 type="text"
                 @click="copyApiKey">复制</el-button>
           </el-descriptions-item>
-          <el-descriptions-item label="累计使用次数" class="num-item">{{ apiNum }}</el-descriptions-item>
-          <el-descriptions-item label="最新使用时间" class="time-item">{{ apiTime }}</el-descriptions-item>
+          <el-descriptions-item label="累计使用次数(记录调用接口次数)" class="num-item">{{ apiNum }}</el-descriptions-item>
+          <el-descriptions-item label="最新使用时间(记录Auth登录与远程接口调用)" class="time-item">{{ apiTime }}</el-descriptions-item>
         </el-descriptions>
         <el-alert
             title="您没有可用的ApiKey"
