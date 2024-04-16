@@ -2,6 +2,7 @@ package com.face.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.face.bean.Face;
+import com.face.bean.result.ApiResult;
 import com.face.bean.result.FaceResult;
 
 
@@ -46,6 +47,9 @@ public interface FaceService extends IService<Face> {
 
     // 查询单个照片
     FaceResult vefOne(String imageBase);
+
+    // 远程接口调用
+    ApiResult vefApi(String AuthToken,String imageBase1, String imageBase2);
 
 
 }
