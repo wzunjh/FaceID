@@ -50,6 +50,11 @@ const routes = [
         path: '/phone',
         name: 'phone',
         component: () => import('@/components/phoneVef/index.vue')
+      },
+      {
+        path: '/ip',
+        name: 'ip',
+        component: () => import('@/components/ipList/index.vue')
       }
     ]
   }
