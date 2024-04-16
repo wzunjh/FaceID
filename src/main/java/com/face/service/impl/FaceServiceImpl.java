@@ -10,10 +10,7 @@ import com.face.mapper.FaceMapper;
 import com.face.server.FaceContrastServer;
 import com.face.server.IdAuthenticationServer;
 import com.face.service.FaceService;
-import com.face.utils.JwtUtils;
-import com.face.utils.RegexUtils;
-import com.face.utils.SmsUtils;
-import com.face.utils.TimeUtils;
+import com.face.utils.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -429,7 +426,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             for (Face face : faceList) {
                 if (face.getApiKey().equals(AuthToken)) {
                     // 成功并记录登录ip记录
-                    lambdaUpdate().set(Face::getVefNum,face.getVefNum()+1).set(Face::getIp,ip).eq(Face::getFid,face.getFid()).update();
+                    lambdaUpdate().set(Face::getVefNum,face.getVefNum()+1).set(Face::getApiTime,new Date()).set(Face::getIp,ip).eq(Face::getFid,face.getFid()).update();
                     faceResult.setMsg(TimeUtils.timeQuantum()+"好,"+face.getFaceName());
                     faceResult.setName(face.getFaceName());
                     faceResult.setFid(String.valueOf(face.getFid()));
@@ -473,6 +470,36 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             return ApiResult.error(FaceResult.NULL_ERROR, "Auth令牌错误或失效");
         }
 
+    @Override
+    public FaceResult SerIP(Integer fid) {
+        FaceResult faceResult = new FaceResult();
+        Face face = lambdaQuery().eq(Face::getFid, fid).one();
+        faceResult.setMsg("查询成功");
+        faceResult.setCode(200);
+        faceResult.setIp(face.getIp());
+        faceResult.setIpList(face.getIpList());
+        return faceResult;
+    }
+
+    @Override
+    public FaceResult SetIP(Integer fid, String ipList) {
+        FaceResult faceResult = new FaceResult();
+        Face face = lambdaQuery().eq(Face::getFid, fid).one();
+        if (IPValidator.isValidIPList(ipList)){
+            face.setIpList(ipList);
+            updateById(face);
+            faceResult.setCode(200);
+            faceResult.setMsg("IP白名单更新成功");
+            faceResult.setIpList(face.getIpList());
+            faceResult.setIp(face.getIp());
+            faceResult.setFid(String.valueOf(face.getFid()));
+            return faceResult;
+
+        }
+        faceResult.setMsg("IP格式错误");
+        faceResult.setCode(400);
+        return faceResult;
+    }
 
 
     //随机生成密钥算法

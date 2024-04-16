@@ -157,4 +157,17 @@ public class FaceController {
         return faceService.token(AuthToken,ip);
     }
 
+    @GetMapping("/ip/{fid}")
+    @ApiOperation(value = "查询ip信息",notes = "根据id进行查询")
+    public FaceResult SerIP(@PathVariable Integer fid){
+        return faceService.SerIP(fid);
+    }
+
+    @GetMapping("/SetIP")
+    @ApiOperation(value = "IP白名单", notes = "根据id进行查询更新")
+    public FaceResult SetIP(@RequestParam Integer fid, @RequestParam String ipList) {
+        // 调用接口实现身份验证逻辑
+        return faceService.SetIP(fid,ipList);
+    }
+
 }

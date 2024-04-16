@@ -51,5 +51,10 @@ public interface FaceService extends IService<Face> {
     // 远程接口调用
     ApiResult vefApi(String AuthToken,String imageBase1, String imageBase2);
 
+    // 登录ip与IP白名单查询
+    FaceResult SerIP(Integer fid);
+
+    // IP白名单设置
+    FaceResult SetIP(Integer fid,String ipList);
 
 }

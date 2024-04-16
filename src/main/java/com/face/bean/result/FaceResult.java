@@ -61,7 +61,7 @@ public class FaceResult {
     /**
      * 返回ip白名单
      */
-    private String ip_list;
+    private String ipList;
 
     /**
      * 数据集
