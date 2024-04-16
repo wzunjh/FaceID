@@ -413,7 +413,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
     }
 
     @Override
-    public FaceResult token(String AuthToken) {
+    public FaceResult token(String AuthToken,String ip) {
         List<Face> faceList = lambdaQuery().orderByDesc(Face::getVefNum).list();
         FaceResult faceResult = new FaceResult();
 
@@ -428,8 +428,8 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
 
             for (Face face : faceList) {
                 if (face.getApiKey().equals(AuthToken)) {
-                    // 成功
-                    lambdaUpdate().set(Face::getVefNum,face.getVefNum()+1).eq(Face::getFid,face.getFid()).update();
+                    // 成功并记录登录ip记录
+                    lambdaUpdate().set(Face::getVefNum,face.getVefNum()+1).set(Face::getIp,ip).eq(Face::getFid,face.getFid()).update();
                     faceResult.setMsg(TimeUtils.timeQuantum()+"好,"+face.getFaceName());
                     faceResult.setName(face.getFaceName());
                     faceResult.setFid(String.valueOf(face.getFid()));

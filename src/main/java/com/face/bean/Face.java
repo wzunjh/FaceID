@@ -85,6 +85,17 @@ public class Face implements Serializable {
      */
     private String phone;
 
+    /**
+     * ip登录地址
+     */
+    private String ip;
+
+
+    /**
+     * ip白名单
+     */
+    private String ipList;
+
 
 
     @TableField(exist = false)

@@ -43,7 +43,7 @@ public interface FaceService extends IService<Face> {
     FaceResult  SmsC(Integer fid);
 
     //令牌一键登录
-    FaceResult token(String AuthToken);
+    FaceResult token(String AuthToken,String ip);
 
     // 查询单个照片
     FaceResult vefOne(String imageBase);

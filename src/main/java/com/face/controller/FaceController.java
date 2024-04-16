@@ -152,9 +152,10 @@ public class FaceController {
     @GetMapping("/vef")
     @ApiOperation(value = "Auth认证登录", notes = "根据Auth进行认证登录")
     @FaceLog
-    public FaceResult token(@RequestParam String AuthToken) {
+    public FaceResult token(@RequestParam String AuthToken,@RequestParam String ip) {
         // 调用接口实现身份验证逻辑
-        return faceService.token(AuthToken);
+        System.out.println(ip);
+        return faceService.token(AuthToken,ip);
     }
 
 }

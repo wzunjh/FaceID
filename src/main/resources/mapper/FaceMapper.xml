@@ -19,12 +19,14 @@
             <result property="apiNum" column="api_num" jdbcType="INTEGER"/>
             <result property="apiTime" column="api_time" jdbcType="TIMESTAMP"/>
             <result property="phone" column="phone" jdbcType="VARCHAR"/>
+            <result property="ip" column="ip" jdbcType="VARCHAR"/>
+            <result property="ipList" column="ip_list" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         fid,face_base,create_time,
         vef_num,face_name,remark,
         face_status,id_no,id2_status,
-        city,api_key,api_num,phone
+        city,api_key,api_num,phone,ip,ip_list
     </sql>
 </mapper>

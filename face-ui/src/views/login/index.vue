@@ -37,9 +37,6 @@
           <el-button type="primary" @click="authLogin"><i class="el-icon-key"></i>一键登录</el-button>
         </div>
 
-
-
-
         <div class="msg">
           <div class="server-msg">{{ msg }}</div>
           <div class="welcome">欢迎使用FaceID身份认证系统</div>
@@ -53,6 +50,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import $camera from '../../camera/index.js'
 export default {
@@ -63,7 +61,8 @@ export default {
       msg: '',
       faceImgState: false,
       faceOption: {},
-      authToken: ''  // Auth token data property
+      authToken: '',
+      clientIP: ''  // Client IP data property
     };
   },
   mounted() {
@@ -76,6 +75,7 @@ export default {
       canvasId: 'canvasCamera',
       videoId: 'videoCamera'
     });
+    this.getClientIP();
   },
   methods: {
     faceVef() {
@@ -108,7 +108,7 @@ export default {
       }
     },
     authLogin() {
-      this.$http.get('/face/vef', { params: { AuthToken: this.authToken } }).then(res => {
+      this.$http.get('/face/vef', { params: { AuthToken: this.authToken, ip: this.clientIP } }).then(res => {
         if (res.data.code === 200) {
           localStorage.setItem("face_token", res.data.token);
           localStorage.setItem("username", res.data.name);
@@ -119,10 +119,21 @@ export default {
           this.$message.error(res.data.msg);
         }
       });
+    },
+    getClientIP() {
+      fetch('https://api.ipify.org/?format=json')
+          .then(response => response.json())
+          .then(data => {
+            this.clientIP = data.ip;
+          })
+          .catch(error => {
+            console.error('Error fetching client IP:', error);
+          });
     }
   },
 };
 </script>
+
 <style>
 @import "./index.css";
 </style>

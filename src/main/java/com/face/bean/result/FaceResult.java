@@ -54,6 +54,14 @@ public class FaceResult {
      * 返回手机号
      */
     private String phone;
+    /**
+     * 返回登录ip
+     */
+    private String ip;
+    /**
+     * 返回ip白名单
+     */
+    private String ip_list;
 
     /**
      * 数据集
