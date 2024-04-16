@@ -3,6 +3,7 @@
     <el-card header="API信息中心">
       <el-descriptions title="接口请求地址" border>
         <el-descriptions-item label="URL">{{ apiBaseUrl }}</el-descriptions-item>
+        <el-descriptions-item label="请求方式">post</el-descriptions-item>
       </el-descriptions>
 
       <div class="api-key-container">
@@ -34,6 +35,23 @@
           </template>
         </el-popconfirm>
       </div>
+
+      <!-- 添加请求体格式说明 -->
+      <el-card>
+        <el-descriptions title="请求体格式说明" border>
+          <el-descriptions-item label="Body 类型" :span="3">multipart/form-data</el-descriptions-item>
+          <el-descriptions-item label="参数名">AuthToken</el-descriptions-item>
+          <el-descriptions-item label="参数值">Auth-xxxxxxxxxxxx</el-descriptions-item>
+          <el-descriptions-item label="参数类型">string</el-descriptions-item>
+          <el-descriptions-item label="参数名">image1</el-descriptions-item>
+          <el-descriptions-item label="参数值">test1.jpg</el-descriptions-item>
+          <el-descriptions-item label="参数类型">file</el-descriptions-item>
+          <el-descriptions-item label="参数名">image2</el-descriptions-item>
+          <el-descriptions-item label="参数值">test2.jpg</el-descriptions-item>
+          <el-descriptions-item label="参数类型">file</el-descriptions-item>
+        </el-descriptions>
+      </el-card>
+
     </el-card>
 
     <el-dialog
