@@ -1,5 +1,7 @@
 package com.face.utils;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class IPValidator {
@@ -30,6 +32,15 @@ public class IPValidator {
             }
         }
         return true; // 所有 IP 地址都符合格式
+    }
+
+    // Method to check if a given IP is in the provided comma-separated list of IPs
+    public static boolean isIPInList(String ip, String ipList) {
+        if (ip == null || ipList == null || ipList.isEmpty()) {
+            return false;
+        }
+        List<String> ipArray = Arrays.asList(ipList.split(","));
+        return ipArray.contains(ip);
     }
 
     public static void main(String[] args) {
