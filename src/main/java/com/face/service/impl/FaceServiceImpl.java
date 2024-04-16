@@ -484,6 +484,9 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         faceResult.setCode(200);
         faceResult.setIp(face.getIp());
         faceResult.setIpList(face.getIpList());
+        if(face.getIpList().isEmpty()){
+            faceResult.setApiNum(10086);
+        }
         return faceResult;
     }
 
