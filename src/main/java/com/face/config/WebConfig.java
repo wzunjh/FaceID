@@ -27,7 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // 添加放行的路径
         String[] addPath = {"/**"};
-        String[] excludePath = {"/face/vef",
+        String[] excludePath = {"/face/vef","/api/vef",
                 "/js/**","/img/**","/*.ico","/*.css"
         };
         registry.addInterceptor(new FaceConfig()).addPathPatterns(addPath).excludePathPatterns(excludePath);
