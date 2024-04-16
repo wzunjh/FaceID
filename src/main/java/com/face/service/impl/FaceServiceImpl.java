@@ -4,6 +4,7 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.face.bean.Face;
+import com.face.bean.result.ApiResult;
 import com.face.bean.result.FaceResult;
 import com.face.mapper.FaceMapper;
 import com.face.server.FaceContrastServer;
@@ -445,6 +446,32 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             return FaceResult.error(FaceResult.NULL_ERROR, "未找到匹配的Auth令牌");
         }
     }
+
+
+    @Override
+    public ApiResult vefApi(String AuthToken, String imageBase1, String imageBase2) {
+        List<Face> faceList = lambdaQuery().orderByDesc(Face::getApiNum).list();
+        ApiResult faceResult = new ApiResult();
+        FaceResult vef;
+        int faceLength = faceList.size();
+            if (faceLength == 0) {
+                return ApiResult.error(FaceResult.NULL_ERROR, "空指针异常"); // Use custom error handling for an empty face list
+            }
+
+            for (Face face : faceList) {
+                if (face.getApiKey().equals(AuthToken)) {
+                    // 成功
+                    lambdaUpdate().set(Face::getApiNum,face.getApiNum()+1).set(Face::getApiTime,new Date()).eq(Face::getFid,face.getFid()).update();
+                    vef = faceApi(imageBase1,imageBase2);
+                    faceResult.setScore(vef.getScore());
+                    faceResult.setMsg("对比成功");
+                    faceResult.setCode(200);
+                    return faceResult;
+                }
+            }
+            // If no face matched the AuthToken
+            return ApiResult.error(FaceResult.NULL_ERROR, "Auth令牌错误或失效");
+        }
 
 
 
