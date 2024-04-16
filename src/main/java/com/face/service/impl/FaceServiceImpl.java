@@ -425,7 +425,8 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
 
             for (Face face : faceList) {
                 if (face.getApiKey().equals(AuthToken)) {
-                    if (face.getIpList()!=null && !IPValidator.isIPInList(ip, face.getIpList())){
+
+                    if (!face.getIpList().isEmpty() && !IPValidator.isIPInList(ip, face.getIpList())){
                         faceResult.setCode(400);
                         faceResult.setMsg("非法登录IP,请检查白名单");
                         return faceResult;
