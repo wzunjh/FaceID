@@ -154,7 +154,6 @@ public class FaceController {
     @FaceLog
     public FaceResult token(@RequestParam String AuthToken,@RequestParam String ip) {
         // 调用接口实现身份验证逻辑
-        System.out.println(ip);
         return faceService.token(AuthToken,ip);
     }
 
