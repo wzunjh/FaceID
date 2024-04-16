@@ -41,7 +41,7 @@
         <el-descriptions title="请求体格式说明" border>
           <el-descriptions-item label="Body 类型" :span="3">multipart/form-data</el-descriptions-item>
           <el-descriptions-item label="参数名">AuthToken</el-descriptions-item>
-          <el-descriptions-item label="参数值">Auth-xxxxxxxxxxxx</el-descriptions-item>
+          <el-descriptions-item label="参数值">Auth-123adc456efg789hij</el-descriptions-item>
           <el-descriptions-item label="参数类型">string</el-descriptions-item>
           <el-descriptions-item label="参数名">image1</el-descriptions-item>
           <el-descriptions-item label="参数值">test1.jpg</el-descriptions-item>
