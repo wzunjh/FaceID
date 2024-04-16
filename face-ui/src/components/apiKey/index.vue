@@ -53,7 +53,7 @@ export default {
       apiKey: null,
       apiNum: 0,
       apiTime: '',
-      apiBaseUrl: 'http://localhost:8868/api',
+      apiBaseUrl: 'http://localhost:8868/api/vef',
       msg: '',
       dialogVisible: false
     };
