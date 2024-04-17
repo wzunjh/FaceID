@@ -186,34 +186,42 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
 
 
     @Override
-    public FaceResult authId(Integer fid, String idNo) {
+    public FaceResult authId(Integer fid, String imageBase) {
         FaceResult faceResult = new FaceResult();
         Face face = lambdaQuery().eq(Face::getFid, fid).one();
         if (face == null) {
             faceResult.setCode(404); // 用户不存在
             faceResult.setMsg("用户不存在,请重新输入");
+            return faceResult;
         } else if (face.getFaceName() == null || face.getFaceName().isEmpty()) {
             faceResult.setCode(400); // 用户姓名为空
             faceResult.setMsg("用户姓名为空,请重新输入");
+            return faceResult;
         } else if (face.getId2Status() !=null && face.getId2Status().equals("1")) {
             faceResult.setCode(202); // 已认证成功
             faceResult.setMsg("该用户已认证成功");
-        } else if (idNo.length() != 18) {
-            faceResult.setCode(400); // 身份证号码格式错误
-            faceResult.setMsg("身份证号码格式错误");
-
+            return faceResult;
         } else if (face.getPhone() == null || face.getPhone().isEmpty()){
             faceResult.setCode(208);
             faceResult.setMsg("请先完成手机号核验绑定");
+            return faceResult;
         }
-        else {
-            faceResult = idAuthenticationServer.authenticateId(face.getFaceName(), idNo);
+        faceResult = faceContrastServer.faceContrast(face.getFaceBase(),imageBase);
+        if (faceResult.getScore()>=FaceResult.SATISFY_SCORE){
 
-            if (faceResult.getCode() == 0) {
+            faceResult = faceContrastServer.idVerification(imageBase);
+            if (faceResult.getCode() != 200 || ! faceResult.getName().equals(face.getFaceName())){
+                faceResult.setMsg("身份证识别失败,请重新上传");
+                faceResult.setCode(401);
+                return faceResult;
+            }
+            FaceResult faceResult2 = idAuthenticationServer.authenticateId(faceResult.getName(), faceResult.getIdNo());
+
+            if (faceResult2.getCode() == 200) {
                 // 认证成功
-                face.setIdNo(idNo);
+                face.setIdNo(faceResult.getIdNo());
                 face.setId2Status("1");
-                face.setCity(faceResult.getCity());
+                face.setCity(faceResult2.getCity());
                 updateById(face);
                 SmsUtils.id2Auth(face.getPhone());
                 faceResult.setCode(200); // 认证成功
@@ -222,8 +230,11 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
                 faceResult.setCode(401); // 信息不匹配
                 faceResult.setMsg("信息不匹配,认证失败");
             }
-        }
+            return faceResult;
 
+        }
+        faceResult.setMsg("人脸信息对比失败");
+        faceResult.setCode(401);
         return faceResult;
     }
 
