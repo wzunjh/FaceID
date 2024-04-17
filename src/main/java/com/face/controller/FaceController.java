@@ -80,8 +80,12 @@ public class FaceController {
     @PostMapping("/update")
     @ApiOperation(value = "修改")
     public FaceResult update(@RequestBody Face face){
-        faceService.updateById(face);
-        return FaceResult.success("修改成功");
+        FaceResult vef = faceService.isGg(face.getFaceBase());
+        if (vef.getCode() == 200){
+            faceService.updateById(face);
+            return FaceResult.success("修改成功");
+        }
+        return FaceResult.error(400,"图片不合格");
     }
 
     @PostMapping("/auth")

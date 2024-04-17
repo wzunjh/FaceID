@@ -57,4 +57,8 @@ public interface FaceService extends IService<Face> {
     // IP白名单设置
     FaceResult SetIP(Integer fid,String ipList);
 
+    // 上传人脸图片是否合格
+    FaceResult isGg(String imageBase);
+
+
 }

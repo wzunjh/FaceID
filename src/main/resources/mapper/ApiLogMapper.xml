@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.face.mapper.ApiLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.face.bean.ApiLog">
+            <id property="fid" column="fid" jdbcType="INTEGER"/>
+            <result property="apiTime" column="api_time" jdbcType="TIMESTAMP"/>
+            <result property="apiCode" column="api_code" jdbcType="INTEGER"/>
+            <result property="apiMsg" column="api_msg" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        fid,api_time,api_code,
+        api_msg
+    </sql>
+</mapper>

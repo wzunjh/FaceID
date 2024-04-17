@@ -3,10 +3,12 @@ package com.face.service.impl;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.face.bean.ApiLog;
 import com.face.bean.Face;
 import com.face.bean.result.ApiResult;
 import com.face.bean.result.FaceResult;
 import com.face.mapper.FaceMapper;
+import com.face.mapper.ApiLogMapper;
 import com.face.server.FaceContrastServer;
 import com.face.server.IdAuthenticationServer;
 import com.face.service.FaceService;
@@ -23,6 +25,9 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
     implements FaceService {
+
+    @Autowired
+    private ApiLogMapper apiLogMapper;
 
     @Autowired
     FaceContrastServer faceContrastServer;
@@ -158,6 +163,11 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
 
     public FaceResult initFace(String imageBase){
         FaceResult faceResult = new FaceResult();
+        if(isGg(imageBase).getCode() != 200){
+            faceResult.setCode(400);
+            faceResult.setMsg("人脸信息错误");
+            return faceResult;
+        }
         Face face = new Face();
         face.setFaceBase(imageBase);
         face.setCreateTime(new Date());
@@ -342,9 +352,11 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
                 if (faceResult.getScore() > FaceResult.SATISFY_SCORE) {
                     // 相似度大于70%，认为是同一个人
                     faceResult.setMsg("两张人脸匹配成功,相似度为:" + faceResult.getScore());
+                    faceResult.setCode(200);
                 } else {
                     // 相似度小于70%，认为不是同一个人
                     faceResult.setMsg("两张人脸匹配失败,相似度为:" + faceResult.getScore());
+                    faceResult.setCode(200);
                 }
             }
             return faceResult;
@@ -477,6 +489,12 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
                     // 成功
                     lambdaUpdate().set(Face::getApiNum,face.getApiNum()+1).set(Face::getApiTime,new Date()).eq(Face::getFid,face.getFid()).update();
                     vef = faceApi(imageBase1,imageBase2);
+                    ApiLog apiLog = new ApiLog();
+                    apiLog.setFid(face.getFid());
+                    apiLog.setApiTime(new Date());
+                    apiLog.setApiCode(vef.getCode());
+                    apiLog.setApiMsg(vef.getMsg());
+                    apiLogMapper.insert(apiLog);
                     faceResult.setScore(vef.getScore());
                     faceResult.setMsg("对比成功");
                     faceResult.setCode(200);
@@ -519,6 +537,19 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         faceResult.setMsg("IP格式错误");
         faceResult.setCode(400);
         return faceResult;
+    }
+
+    @Override
+    public FaceResult isGg(String imageBase) {
+        Face face = lambdaQuery().eq(Face::getFid, 1).one();
+        FaceResult vef = faceApi(imageBase,face.getFaceBase());
+        if (vef.getCode() == 200){
+            vef.setMsg("图片合格");
+            return vef;
+        }
+        vef.setMsg("图片不合格");
+        vef.setCode(400);
+        return vef;
     }
 
 
