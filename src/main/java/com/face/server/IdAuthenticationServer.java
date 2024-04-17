@@ -50,6 +50,7 @@ public class IdAuthenticationServer {
                 String city = responseBody.get("city").toString();
                 String concatenatedCity = province + "-" + city; // 拼接省份和城市，中间用"-"分隔
                 faceResult.setCity(concatenatedCity); // 存放拼接后的字符串到faceResult的city属性中
+                faceResult.setCode(200);
             } else {
                 faceResult.setCode(FaceResult.FACE_ERROR);
                 faceResult.setMsg("No 'province' or 'city' found in the response");
