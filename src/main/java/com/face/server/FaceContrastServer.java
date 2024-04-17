@@ -10,8 +10,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  * <p>调用py接口</p>
  **/
@@ -35,15 +37,14 @@ public class FaceContrastServer {
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.set("Secret-ID", serviceSecretId); // 添加Secret-ID
-            headers.set("Secret-Key", serviceSecretKey); // 添加Secret-Key
+            headers.set("Secret-ID", serviceSecretId);
+            headers.set("Secret-Key", serviceSecretKey);
 
             Map<String, String> map = new HashMap<>();
             map.put("imageA", imageA);
             map.put("imageB", imageB);
 
             HttpEntity<Map<String, String>> request = new HttpEntity<>(map, headers);
-
             ResponseEntity<Map> response = restTemplate.postForEntity(pythonServiceUrl + "/compare_face", request, Map.class);
             Map<String, Integer> responseBody = response.getBody();
 
@@ -59,5 +60,36 @@ public class FaceContrastServer {
             faceResult.setMsg(e.getMessage());
         }
         return faceResult;
+    }
+
+    public FaceResult idVerification(String image) {
+        FaceResult result = new FaceResult();
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Secret-ID", serviceSecretId);
+            headers.set("Secret-Key", serviceSecretKey);
+
+            Map<String, String> map = new HashMap<>();
+            map.put("image", image);
+
+            HttpEntity<Map<String, String>> request = new HttpEntity<>(map, headers);
+            ResponseEntity<Map> response = restTemplate.postForEntity(pythonServiceUrl + "/idVef", request, Map.class);
+            Map<String, String> responseBody = response.getBody();
+
+            if (responseBody != null && responseBody.containsKey("name") && responseBody.containsKey("idNo")) {
+                result.setName(responseBody.get("name"));
+                result.setIdNo(responseBody.get("idNo"));
+                result.setCode(FaceResult.SUCCESS_CODE);
+            } else {
+                result.setCode(400);
+                result.setMsg("Failed to verify ID");
+            }
+        } catch (Exception e) {
+            result.setCode(500);
+            result.setMsg(e.getMessage());
+        }
+        return result;
     }
 }
