@@ -1,4 +1,5 @@
 import base64
+import os
 import re
 import cv2
 import numpy as np
@@ -7,6 +8,7 @@ from flask_cors import CORS
 from insightface.app import FaceAnalysis
 from concurrent.futures import ThreadPoolExecutor
 from functools import lru_cache
+from paddleocr import PaddleOCR
 
 app = Flask(__name__)
 CORS(app)
@@ -16,7 +18,7 @@ face_analysis_app = FaceAnalysis(name='buffalo_l')
 face_analysis_app.prepare(ctx_id=0, det_size=(640, 640))
 
 # 创建线程池执行器
-executor = ThreadPoolExecutor(max_workers=4)
+executor = ThreadPoolExecutor(max_workers=20)
 
 
 def resize_image(image, max_size=1024):
@@ -55,7 +57,7 @@ def get_face_embedding_cached(img_data):
     img = resize_image(img)
     faces = face_analysis_app.get(img)
     if len(faces) == 0:
-        raise ValueError("No face found in the image")
+        raise ValueError("No face found in the image Or is too close to the camera")
     elif len(faces) > 1:
         raise ValueError("Multiple faces found in the image, please provide an image with a single face")
     return faces[0].normed_embedding
@@ -70,9 +72,20 @@ def calculate_similarity(embedding1, embedding2):
     return float(similarity)
 
 
+SECRET_ID = "wzunjh"
+SECRET_KEY = "GcJypclbi1t1lTFzCQ"
+
+
 @app.route('/compare_face', methods=['POST'])
 def compare_faces():
     try:
+        # 验证 SecretID 和 SecretKey
+        secret_id = request.headers.get('Secret-ID')
+        secret_key = request.headers.get('Secret-Key')
+
+        if secret_id != SECRET_ID or secret_key != SECRET_KEY:
+            return jsonify({"error": "Unauthorized"}), 401
+
         data = request.get_json()
         imageA_base64 = data['imageA']
         imageB_base64 = data['imageB']
@@ -86,9 +99,67 @@ def compare_faces():
         embedding1 = future_embedding1.result()
         embedding2 = future_embedding2.result()
 
-        similarity_score = calculate_similarity(embedding1, embedding2) * 100
+        similarity_score = calculate_similarity(embedding1, embedding2) * 100 + 10  # 相似度计算(减低误差)
+        if similarity_score > 100:
+            similarity_score = 100
         similarity_score_int = int(similarity_score)  # 转换为整数
         return jsonify({"similarity_score": similarity_score_int}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+
+@app.route('/idVef', methods=['POST'])
+def id_verification():
+    try:
+        # Verify SecretID and SecretKey
+        secret_id = request.headers.get('Secret-ID')
+        secret_key = request.headers.get('Secret-Key')
+
+        if secret_id != SECRET_ID or secret_key != SECRET_KEY:
+            return jsonify({"error": "Unauthorized"}), 401
+
+        # Extract and decode image from the request
+        data = request.get_json()
+        image_base64 = data['image']
+        img_data = base64.b64decode(re.sub('^data:image/.+;base64,', '', image_base64))
+        img = cv2.imdecode(np.frombuffer(img_data, np.uint8), cv2.IMREAD_COLOR)
+        img_path = 'temp_id_card.jpg'  # Temporarily save the image for OCR
+        cv2.imwrite(img_path, img)
+
+        # Initialize OCR model
+        ocr = PaddleOCR(use_angle_cls=True, lang="ch")
+
+        # Perform OCR on the image
+        result = ocr.ocr(img_path, cls=True)
+
+        # Use flags to track and extract name and ID number
+        name = ''
+        id_number = ''
+        capture_next = False
+
+        # Process OCR results to extract name and ID number
+        for line in result:
+            for element in line:
+                text = element[1][0]  # Extracted text
+                if "姓名" in text:
+                    name_index = text.find("姓名") + len("姓名")
+                    name = text[name_index:].strip()
+                if "公民身份号码" in text:
+                    match = re.search(r'\d{17}[\dX]', text)
+                    if match:
+                        id_number = match.group(0)
+                    else:
+                        capture_next = True
+                elif capture_next:
+                    match = re.search(r'\d{17}[\dX]', text)
+                    if match:
+                        id_number = match.group(0)
+                    capture_next = False
+
+        # Delete the temporary image file
+        os.remove(img_path)
+
+        return jsonify({"name": name, "idNo": id_number}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
