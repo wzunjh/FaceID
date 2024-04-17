@@ -2,8 +2,11 @@
   <div>
     <el-card v-if="!authenticated" header="身份证认证">
       <el-form ref="form" :model="authForm" label-width="120px">
-        <el-form-item label="18位身份证号码" prop="idNo">
-          <el-input v-model="authForm.idNo" clearable></el-input>
+        <el-form-item label="上传身份证图片">
+          <input type="file" @change="handleFileChange" accept="image/*" />
+          <div v-if="imageSrc" style="text-align: center; margin-top: 20px;">
+            <img :src="imageSrc" style="max-width: 100%; max-height: 400px;" />
+          </div>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('form')">立即认证</el-button>
@@ -13,15 +16,13 @@
     <div v-else class="success-message">
       <el-alert title="您已认证成功" type="success" center show-icon />
       <el-descriptions title="您的认证信息">
-        <el-descriptions-item label="姓名">{{ faceData.faceName }}</el-descriptions-item>
+        <el-descriptions-item label="姓名">{{ faceData.name }}</el-descriptions-item>
         <el-descriptions-item label="用户ID">{{ faceData.fid }}</el-descriptions-item>
         <el-descriptions-item label="身份证所在城市地区">{{ faceData.city }}</el-descriptions-item>
         <el-descriptions-item label="认证状态">
           <el-tag size="small">已认证</el-tag>
         </el-descriptions-item>
-        <el-descriptions-item label="18位身份证号码"
-        >{{ faceData.idNo }}</el-descriptions-item
-        >
+        <el-descriptions-item label="18位身份证号码">{{ faceData.idNo }}</el-descriptions-item>
       </el-descriptions>
     </div>
   </div>
@@ -32,13 +33,14 @@ export default {
   data() {
     return {
       authForm: {
-        idNo: '',
-        fid: ''
+        fid: '',
+        imageBase: null
       },
+      imageSrc: null,
       dialogVisible: false,
       authMsg: '',
       authenticated: false,
-      faceData: { fid: '', faceName: '', idNo: '',city: '' }
+      faceData: { fid: '', name: '', idNo: '', city: '' }
     };
   },
   mounted() {
@@ -59,19 +61,35 @@ export default {
     fetchAuthInfo() {
       this.$http.get(`/face/authUser/${this.authForm.fid}`).then(response => {
         if (response.data.code === 200) {
-          this.faceData.fid = response.data.fid;
-          this.faceData.faceName = response.data.name;
-          this.faceData.idNo = response.data.idNo;
-          this.faceData.city = response.data.city;
+          this.faceData = response.data;
         }
       }).catch(error => {
         console.error('Error fetching user info:', error);
       });
     },
+    handleFileChange(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.imageSrc = e.target.result;
+          this.authForm.imageBase = e.target.result.split(',')[1]; // Assuming the result is in base64 format
+        };
+        reader.readAsDataURL(file);
+      }
+    },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$http.get('/face/auth', { params: this.authForm }).then(response => {
+          let formData = new FormData();
+          formData.append('fid', this.authForm.fid);
+          formData.append('imageBase', this.authForm.imageBase);
+
+          this.$http.post('/face/auth', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }).then(response => {
             if (response.data.code === 200 || response.data.code === 202) {
               this.authMsg = response.data.msg;
               this.authenticated = true;
@@ -93,6 +111,7 @@ export default {
   }
 };
 </script>
+
 <style scoped>
 .center-container {
   display: flex;
