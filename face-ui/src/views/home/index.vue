@@ -56,7 +56,7 @@
             </router-link>
             <router-link class="router-link-active" to="/apikey">
               <el-menu-item index="1-6">
-                Auth令牌信息
+                API信息中心
               </el-menu-item>
             </router-link>
             <router-link class="router-link-active" to="/faceApi">
