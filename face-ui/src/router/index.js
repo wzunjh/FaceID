@@ -55,6 +55,11 @@ const routes = [
         path: '/ip',
         name: 'ip',
         component: () => import('@/components/ipList/index.vue')
+      },
+      {
+        path: '/apiLog',
+        name: 'apiLog',
+        component: () => import('@/components/apiLog/index.vue')
       }
     ]
   }

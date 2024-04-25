@@ -64,6 +64,11 @@
                 API在线识别
               </el-menu-item>
             </router-link>
+            <router-link class="router-link-active" to="/apiLog">
+              <el-menu-item index="1-8">
+                API请求日志
+              </el-menu-item>
+            </router-link>
           </el-submenu>
         </el-menu>
       </el-aside>
