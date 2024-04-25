@@ -117,7 +117,7 @@ export default {
       })
     },
     statusFormatter(row, column, value) {
-      return value === 200 ? '成功' : '错误';
+      return value === 200 ? '200,请求成功' : '请求错误';
     }
   }
 }
