@@ -442,7 +442,6 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         List<Face> faceList = lambdaQuery().orderByDesc(Face::getVefNum).list();
         FaceResult faceResult = new FaceResult();
 
-        // 如果人脸库为空,则第一次登录为录入人脸
         if (AuthToken.isEmpty()){
             return faceResult.setMsg("令牌不能为空");
         } else {
