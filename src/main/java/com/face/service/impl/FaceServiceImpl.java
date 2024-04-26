@@ -2,7 +2,6 @@ package com.face.service.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONUtil;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.face.bean.ApiLog;
 import com.face.bean.Face;
