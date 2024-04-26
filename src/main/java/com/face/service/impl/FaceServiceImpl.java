@@ -324,7 +324,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             face.setApiNum(0);
             face.setApiTime(new Date());
             updateById(face);
-            faceResult.setMsg("API Key 创建成功");
+            faceResult.setMsg("API Key 创建成功: 为了确保信息安全,ApiKey只显示一次");
             faceResult.setCode(200);
             faceResult.setApiKey(generatedKey);
             faceResult.setApiNum(face.getApiNum());
@@ -338,7 +338,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             SmsUtils.ApiKey(face.getPhone());
             updateById(face);
             Face faceNew = lambdaQuery().eq(Face::getFid, fid).one();
-            faceResult.setMsg("API Key 更新成功");
+            faceResult.setMsg("API Key 更新成功: 为了确保信息安全,ApiKey只显示一次");
             faceResult.setApiNum(faceNew.getApiNum());
             faceResult.setApiTime(faceNew.getApiTime());
             faceResult.setCode(200);
