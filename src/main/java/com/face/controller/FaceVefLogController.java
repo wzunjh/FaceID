@@ -4,7 +4,6 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.face.annotation.FaceLog;
 import com.face.bean.ApiLog;
 import com.face.bean.FaceVefLog;
 import com.face.bean.result.ApiResult;
