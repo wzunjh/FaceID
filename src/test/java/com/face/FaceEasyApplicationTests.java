@@ -1,9 +1,11 @@
 package com.face;
 
 import com.face.bean.result.ApiResult;
+import com.face.bean.result.OtpResult;
 import com.face.server.IdAuthenticationServer;
 import com.face.service.ApiLogService;
 import com.face.service.FaceService;
+import com.face.service.impl.OTPService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.face.bean.result.FaceResult;
@@ -21,6 +23,9 @@ class FaceEasyApplicationTests {
 
     @Autowired
     ApiLogService apiLogService;
+
+    @Autowired
+    OTPService otpService;
 
 
     @Test
@@ -88,6 +93,15 @@ class FaceEasyApplicationTests {
         ApiResult apiResult = faceService.vefAuth(Auth,fid);
         System.out.println(apiResult.getCode()+apiResult.getMsg());
     }
+
+    @Test
+    public void Otp(){
+
+        Integer fid = 1;
+        OtpResult otpResult = otpService.generateOTP(String.valueOf(1));
+        System.out.println(otpResult.getExpirationSeconds()+otpResult.getOtp());
+    }
+
 
 
 }

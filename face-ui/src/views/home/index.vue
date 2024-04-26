@@ -69,6 +69,11 @@
                 API请求日志
               </el-menu-item>
             </router-link>
+            <router-link class="router-link-active" to="/otp">
+              <el-menu-item index="1-9">
+                OTP动态口令
+              </el-menu-item>
+            </router-link>
           </el-submenu>
         </el-menu>
       </el-aside>

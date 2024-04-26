@@ -60,6 +60,11 @@ const routes = [
         path: '/apiLog',
         name: 'apiLog',
         component: () => import('@/components/apiLog/index.vue')
+      },
+      {
+        path: '/otp',
+        name: 'otp',
+        component: () => import('@/components/otp/index.vue')
       }
     ]
   }
