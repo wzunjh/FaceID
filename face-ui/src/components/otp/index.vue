@@ -1,14 +1,14 @@
 <template>
   <div id="app">
-    <h1>OTP Generator</h1>
-    <p v-if="error">{{ error }}</p>
+    <h1 style="font-size: 48px;">OTP Generator</h1>
+    <p v-if="error" style="font-size: 24px;">{{ error }}</p>
     <div v-else class="otp-container">
       <div class="otp-digits">
-        <div class="otp-digit" v-for="digit in otp.split('')" :key="digit">{{ digit }}</div>
+        <div class="otp-digit" v-for="digit in otp.split('')" :key="digit" style="font-size: 48px; width: 80px; height: 80px; line-height: 80px;">{{ digit }}</div>
       </div>
       <div class="countdown">
-        <el-progress :percentage="(expirationSeconds / 30) * 100" :show-text="false" :stroke-width="20" />
-        <div class="countdown-text">{{ expirationSeconds }} seconds</div>
+        <el-progress :percentage="(expirationSeconds / 30) * 100" :show-text="false" :stroke-width="24" color="#67C23A" />
+        <div class="countdown-text" style="font-size: 24px; font-weight: bold; color: #67C23A;">{{ expirationSeconds }} seconds</div>
       </div>
     </div>
   </div>
