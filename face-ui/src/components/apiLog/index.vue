@@ -5,7 +5,7 @@
       <el-col :span="24">
         <el-card header="API日志列表">
           <el-form :inline="true">
-            <el-form-item label="验证时间">
+            <el-form-item label="请求时间">
               <el-date-picker
                   v-model="searchApi.timeArray"
                   type="daterange"
