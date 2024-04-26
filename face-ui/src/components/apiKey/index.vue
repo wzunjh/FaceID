@@ -7,7 +7,7 @@
       </el-descriptions>
 
       <div class="api-key-container">
-        <el-descriptions title="API Key 信息" border v-if="apiKey">
+        <el-descriptions title="API Key 信息 (请妥善保管好,必要时及时修改或者设置IP白名单)" border v-if="apiKey">
           <el-descriptions-item label="当前为" class="key-item">
             {{ apiKey }}
             <el-button
@@ -16,7 +16,7 @@
                 @click="copyApiKey">复制</el-button>
           </el-descriptions-item>
           <el-descriptions-item label="累计使用次数(调用接口次数)" class="num-item">{{ apiNum }}</el-descriptions-item>
-          <el-descriptions-item label="最新使用时间(Auth登录与远程接口调用)" class="time-item">{{ apiTime }}</el-descriptions-item>
+          <el-descriptions-item label="最新使用时间(一键登录与远程接口调用)" class="time-item">{{ apiTime }}</el-descriptions-item>
         </el-descriptions>
         <el-alert
             title="您没有可用的ApiKey"
