@@ -31,15 +31,28 @@
 
     <el-card v-else-if="modifyPhoneStep === 1" header="修改手机号绑定">
       <el-form ref="modifyPhoneForm" :model="modifyPhoneForm" label-width="120px">
-        <el-form-item label="原手机号码" prop="oldPhone">
-          <el-input v-model="modifyPhoneForm.oldPhone" clearable disabled></el-input>
+        <el-form-item label="验证方式" prop="verifyType">
+          <el-radio-group v-model="modifyPhoneForm.verifyType">
+            <el-radio label="phone">原手机号验证</el-radio>
+            <el-radio label="apikey">API Key 验证</el-radio>
+          </el-radio-group>
         </el-form-item>
-        <el-form-item label="验证码" prop="oldCode">
-          <el-input v-model="modifyPhoneForm.oldCode" clearable></el-input>
-          <el-button @click="sendCode('old')" :disabled="oldPhoneCountdown > 0">发送验证码{{oldPhoneCountdown ? `(${oldPhoneCountdown}s)` : ''}}</el-button>
-        </el-form-item>
+        <template v-if="modifyPhoneForm.verifyType === 'phone'">
+          <el-form-item label="原手机号码" prop="oldPhone">
+            <el-input v-model="modifyPhoneForm.oldPhone" clearable disabled></el-input>
+          </el-form-item>
+          <el-form-item label="验证码" prop="oldCode">
+            <el-input v-model="modifyPhoneForm.oldCode" clearable></el-input>
+            <el-button @click="sendCode('old')" :disabled="oldPhoneCountdown > 0">发送验证码{{oldPhoneCountdown ? `(${oldPhoneCountdown}s)` : ''}}</el-button>
+          </el-form-item>
+        </template>
+        <template v-else-if="modifyPhoneForm.verifyType === 'apikey'">
+          <el-form-item label="API Key" prop="apiKey">
+            <el-input v-model="modifyPhoneForm.apiKey" clearable></el-input>
+          </el-form-item>
+        </template>
         <el-form-item>
-          <el-button type="primary" @click="submitOldPhoneForm('modifyPhoneForm')">提交验证</el-button>
+          <el-button type="primary" @click="submitVerification('modifyPhoneForm')">提交验证</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -71,8 +84,10 @@ export default {
         fid: ''
       },
       modifyPhoneForm: {
+        verifyType: 'phone',
         oldPhone: '',
         oldCode: '',
+        apiKey: '',
         newPhone: '',
         newCode: ''
       },
@@ -184,24 +199,41 @@ export default {
       this.modifyPhoneVisible = true;
       this.modifyPhoneStep = 1;
     },
-    submitOldPhoneForm(formName) {
+    submitVerification(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$http.get('/face/SmsVef', {
-            params: {
-              fid: this.phoneAuthForm.fid,
-              phone: this.modifyPhoneForm.oldPhone,
-              code: this.modifyPhoneForm.oldCode
-            }
-          }).then(response => {
-            if (response.data.code === 200) {
-              this.modifyPhoneStep = 2;
-            } else {
-              alert(response.data.msg);
-            }
-          }).catch(error => {
-            console.error('Old phone verification failed:', error);
-          });
+          if (this.modifyPhoneForm.verifyType === 'phone') {
+            this.$http.get('/face/SmsVef', {
+              params: {
+                fid: this.phoneAuthForm.fid,
+                phone: this.modifyPhoneForm.oldPhone,
+                code: this.modifyPhoneForm.oldCode
+              }
+            }).then(response => {
+              if (response.data.code === 200) {
+                this.modifyPhoneStep = 2;
+              } else {
+                alert(response.data.msg);
+              }
+            }).catch(error => {
+              console.error('Old phone verification failed:', error);
+            });
+          } else if (this.modifyPhoneForm.verifyType === 'apikey') {
+            this.$http.get('/face/log/vef', {
+              params: {
+                fid: this.phoneAuthForm.fid,
+                Auth: this.modifyPhoneForm.apiKey
+              }
+            }).then(response => {
+              if (response.data.code === 200) {
+                this.modifyPhoneStep = 2;
+              } else {
+                alert(response.data.msg);
+              }
+            }).catch(error => {
+              console.error('API key verification failed:', error);
+            });
+          }
         } else {
           return false;
         }

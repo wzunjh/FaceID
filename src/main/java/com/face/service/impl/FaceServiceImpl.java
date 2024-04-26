@@ -606,8 +606,8 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             apiResult.setCode(400);
             return apiResult;
         }
-        String ApiKey = String.valueOf(lambdaQuery().eq(Face::getFid,fid).select(Face::getApiKey));
-        if (Auth.equals(ApiKey)){
+        Face face = lambdaQuery().eq(Face::getFid, fid).one();
+        if (Auth.equals(face.getApiKey())){
             apiResult.setCode(200);
             apiResult.setMsg("验证成功");
             return apiResult;
