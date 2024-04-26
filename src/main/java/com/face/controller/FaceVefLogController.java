@@ -4,10 +4,13 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.face.annotation.FaceLog;
 import com.face.bean.ApiLog;
 import com.face.bean.FaceVefLog;
+import com.face.bean.result.ApiResult;
 import com.face.bean.result.FaceResult;
 import com.face.service.ApiLogService;
+import com.face.service.FaceService;
 import com.face.service.FaceVefLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +30,10 @@ public class FaceVefLogController {
 
     @Autowired
     ApiLogService apiLogService;
+
+    @Autowired
+    FaceService faceService;
+
 
 
     @GetMapping("/list")
@@ -72,6 +79,11 @@ public class FaceVefLogController {
         return FaceResult.success(page);
     }
 
+    @GetMapping("/vef")
+    @ApiOperation(value = "Auth认证", notes = "根据Auth进行认证")
+    public ApiResult vefAuth(@RequestParam String Auth, @RequestParam Integer fid) {
+        return faceService.vefAuth(Auth,fid);
+    }
 
 
 }

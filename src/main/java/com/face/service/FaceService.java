@@ -60,5 +60,6 @@ public interface FaceService extends IService<Face> {
     // 上传人脸图片是否合格
     FaceResult isGg(String imageBase);
 
-
+    //Auth 验证
+    ApiResult vefAuth(String Auth, Integer fid);
 }

@@ -597,6 +597,26 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         return sb.toString();
     }
 
+    @Override
+    public ApiResult vefAuth(String Auth, Integer fid) {
+
+        ApiResult apiResult = new ApiResult();
+        if (Auth.isEmpty()){
+            apiResult.setMsg("令牌不能为空");
+            apiResult.setCode(400);
+            return apiResult;
+        }
+        String ApiKey = String.valueOf(lambdaQuery().eq(Face::getFid,fid).select(Face::getApiKey));
+        if (Auth.equals(ApiKey)){
+            apiResult.setCode(200);
+            apiResult.setMsg("验证成功");
+            return apiResult;
+        }
+        apiResult.setMsg("令牌不匹配,验证失败");
+        apiResult.setCode(400);
+        return apiResult;
+    }
+
 }
 
 
