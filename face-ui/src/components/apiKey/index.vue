@@ -17,6 +17,7 @@
           </el-descriptions-item>
           <el-descriptions-item label="累计使用次数(调用接口次数)" class="num-item">{{ apiNum }}</el-descriptions-item>
           <el-descriptions-item label="最新使用时间(一键登录与远程接口调用)" class="time-item">{{ apiTime }}</el-descriptions-item>
+          <el-descriptions-item label="接口每分钟请求限制次数" class="num-item">{{ apiMin }}次/每分钟</el-descriptions-item>
         </el-descriptions>
         <el-alert
             title="您没有可用的ApiKey"
@@ -92,6 +93,7 @@ export default {
     return {
       apiKey: null,
       apiNum: 0,
+      apiMin: 3,
       apiTime: '',
       apiBaseUrl: 'http://localhost:8868/api/vef',
       msg: '',
@@ -117,6 +119,7 @@ export default {
         if (response.data.code === 200) {
           this.apiKey = response.data.apiKey;
           this.apiNum = response.data.apiNum;
+          this.apiMin = response.data.apiMin;
           this.apiTime = response.data.apiTime;
           if (response.data.msg) {
             this.msg = response.data.msg;
@@ -128,12 +131,14 @@ export default {
         } else {
           this.apiKey = null;
           this.apiNum = 0;
+          this.apiMin = 3;
           this.apiTime = '';
         }
       }).catch(error => {
         console.error('Error fetching API key:', error);
         this.apiKey = null;
         this.apiNum = 0;
+        this.apiMin = 3;
         this.apiTime = '';
       });
     },
@@ -175,6 +180,7 @@ export default {
         if (response.data.code === 200) {
           this.apiKey = response.data.apiKey;
           this.apiNum = response.data.apiNum;
+          this.apiMin = response.data.apiMin;
           this.apiTime = response.data.apiTime;
           if (response.data.msg) {
             this.msg = response.data.msg;

@@ -294,6 +294,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             faceResult.setApiKey("Auth-************************");
             faceResult.setApiNum(face.getApiNum());
             faceResult.setApiTime(face.getApiTime());
+            faceResult.setApiMin(face.getApiMin());
             faceResult.setCode(200);
         }
 

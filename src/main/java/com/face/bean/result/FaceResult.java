@@ -74,6 +74,11 @@ public class FaceResult {
     private int apiNum;
 
     /**
+     * 接口调用限制
+     */
+    private int apiMin;
+
+    /**
      * 接口调用最新时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
