@@ -559,7 +559,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         sb.append("Auth-");
 
         Random random = new Random();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 30; i++) {
             int type = random.nextInt(3); // 0 for digit, 1 for uppercase letter, 2 for lowercase letter
 
             switch (type) {
