@@ -292,7 +292,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             faceResult.setMsg("未查询到,请新建或更新 ApiKey");
         }
         else {
-            faceResult.setApiKey(face.getApiKey());
+            faceResult.setApiKey("Auth-************************");
             faceResult.setApiNum(face.getApiNum());
             faceResult.setApiTime(face.getApiTime());
             faceResult.setCode(200);
