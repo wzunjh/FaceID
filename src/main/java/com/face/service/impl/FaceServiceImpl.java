@@ -2,6 +2,7 @@ package com.face.service.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONUtil;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.face.bean.ApiLog;
 import com.face.bean.Face;
@@ -11,6 +12,7 @@ import com.face.mapper.FaceMapper;
 import com.face.mapper.ApiLogMapper;
 import com.face.server.FaceContrastServer;
 import com.face.server.IdAuthenticationServer;
+import com.face.service.ApiLogService;
 import com.face.service.FaceService;
 import com.face.utils.*;
 import org.jetbrains.annotations.NotNull;
@@ -28,6 +30,9 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
 
     @Autowired
     private ApiLogMapper apiLogMapper;
+
+    @Autowired
+    ApiLogService apiLogService;
 
     @Autowired
     FaceContrastServer faceContrastServer;
@@ -480,31 +485,47 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         ApiResult faceResult = new ApiResult();
         FaceResult vef;
         int faceLength = faceList.size();
-            if (faceLength == 0) {
-                return ApiResult.error(FaceResult.NULL_ERROR, "空指针异常"); // Use custom error handling for an empty face list
-            }
-
-            for (Face face : faceList) {
-                if (face.getApiKey().equals(AuthToken)) {
-                    // 成功
-                    lambdaUpdate().set(Face::getApiNum,face.getApiNum()+1).set(Face::getApiTime,new Date()).eq(Face::getFid,face.getFid()).update();
-                    vef = faceApi(imageBase1,imageBase2);
-                    ApiLog apiLog = new ApiLog();
-                    apiLog.setFid(face.getFid());
-                    apiLog.setApiTime(new Date());
-                    apiLog.setApiCode(vef.getCode());
-                    apiLog.setApiMsg(vef.getMsg());
-                    apiLogMapper.insert(apiLog);
-                    faceResult.setScore(vef.getScore());
-                    faceResult.setMsg("对比成功");
-                    faceResult.setCode(200);
-                    return faceResult;
-                }
-            }
-            // If no face matched the AuthToken
-            return ApiResult.error(FaceResult.NULL_ERROR, "Auth令牌错误或失效");
+        if (faceLength == 0) {
+            return ApiResult.error(FaceResult.NULL_ERROR, "空指针异常"); // Use custom error handling for an empty face list
         }
 
+        for (Face face : faceList) {
+            if (face.getApiKey().equals(AuthToken)) {
+                // Check if the request limit is exceeded
+                if (isRequestLimitExceeded(face)) {
+                    return ApiResult.error(FaceResult.NULL_ERROR, "请求次数超出限制");
+                }
+
+                // 成功
+                lambdaUpdate().set(Face::getApiNum, face.getApiNum() + 1).set(Face::getApiTime, new Date()).eq(Face::getFid, face.getFid()).update();
+                vef = faceApi(imageBase1, imageBase2);
+                ApiLog apiLog = new ApiLog();
+                apiLog.setFid(face.getFid());
+                apiLog.setApiTime(new Date());
+                apiLog.setApiCode(vef.getCode());
+                apiLog.setApiMsg(vef.getMsg());
+                apiLogMapper.insert(apiLog);
+                faceResult.setScore(vef.getScore());
+                faceResult.setMsg("对比成功");
+                faceResult.setCode(200);
+                return faceResult;
+            }
+        }
+
+        // If no face matched the AuthToken
+        return ApiResult.error(FaceResult.NULL_ERROR, "Auth令牌错误或失效");
+    }
+
+    private boolean isRequestLimitExceeded(Face face) {
+        long currentTime = System.currentTimeMillis();
+        long lastMinuteStartTime = currentTime - (currentTime % (60 * 1000));
+        int requestCountInLastMinute = apiLogService.lambdaQuery()
+                .eq(ApiLog::getFid, face.getFid())
+                .ge(ApiLog::getApiTime, new Date(lastMinuteStartTime))
+                .lt(ApiLog::getApiTime, new Date(currentTime))
+                .count();
+        return requestCountInLastMinute >= face.getApiMin();
+    }
     @Override
     public FaceResult SerIP(Integer fid) {
         FaceResult faceResult = new FaceResult();

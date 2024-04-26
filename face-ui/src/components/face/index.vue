@@ -41,6 +41,7 @@
             <el-table-column prop="createTime" label="创建时间" width="200" sortable></el-table-column>
             <el-table-column prop="vefNum" label="验证次数" sortable></el-table-column>
             <el-table-column prop="faceName" label="姓名"></el-table-column>
+            <el-table-column prop="apiMin" label="API次数/Min"></el-table-column>
             <el-table-column prop="remark" label="备注"></el-table-column>
             <el-table-column prop="faceStatus" label="是否启用" sortable>
               <template v-slot:default="scope">
@@ -103,6 +104,9 @@
             <el-button>摄像头正在加载...</el-button>
           </div>
         </el-form-item>
+        <el-form-item label="次数/分钟">
+          <el-input placeholder="必填" type="textarea" v-model="faceObj.apiMin"></el-input>
+        </el-form-item>
         <el-form-item label="备注">
           <el-input placeholder="非必填" type="textarea" v-model="faceObj.remark"></el-input>
         </el-form-item>
@@ -143,6 +147,7 @@ export default {
         faceBase: '',
         faceStatus: 0,
         remark: '',
+        apiMin: 5,
         addAndUpdateState: false,
       },
       rules: {

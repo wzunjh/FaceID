@@ -96,6 +96,11 @@ public class Face implements Serializable {
      */
     private String ipList;
 
+    /**
+     * 接口调用频率限制
+     */
+    private Integer apiMin;
+
 
 
     @TableField(exist = false)
