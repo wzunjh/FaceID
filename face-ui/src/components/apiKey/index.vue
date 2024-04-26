@@ -29,7 +29,7 @@
             title="Are you sure you want to update the API key?"
             confirm-button-text="Yes, update it"
             cancel-button-text="Cancel"
-            @confirm="updateApiKey">
+            @confirm="showPhoneVerification">
           <template #reference>
             <el-button type="primary">新建/更新ApiKey</el-button>
           </template>
@@ -61,6 +61,28 @@
         center>
       <span>{{ msg }}</span>
     </el-dialog>
+
+    <el-dialog
+        :visible.sync="phoneVerificationVisible"
+        title="手机号验证"
+        width="30%"
+        center>
+      <el-form :model="phoneAuthForm" ref="phoneAuthForm" label-width="100px">
+        <el-form-item label="手机号" prop="phone">
+          <el-input v-model="phoneAuthForm.phone" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="验证码" prop="code">
+          <el-input v-model="phoneAuthForm.code"></el-input>
+          <el-button @click="sendCode('phone')" :disabled="phoneCountdown > 0">
+            {{ phoneCountdown > 0 ? `${phoneCountdown}s` : '发送验证码' }}
+          </el-button>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="phoneVerificationVisible = false">取消</el-button>
+        <el-button type="primary" @click="verifyPhone">验证</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -73,11 +95,20 @@ export default {
       apiTime: '',
       apiBaseUrl: 'http://localhost:8868/api/vef',
       msg: '',
-      dialogVisible: false
+      dialogVisible: false,
+      phoneAuthForm: {
+        phone: '',
+        code: '',
+        fid: ''
+      },
+      phoneData: { fid: '', phone: '' },
+      phoneCountdown: 0,
+      phoneVerificationVisible: false
     };
   },
   mounted() {
     this.fetchApiKey();
+    this.checkPhoneBinding();
   },
   methods: {
     fetchApiKey() {
@@ -104,6 +135,38 @@ export default {
         this.apiKey = null;
         this.apiNum = 0;
         this.apiTime = '';
+      });
+    },
+    showPhoneVerification() {
+      const fid = localStorage.getItem('user_id');
+      this.phoneAuthForm.fid = fid;
+      this.$http.get(`/face/SmsC/${fid}`).then(response => {
+        if (response.data.code === 200) {
+          this.phoneData.phone = response.data.phone;
+          this.phoneData.fid = response.data.fid;
+          this.phoneAuthForm.phone = this.phoneData.phone;
+          this.phoneVerificationVisible = true;
+        }
+      }).catch(error => {
+        console.error('Error checking phone binding:', error);
+      });
+    },
+    verifyPhone() {
+      this.$http.get('/face/SmsVef', {
+        params: {
+          fid: this.phoneAuthForm.fid,
+          phone: this.phoneAuthForm.phone,
+          code: this.phoneAuthForm.code
+        }
+      }).then(response => {
+        if (response.data.code === 200) {
+          this.phoneVerificationVisible = false;
+          this.updateApiKey();
+        } else {
+          alert(response.data.msg);
+        }
+      }).catch(error => {
+        console.error('Phone verification failed:', error);
       });
     },
     updateApiKey() {
@@ -134,6 +197,49 @@ export default {
         });
       }).catch(err => {
         console.error('Failed to copy API key: ', err);
+      });
+    },
+    checkPhoneBinding() {
+      const fid = localStorage.getItem('user_id');
+      this.$http.get(`/face/SmsC/${fid}`).then(response => {
+        if (response.data.code === 200) {
+          this.phoneData.phone = response.data.phone;
+          this.phoneData.fid = response.data.fid;
+        }
+      }).catch(error => {
+        console.error('Error checking phone binding:', error);
+      });
+    },
+    sendCode(type) {
+      let countdown = 0;
+      switch (type) {
+        case 'phone':
+          countdown = this.phoneCountdown;
+          break;
+      }
+      if (countdown > 0) return;
+      countdown = 60;
+      let interval = setInterval(() => {
+        countdown--;
+        if (countdown === 0) clearInterval(interval);
+        switch (type) {
+          case 'phone':
+            this.phoneCountdown = countdown;
+            break;
+        }
+      }, 1000);
+
+      let phone = '';
+      switch (type) {
+        case 'phone':
+          phone = this.phoneAuthForm.phone;
+          break;
+      }
+      this.$http.get('/face/Sms', { params: { phone: phone } })
+          .then(response => {
+            alert(response.data.msg);
+          }).catch(error => {
+        console.error('Failed to send code:', error);
       });
     }
   }
