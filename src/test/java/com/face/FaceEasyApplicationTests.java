@@ -1,6 +1,8 @@
 package com.face;
 
+import com.face.bean.result.ApiResult;
 import com.face.server.IdAuthenticationServer;
+import com.face.service.ApiLogService;
 import com.face.service.FaceService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +18,9 @@ class FaceEasyApplicationTests {
 
     @Autowired
     FaceService faceService;
+
+    @Autowired
+    ApiLogService apiLogService;
 
 
     @Test
@@ -73,6 +78,16 @@ class FaceEasyApplicationTests {
         System.out.println("Msg: " + faceResult.getMsg());
     }
 
+
+    @Test
+    public void vufAuth(){
+
+        String Auth = "Auth-*****************************";
+        Integer fid = 1;
+
+        ApiResult apiResult = faceService.vefAuth(Auth,fid);
+        System.out.println(apiResult.getCode()+apiResult.getMsg());
+    }
 
 
 }
