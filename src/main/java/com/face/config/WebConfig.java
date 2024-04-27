@@ -1,52 +1,51 @@
 package com.face.config;
 
+import com.face.utils.JwtUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+@Configuration
+@EnableWebSecurity
+public class WebConfig {
 
-@Component
-public class WebConfig implements WebMvcConfigurer {
+    @Autowired
+    private JwtUtils jwtUtils;
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOriginPatterns("*")
-                .allowedHeaders("*")
-                .allowedMethods("GET", "POST", "DELETE", "PUT")
-                .allowCredentials(true)
-                .maxAge(3600);
-    }
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.cors().and()
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/face/vef", "/api/vef", "/js/**", "/img/**", "/*.ico", "/*.css", "/oauth/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        // 添加放行的路径
-        String[] addPath = {"/**"};
-        String[] excludePath = {"/face/vef","/api/vef",
-                "/js/**","/img/**","/*.ico","/*.css","/oauth/**"
-        };
-        registry.addInterceptor(new FaceConfig()).addPathPatterns(addPath).excludePathPatterns(excludePath);
-    }
-
-
-    private CorsConfiguration buildConfig() {
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("*");
-        corsConfiguration.addAllowedHeader("*");
-        corsConfiguration.addAllowedMethod("*");
-        corsConfiguration.addExposedHeader("face_token");
-        return corsConfiguration;
+        return http.build();
     }
 
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", buildConfig());
+        CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        config.addExposedHeader("face_token");
+        source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
 }
