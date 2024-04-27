@@ -69,6 +69,12 @@
           <option value="FaceID" />
           <option value="FaceID" />
           <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
+          <option value="FaceID" />
         </list>
       </option>
       <option name="ignoredPackages">
@@ -97,6 +103,12 @@
           <option value="io.netty:netty-codec:4.1.70.Final" />
           <option value="io.netty:netty-common:4.1.70.Final" />
           <option value="io.netty:netty-handler:4.1.70.Final" />
+          <option value="org.springframework.security.oauth:spring-security-oauth2:2.5.0.RELEASE" />
+          <option value="org.springframework.security:spring-security-config:5.6.0" />
+          <option value="org.springframework.security:spring-security-core:5.6.0" />
+          <option value="org.springframework.security.oauth:spring-security-oauth2:2.4.1.RELEASE" />
+          <option value="org.springframework.security:spring-security-crypto:5.6.0" />
+          <option value="org.springframework.security:spring-security-web:5.6.0" />
         </list>
       </option>
       <option name="ignoredReasons">
@@ -122,6 +134,12 @@
           <option value="不可利用" />
           <option value="不可利用" />
           <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="不可利用" />
+          <option value="处理中" />
           <option value="不可利用" />
           <option value="不可利用" />
           <option value="不可利用" />
