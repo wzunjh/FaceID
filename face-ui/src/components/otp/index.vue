@@ -8,7 +8,7 @@
       </div>
       <div class="countdown">
         <el-progress :percentage="(expirationSeconds / 30) * 100" :show-text="false" :stroke-width="24" color="#67C23A" />
-        <div class="countdown-text" style="font-size: 24px; font-weight: bold; color: #67C23A;">{{ expirationSeconds }} seconds</div>
+        <div class="countdown-text" style="font-size: 24px; font-weight: bold; color: #67C23A;">剩余有效时间: {{ expirationSeconds }} seconds</div>
       </div>
     </div>
   </div>

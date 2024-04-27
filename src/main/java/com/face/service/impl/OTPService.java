@@ -19,7 +19,7 @@ public class OTPService {
     private StringRedisTemplate redisTemplate;
 
     private static final int OTP_LENGTH = 6;
-    private static final int OTP_EXPIRATION_MINUTES = 5;
+    private static final int OTP_EXPIRATION_MINUTES = 1;
 
     public OtpResult generateOTP(String userId) {
         String otpKey = getOTPKey(userId);
