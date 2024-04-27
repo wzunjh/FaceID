@@ -2,7 +2,7 @@
   <div id="app">
     <h1 style="font-size: 48px;">OTP Generator</h1>
     <p v-if="error" style="font-size: 24px;">{{ error }}</p>
-    <div v-else class="otp-container">
+    <div v-else-if="isAuthenticated" class="otp-container">
       <div class="otp-digits">
         <div class="otp-digit" v-for="digit in otp.split('')" :key="digit" style="font-size: 48px; width: 80px; height: 80px; line-height: 80px;">{{ digit }}</div>
       </div>
@@ -11,6 +11,7 @@
         <div class="countdown-text" style="font-size: 24px; font-weight: bold; color: #67C23A;">剩余有效时间: {{ expirationSeconds }} seconds</div>
       </div>
     </div>
+    <div v-else style="font-size: 24px;">未认证,无法使用 OTP</div>
   </div>
 </template>
 
@@ -28,10 +29,12 @@ export default {
       otp: '',
       expirationSeconds: 0,
       intervalId: null,
-      error: null
+      error: null,
+      isAuthenticated: false
     }
   },
   mounted() {
+    this.checkAuthentication();
     this.fetchOtp();
     this.intervalId = setInterval(this.fetchOtp, 1000);
   },
@@ -39,6 +42,17 @@ export default {
     clearInterval(this.intervalId);
   },
   methods: {
+    checkAuthentication() {
+      const fid = localStorage.getItem('user_id');
+      this.$http.get(`/face/orAuth/${fid}`)
+          .then(response => {
+            this.isAuthenticated = response.data.code === 200;
+          })
+          .catch(error => {
+            console.error(error);
+            this.error = error.response.data.msg;
+          });
+    },
     fetchOtp() {
       const fid = localStorage.getItem('user_id');
       this.$http.get(`/mfa/otp/${fid}`, {
