@@ -6,4 +6,7 @@ import com.face.bean.OauthClient;
 
 public interface OauthClientService extends IService<OauthClient> {
 
+
+    OauthClient getClientByClientId(String clientId);
+
 }
