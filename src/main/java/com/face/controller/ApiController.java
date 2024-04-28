@@ -2,6 +2,7 @@ package com.face.controller;
 
 import com.face.bean.result.ApiResult;
 import com.face.service.FaceService;
+import com.face.service.impl.OTPService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,9 @@ public class ApiController {
 
     @Autowired
     FaceService faceService;
+
+    @Autowired
+    OTPService otpservice;
 
 
     @PostMapping("/vef")
@@ -53,6 +57,21 @@ public class ApiController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @PostMapping("/otp")
+    @ApiOperation(value = "OTP认证", notes = "根据id和OPT进行认证")
+    public ApiResult authenticate(@RequestParam String fid, @RequestParam String otp) {
+        ApiResult apiResult = new ApiResult();
+        // 调用接口实现身份验证逻辑
+        if (otpservice.verifyOTP(fid, otp)) {
+            apiResult.setMsg("授权成功");
+            apiResult.setCode(200);
+            return apiResult;
+        }
+        apiResult.setMsg("授权失败,信息不匹配");
+        apiResult.setCode(400);
+        return apiResult;
     }
 
 
