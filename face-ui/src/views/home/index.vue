@@ -74,6 +74,11 @@
                 OTP动态口令
               </el-menu-item>
             </router-link>
+            <router-link class="router-link-active" to="/otp">
+              <el-menu-item index="1-10">
+                授权第三方服务
+              </el-menu-item>
+            </router-link>
           </el-submenu>
         </el-menu>
       </el-aside>

@@ -78,6 +78,11 @@ const routes = [
         path: '/otp',
         name: 'otp',
         component: () => import('@/components/otp/index.vue')
+      },
+      {
+        path: '/oauth',
+        name: 'oauth',
+        component: () => import('@/components/OAUTH/index.vue')
       }
     ]
   }
