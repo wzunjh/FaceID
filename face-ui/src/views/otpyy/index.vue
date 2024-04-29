@@ -1,8 +1,8 @@
 <template>
-  <div class="container mx-auto my-8">
-    <div class="flex flex-col items-center">
+  <div class="container mx-auto my-8 flex flex-col items-center justify-center h-screen">
+    <div class="text-center">
       <h1 class="text-3xl font-bold mb-4">第三方应用</h1>
-      <el-button v-if="!isLoggedIn" type="primary" @click="login" class="mb-8">登录</el-button>
+      <el-button v-if="!isLoggedIn" type="primary" @click="login" class="mb-8">授权登录</el-button>
       <div v-if="isLoggedIn" class="mt-8">
         <h2 class="text-2xl font-bold mb-4">授权登录成功,用户信息如下:</h2>
         <el-descriptions :column="1" border>
@@ -122,3 +122,17 @@ export default {
   }
 }
 </script>
+
+<style>
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.text-center {
+  text-align: center;
+}
+</style>
