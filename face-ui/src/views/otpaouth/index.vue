@@ -2,27 +2,24 @@
   <div class="flex justify-center items-center h-screen">
     <div class="w-full max-w-md">
       <el-card class="box-card p-8 shadow-lg">
-        <div class="text-center mb-8">
-          <span class="text-5xl font-bold">统一身份信息授权登录中心</span>
+        <div class="text-center mb-16">
+          <h1 class="text-4xl font-bold">统一身份信息授权登录中心</h1>
+          <p class="text-gray-500 mt-4">请输入您的用户 ID 和OTP动态口令进行授权</p>
         </div>
         <el-form @submit.native.prevent="authorizeAndRedirect" class="form-center">
           <el-form-item label="用户 ID" label-width="100px" class="mb-6">
             <el-input v-model="fid" placeholder="请输入用户 ID" required></el-input>
           </el-form-item>
-          <el-form-item label="动态口令" label-width="100px" class="mb-6">
-            <el-input v-model="otp" placeholder="请输入动态口令" required></el-input>
+          <el-form-item label="OTP动态口令" label-width="100px" class="mb-6">
+            <el-input v-model="otp" placeholder="请输入OTP动态口令" required></el-input>
           </el-form-item>
           <el-form-item class="mb-6">
-            <div class="flex justify-center">
-              <el-checkbox v-model="isHuman" class="mr-2">同意授权人脸、身份证号码、手机号、姓名等信息</el-checkbox>
-            </div>
+            <el-checkbox v-model="isHuman" class="mr-2">同意授权人脸、身份证号码、手机号、姓名等信息</el-checkbox>
           </el-form-item>
-          <el-form-item>
-            <div class="text-center">
-              <el-button type="primary" native-type="submit" @click="validateForm" :disabled="!isHuman" class="submit-button text-lg">
-                <i class="el-icon-user-solid mr-2"></i>同意并授权
-              </el-button>
-            </div>
+          <el-form-item class="mb-6">
+            <el-button type="primary" native-type="submit" @click="validateForm" :disabled="!isHuman" class="submit-button text-lg">
+              <i class="el-icon-user-solid mr-2"></i>同意并授权
+            </el-button>
           </el-form-item>
         </el-form>
       </el-card>
