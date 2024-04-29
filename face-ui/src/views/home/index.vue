@@ -76,7 +76,7 @@
             </router-link>
             <router-link class="router-link-active" to="/otp">
               <el-menu-item index="1-10">
-                授权第三方服务
+                OAuth2.0 身份信息授权
               </el-menu-item>
             </router-link>
           </el-submenu>
