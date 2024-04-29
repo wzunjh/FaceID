@@ -15,6 +15,11 @@ public class FaceResult {
     private String msg;
 
     /**
+     * 图片数据 base_64编码
+     */
+    private String faceBase;
+
+    /**
      * 状态码
      */
     private int code;

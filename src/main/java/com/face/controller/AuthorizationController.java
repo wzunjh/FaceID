@@ -1,6 +1,10 @@
 package com.face.controller;
 
+import cn.hutool.json.JSONUtil;
+import com.face.bean.Face;
 import com.face.bean.OauthClient;
+import com.face.bean.result.FaceResult;
+import com.face.service.FaceService;
 import com.face.service.OauthClientService;
 import com.face.service.impl.OTPService;
 import com.face.utils.JsonUtils;
@@ -32,6 +36,10 @@ public class AuthorizationController {
 
     @Autowired
     private OauthClientService oauthClientService;
+
+    @Autowired
+    private FaceService faceService;
+
     @Autowired
     private OTPService otpService;
 
@@ -61,7 +69,7 @@ public class AuthorizationController {
                                 @RequestParam(value = "otp", required = false) String otp) {
         if (otpService.verifyOTP(fid, otp)) {
             String code = generateAuthorizationCode(clientId);
-            return redirectUri + "?code=" + code;
+            return redirectUri + "?code=" + code + "&fid=" + fid;
         } else {
             return redirectUri + "?error=invalid_otp";
         }
@@ -130,4 +138,36 @@ public class AuthorizationController {
         // 过期时间为 1 小时
         stringRedisTemplate.opsForValue().set(clientId + ":" + code, JsonUtils.serialize(accessToken), 3600, TimeUnit.SECONDS);
     }
+
+    @GetMapping("/user_info")
+    public ResponseEntity<FaceResult> getUserInfo(@RequestParam("client_id") String clientId,
+                                                  @RequestParam("code") String code,
+                                                  @RequestParam("fid") String fid,
+                                                  @RequestHeader("Authorization") String authorization) {
+        // 从请求头中获取 accessToken
+        String accessToken = authorization.replace("Bearer ", "");
+
+        // 从 Redis 中获取存储的 accessToken 信息
+        String storedAccessTokenJson = stringRedisTemplate.opsForValue().get(clientId + ":" + code);
+        if (storedAccessTokenJson != null) {
+            // 使用 Hutool 提取 accessToken
+            String storedAccessToken = JSONUtil.parseObj(storedAccessTokenJson).getStr("access_token");
+            if (storedAccessToken != null && storedAccessToken.equals(accessToken)) {
+                // 如果 accessToken 有效,则调用 faceService 进行查询操作
+                FaceResult faceResult = new FaceResult();
+                Face userInfo = faceService.lambdaQuery().eq(Face::getFid, fid).one();
+                faceResult.setMsg("授权成功");
+                faceResult.setCode(200);
+                faceResult.setName(userInfo.getFaceName());
+                faceResult.setPhone(userInfo.getPhone());
+                faceResult.setIdNo(userInfo.getIdNo());
+                faceResult.setFaceBase(userInfo.getFaceBase());
+                return ResponseEntity.ok(faceResult);
+            }
+        }
+
+        // 如果 accessToken 无效,返回 401 Unauthorized 状态码
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
 }
