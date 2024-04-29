@@ -91,6 +91,8 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .form-center .el-form-item__label {
