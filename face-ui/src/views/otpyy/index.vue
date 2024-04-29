@@ -2,9 +2,9 @@
   <div class="container mx-auto my-8">
     <div class="flex flex-col items-center">
       <h1 class="text-3xl font-bold mb-4">第三方应用</h1>
-      <el-button type="primary" @click="login" class="mb-8">登录</el-button>
-      <div v-if="userInfo.name" class="mt-8">
-        <h2 class="text-2xl font-bold mb-4">用户信息</h2>
+      <el-button v-if="!isLoggedIn" type="primary" @click="login" class="mb-8">登录</el-button>
+      <div v-if="isLoggedIn" class="mt-8">
+        <h2 class="text-2xl font-bold mb-4">授权登录成功,用户信息如下:</h2>
         <el-descriptions :column="1" border>
           <el-descriptions-item label="姓名">{{ userInfo.name }}</el-descriptions-item>
           <el-descriptions-item label="手机号">{{ userInfo.phone }}</el-descriptions-item>
@@ -45,7 +45,8 @@ export default {
         faceBase: ''
       },
       faceImageUrl: '',
-      imageDialogVisible: false
+      imageDialogVisible: false,
+      isLoggedIn: false
     }
   },
   methods: {
@@ -69,8 +70,6 @@ export default {
         }
       })
           .then(response => {
-            // 处理获取到的 access_token
-            console.log(response.data);
             this.getUserInfo(response.data.access_token);
           })
           .catch(error => {
@@ -93,14 +92,12 @@ export default {
         }
       })
           .then(response => {
-            // 更新用户信息
             this.userInfo.name = response.data.name;
             this.userInfo.phone = response.data.phone;
             this.userInfo.idNo = response.data.idNo;
             this.userInfo.faceBase = response.data.faceBase;
-
-            // 将 faceBase 转换为图片 URL
             this.faceImageUrl = this.convertBase64ToImageUrl(response.data.faceBase);
+            this.isLoggedIn = true;
           })
           .catch(error => {
             console.error(error);
