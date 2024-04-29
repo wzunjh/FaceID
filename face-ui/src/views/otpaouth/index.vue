@@ -1,21 +1,32 @@
 <template>
   <div class="flex justify-center items-center h-screen">
-    <el-card class="box-card w-full max-w-md">
-      <div slot="header" class="clearfix">
-        <span class="text-2xl font-bold">授权登录</span>
-      </div>
-      <el-form @submit.native.prevent="authorizeAndRedirect">
-        <el-form-item label="用户 ID" label-width="100px">
-          <el-input v-model="fid" placeholder="请输入用户 ID" required></el-input>
-        </el-form-item>
-        <el-form-item label="动态口令" label-width="100px">
-          <el-input v-model="otp" placeholder="请输入动态口令" required></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" native-type="submit">登录并授权</el-button>
-        </el-form-item>
-      </el-form>
-    </el-card>
+    <div class="w-full max-w-md">
+      <el-card class="box-card p-8 shadow-lg">
+        <div class="text-center mb-6">
+          <span class="text-2xl font-bold">统一身份信息授权登录中心</span>
+        </div>
+        <el-form @submit.native.prevent="authorizeAndRedirect" class="form-center">
+          <el-form-item label="用户 ID" label-width="100px" class="mb-4">
+            <el-input v-model="fid" placeholder="请输入用户 ID" required></el-input>
+          </el-form-item>
+          <el-form-item label="动态口令" label-width="100px" class="mb-4">
+            <el-input v-model="otp" placeholder="请输入动态口令" required></el-input>
+          </el-form-item>
+          <el-form-item class="mb-4">
+            <div class="flex justify-center">
+              <el-checkbox v-model="isHuman" class="mr-2">同意授权人脸、身份证号码、手机号、姓名等信息</el-checkbox>
+            </div>
+          </el-form-item>
+          <el-form-item>
+            <div class="text-center">
+              <el-button type="primary" native-type="submit" @click="validateForm" :disabled="!isHuman" class="submit-button">
+                <i class="el-icon-user-solid mr-2"></i>登录并授权
+              </el-button>
+            </div>
+          </el-form-item>
+        </el-form>
+      </el-card>
+    </div>
   </div>
 </template>
 
@@ -29,7 +40,8 @@ export default {
       fid: '',
       otp: '',
       clientId: '',
-      redirectUri: ''
+      redirectUri: '',
+      isHuman: false
     }
   },
   created() {
@@ -38,6 +50,18 @@ export default {
     this.$http = axios;
   },
   methods: {
+    validateForm() {
+      // 在这里添加表单验证逻辑
+      if (this.fid.trim() === '' || this.otp.trim() === '') {
+        this.$message.error('请填写完整的用户 ID 和动态口令');
+        return;
+      }
+      if (!this.isHuman) {
+        this.$message.error('请确认您不是机器人');
+        return;
+      }
+      this.authorizeAndRedirect();
+    },
     authorizeAndRedirect() {
       this.$http.post('/oauth/authorize', null, {
         params: {
@@ -61,3 +85,24 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.form-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-center .el-form-item__label {
+  text-align: center;
+}
+
+.form-center .el-form-item__content {
+  display: flex;
+  justify-content: center;
+}
+
+.submit-button {
+  width: 100%;
+}
+</style>
