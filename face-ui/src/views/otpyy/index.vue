@@ -1,15 +1,33 @@
-<!-- OtpYy.vue -->
 <template>
-  <div>
-    <h1>第三方应用</h1>
-    <button @click="login">登录</button>
-    <div v-if="userInfo.name">
-      <h2>用户信息</h2>
-      <p>姓名: {{ userInfo.name }}</p>
-      <p>手机号: {{ userInfo.phone }}</p>
-      <p>身份证号: {{ userInfo.idNo }}</p>
-      <img :src="faceImageUrl" alt="Face Image" />
+  <div class="container mx-auto my-8">
+    <div class="flex flex-col items-center">
+      <h1 class="text-3xl font-bold mb-4">第三方应用</h1>
+      <el-button type="primary" @click="login" class="mb-8">登录</el-button>
+      <div v-if="userInfo.name" class="mt-8">
+        <h2 class="text-2xl font-bold mb-4">用户信息</h2>
+        <el-descriptions :column="1" border>
+          <el-descriptions-item label="姓名">{{ userInfo.name }}</el-descriptions-item>
+          <el-descriptions-item label="手机号">{{ userInfo.phone }}</el-descriptions-item>
+          <el-descriptions-item label="身份证号">{{ userInfo.idNo }}</el-descriptions-item>
+          <el-descriptions-item label="人脸图像">
+            <el-image
+                :src="faceImageUrl"
+                :preview-src-list="[faceImageUrl]"
+                fit="contain"
+                style="width: 200px; height: 200px; cursor: pointer;"
+                @click="openImageDialog"
+            >
+              <div slot="error" class="image-slot">
+                <i class="el-icon-picture-outline"></i>
+              </div>
+            </el-image>
+          </el-descriptions-item>
+        </el-descriptions>
+      </div>
     </div>
+    <el-dialog :visible.sync="imageDialogVisible" title="人脸图片预览">
+      <el-image :src="faceImageUrl" fit="contain"></el-image>
+    </el-dialog>
   </div>
 </template>
 
@@ -26,7 +44,8 @@ export default {
         idNo: '',
         faceBase: ''
       },
-      faceImageUrl: ''
+      faceImageUrl: '',
+      imageDialogVisible: false
     }
   },
   methods: {
@@ -88,7 +107,14 @@ export default {
           });
     },
     convertBase64ToImageUrl(base64) {
-      return `data:image/jpeg;base64,${base64}`;
+      if (base64) {
+        return `${base64}`;
+      } else {
+        return '';
+      }
+    },
+    openImageDialog() {
+      this.imageDialogVisible = true;
     }
   },
   created() {
