@@ -2,6 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import login from '../views/login/index.vue'
 import desktop from '../components/desktop/index.vue'
+import otpaouth from "../views/otpaouth/index.vue";
+import otpyy from "../views/otpyy/index.vue";
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -9,6 +12,16 @@ const routes = [
     path: '/',
     name: 'login',
     component: login
+  },
+  {
+    path: '/otpaouth',
+    name: 'otpaouth',
+    component: otpaouth
+  },
+  {
+    path: '/otpyy',
+    name: 'otpyy',
+    component: otpyy
   },
   {
     path: '/home',
@@ -71,15 +84,19 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 
-
-router.beforeEach((to,from,next)=>{
-  if(to.path === '/') return next()
+router.beforeEach((to, from, next) => {
+  if (to.path === '/' || to.path === '/otpaouth' || to.path === '/otpyy') {
+    return next();
+  }
   let face_token = localStorage.getItem("face_token");
-  if (!face_token) return next("/")
-  next()
+  if (!face_token) {
+    return next("/");
+  }
+  next();
 })
 
 export default router
