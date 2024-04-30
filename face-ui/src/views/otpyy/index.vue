@@ -51,13 +51,13 @@ export default {
   },
   methods: {
     login() {
-      const clientId = '100086';
+      const clientId = '233358';
       const redirectUri = 'http://localhost:8080/otpyy';
       window.location.href = `http://localhost:8868/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;
     },
     getToken(code) {
-      const clientId = '100086';
-      const clientSecret = '100086';
+      const clientId = '233358';
+      const clientSecret = 'M3nU1PFOxX';
       const redirectUri = 'http://localhost:8080/otpyy';
 
       axios.post('http://localhost:8868/oauth/token', null, {
@@ -77,7 +77,7 @@ export default {
           });
     },
     getUserInfo(accessToken) {
-      const clientId = '100086';
+      const clientId = '233358';
       const code = this.$route.query.code;
       const fid = this.$route.query.fid;
 
