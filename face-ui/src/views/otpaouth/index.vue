@@ -3,7 +3,7 @@
     <div class="w-full max-w-md">
       <el-card class="box-card p-8 shadow-lg">
         <div class="text-center mb-16">
-          <h1 class="text-4xl font-bold">统一身份信息授权登录中心</h1>
+          <h1 class="text-4xl font-bold">OAuth2.0身份信息授权中心</h1>
           <p class="text-gray-500 mt-4">请输入您的用户 ID 和OTP动态口令进行授权</p>
         </div>
         <el-form @submit.native.prevent="authorizeAndRedirect" class="form-center">
