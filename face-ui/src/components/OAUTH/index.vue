@@ -12,6 +12,8 @@
             </el-form-item>
             <el-form-item>
               <el-button icon="el-icon-search" @click="getAppList">搜索</el-button>
+              <el-button type="primary" @click="openOtpOauthPage">统一身份信息授权登录中心</el-button>
+              <el-button type="primary" @click="openOtpYyPage">第三方网站授权登录演示</el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -215,6 +217,12 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    openOtpOauthPage() {
+      window.open('http://localhost:8080/otpaouth', '_blank');
+    },
+    openOtpYyPage() {
+      window.open('http://localhost:8080/otpyy', '_blank');
     }
   }
 }
