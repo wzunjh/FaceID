@@ -74,7 +74,7 @@
                 OTP动态口令
               </el-menu-item>
             </router-link>
-            <router-link class="router-link-active" to="/otp">
+            <router-link class="router-link-active" to="/oauth">
               <el-menu-item index="1-10">
                 OAuth2.0 授权服务
               </el-menu-item>
