@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col :span="24">
-        <el-card header="应用列表">
+        <el-card header="授权应用列表">
           <el-form :inline="true">
             <el-form-item label="应用名称">
               <el-input v-model="searchParams.name" placeholder="名称" clearable></el-input>
@@ -27,7 +27,7 @@
           <el-table :data="tableData" style="width: 100%">
             <el-table-column prop="clientId" label="客户端ID" sortable></el-table-column>
             <el-table-column prop="clientSecret" label="客户端密钥"></el-table-column>
-            <el-table-column prop="webServerRedirectUrl" label="重定向URL"></el-table-column>
+            <el-table-column prop="webServerRedirectUrl" label="回调URL"></el-table-column>
             <el-table-column prop="name" label="应用名称"></el-table-column>
             <el-table-column prop="fid" label="所属用户ID" sortable></el-table-column>
             <el-table-column label="操作" width="230">
@@ -53,15 +53,17 @@
         <el-form-item label="应用名称" prop="name">
           <el-input placeholder="必填项" v-model="appObj.name"></el-input>
         </el-form-item>
-        <el-form-item label="重定向URL" prop="webServerRedirectUrl">
+        <el-form-item label="回调URL" prop="webServerRedirectUrl">
           <el-input placeholder="必填项" v-model="appObj.webServerRedirectUrl"></el-input>
         </el-form-item>
-        <el-form-item v-if="isSuperUser" label="所属用户ID" prop="fid">
-          <el-input placeholder="必填项" v-model="appObj.fid"></el-input>
-        </el-form-item>
-        <el-form-item v-else>
-          <el-input type="hidden" :value="appObj.fid = currentUserFid"></el-input>
-        </el-form-item>
+        <el-form-group>
+          <el-form-item v-if="isSuperUser" label="所属用户ID" prop="fid">
+            <el-input placeholder="必填项" v-model="appObj.fid"></el-input>
+          </el-form-item>
+          <el-form-item v-else>
+            <el-input type="hidden" :value="appObj.fid = currentUserFid"></el-input>
+          </el-form-item>
+        </el-form-group>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')">立即保存</el-button>
           <el-button @click="resetForm('ruleForm')">重置</el-button>
@@ -74,6 +76,14 @@
 <script>
 export default {
   data() {
+    const validateWebServerRedirectUrl = (rule, value, callback) => {
+      const urlRegex = /^(http|https):\/\//;
+      if (!urlRegex.test(value)) {
+        callback(new Error('请输入以 http:// 或 https:// 开头的合法重定向URL'));
+      } else {
+        callback();
+      }
+    };
     return {
       size: 5,
       current: 1,
@@ -99,7 +109,8 @@ export default {
           { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
         ],
         webServerRedirectUrl: [
-          { required: true, message: '请输入重定向URL', trigger: 'blur' }
+          { required: true, message: '请输入重定向URL', trigger: 'blur' },
+          { validator: validateWebServerRedirectUrl, trigger: 'blur' }
         ],
         fid: [
           { required: true, message: '请输入所属用户ID', trigger: 'blur' }
