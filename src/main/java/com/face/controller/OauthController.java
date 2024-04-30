@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Objects;
 import java.util.Random;
 
+import static com.baomidou.mybatisplus.core.toolkit.Wrappers.update;
+
 @RestController
 @RequestMapping("/oau")
 @Api("授权端信息增删改查")
@@ -64,6 +66,13 @@ public class OauthController {
         oauthClient.setClientSecret(client_secret);
         oauthClientService.save(oauthClient);
         return FaceResult.success("添加成功");
+    }
+
+    @PostMapping("/update")
+    @ApiOperation(value = "添加")
+    public FaceResult updateOauth(@RequestBody OauthClient oauthClient){
+        oauthClientService.updateById(oauthClient);
+        return FaceResult.success("修改成功");
     }
 
     private String generateRandomOTP() {
