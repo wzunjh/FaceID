@@ -21,6 +21,8 @@ public class OauthClient implements Serializable {
 
     private Integer fid;
 
+    private String name;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

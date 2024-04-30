@@ -9,10 +9,11 @@
             <result property="ClientId" column="client_id" jdbcType="VARCHAR"/>
             <result property="ClientSecret" column="client_secret" jdbcType="VARCHAR"/>
             <result property="WebServerRedirectUrl" column="web_server_redirect_url" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         fid,client_id,client_secret,
-        web_server_redirect_url
+        web_server_redirect_url,name
     </sql>
 </mapper>
