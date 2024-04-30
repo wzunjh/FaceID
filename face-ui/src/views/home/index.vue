@@ -79,6 +79,11 @@
                 OAuth2.0 授权服务
               </el-menu-item>
             </router-link>
+            <router-link class="router-link-active" to="/oauthdoc">
+              <el-menu-item index="1-11">
+                如何接入授权服务
+              </el-menu-item>
+            </router-link>
           </el-submenu>
         </el-menu>
       </el-aside>
