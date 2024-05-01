@@ -505,7 +505,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
                 apiLog.setApiMsg(vef.getMsg());
                 apiLogMapper.insert(apiLog);
                 faceResult.setScore(vef.getScore());
-                faceResult.setMsg("对比成功");
+                faceResult.setMsg(vef.getMsg());
                 faceResult.setCode(200);
                 return faceResult;
             }
