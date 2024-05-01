@@ -62,6 +62,41 @@ public class FaceContrastServer {
         return faceResult;
     }
 
+    public FaceResult faceContrastApi(String imageA, String imageB) {
+        FaceResult faceResult = new FaceResult();
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Secret-ID", serviceSecretId);
+            headers.set("Secret-Key", serviceSecretKey);
+
+            Map<String, String> map = new HashMap<>();
+            map.put("imageA", imageA);
+            map.put("imageB", imageB);
+
+            HttpEntity<Map<String, String>> request = new HttpEntity<>(map, headers);
+            ResponseEntity<Map> response = restTemplate.postForEntity(pythonServiceUrl + "/compare_faceApi", request, Map.class);
+            Map<String, Integer> responseBody = response.getBody();
+
+            if (responseBody != null && responseBody.containsKey("similarity_score")) {
+                faceResult.setScore(Float.valueOf(responseBody.get("similarity_score")));
+                faceResult.setSex1(String.valueOf(responseBody.get("sex1")));
+                faceResult.setSex2(String.valueOf(responseBody.get("sex2")));
+                faceResult.setAge1(String.valueOf(responseBody.get("age1")));
+                faceResult.setAge2(String.valueOf(responseBody.get("age2")));
+                faceResult.setCode(FaceResult.SUCCESS_CODE);
+            } else {
+                faceResult.setCode(FaceResult.FACE_ERROR);
+                faceResult.setMsg("No similarity score found in the response");
+            }
+        } catch (Exception e) {
+            faceResult.setCode(FaceResult.FACE_ERROR);
+            faceResult.setMsg(e.getMessage());
+        }
+        return faceResult;
+    }
+
     public FaceResult idVerification(String image) {
         FaceResult result = new FaceResult();
         try {

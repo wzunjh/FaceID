@@ -113,7 +113,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         }else {
             int faceLength = faceList.size();
             for (Face face : faceList) {
-                FaceResult faceResult = faceContrastServer.faceContrast(face.getFaceBase(), imageBase);
+                FaceResult faceResult = faceContrastServer.faceContrastApi(face.getFaceBase(), imageBase);
                 // 是否比对成功
                 if (faceResult.getCode() == FaceResult.SUCCESS_CODE ){
                     // 相似度是否大于80
@@ -220,7 +220,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             faceResult.setMsg("请先完成手机号核验绑定");
             return faceResult;
         }
-        faceResult = faceContrastServer.faceContrast(face.getFaceBase(),imageBase);
+        faceResult = faceContrastServer.faceContrastApi(face.getFaceBase(),imageBase);
         if (faceResult.getScore()>=FaceResult.SATISFY_SCORE){
 
             faceResult = faceContrastServer.idVerification(imageBase);
@@ -352,15 +352,15 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
     @Override
     public FaceResult faceApi(String imageBase1, String imageBase2) {
 
-            FaceResult faceResult = faceContrastServer.faceContrast(imageBase1, imageBase2);
+            FaceResult faceResult = faceContrastServer.faceContrastApi(imageBase1, imageBase2);
             if (faceResult.getCode() == FaceResult.SUCCESS_CODE) {
                 if (faceResult.getScore() > FaceResult.SATISFY_SCORE) {
                     // 相似度大于70%，认为是同一个人
-                    faceResult.setMsg("两张人脸匹配成功,相似度为:" + faceResult.getScore());
+                    faceResult.setMsg("两张人脸匹配成功,相似度为:" + faceResult.getScore()+" 性别:"+ faceResult.getSex1()+" 图一年龄:" + faceResult.getAge1() + " 图二年龄:" + faceResult.getAge2());
                     faceResult.setCode(200);
                 } else {
                     // 相似度小于70%，认为不是同一个人
-                    faceResult.setMsg("两张人脸匹配失败,相似度为:" + faceResult.getScore());
+                    faceResult.setMsg("两张人脸匹配失败,相似度为:" + faceResult.getScore()+" 图一性别:"+ faceResult.getSex1()+" 图二性别:"+faceResult.getSex2()+" 图一年龄:" + faceResult.getAge1() + " 图二年龄:" + faceResult.getAge2());
                     faceResult.setCode(200);
                 }
             }

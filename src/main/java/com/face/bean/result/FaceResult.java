@@ -84,6 +84,22 @@ public class FaceResult {
     private int apiMin;
 
     /**
+     * 返回性别
+     */
+    private String sex1;
+    /**
+     * 返回性别
+     */
+    private String sex2;/**
+     * 返回年龄
+     */
+    private String age1;
+    /**
+     * 返回年龄
+     */
+    private String age2;
+
+    /**
      * 接口调用最新时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
