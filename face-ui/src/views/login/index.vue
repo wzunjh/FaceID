@@ -33,9 +33,8 @@
 
         <!-- Auth Token Input Section -->
         <div class="auth-token" style="display: flex; justify-content: center; align-items: center; gap: 20px;">
-          <el-input v-model="authToken" placeholder="请输入您的API令牌" style="flex-grow: 1; max-width: 400px;"></el-input>
-          <el-button type="primary" @click="authLogin"><i class="el-icon-key"></i>一键登录</el-button>
-          <el-button type="primary" @click="showSmsLoginModal = true">短信验证登录</el-button>
+          <el-button type="primary" @click="showAuthLoginModal = true"><i class="el-icon-key"></i>令牌一键登录</el-button>
+          <el-button type="primary" @click="showSmsLoginModal = true"><i class="el-icon-mobile-phone"></i>短信验证登录</el-button>
         </div>
 
         <div class="msg">
@@ -49,6 +48,14 @@
         <div class="shadow-bot-right"></div>
       </div>
     </div>
+
+    <!-- Auth Login Modal -->
+    <el-dialog title="一键登录" :visible.sync="showAuthLoginModal" width="30%">
+      <div class="auth-login">
+        <el-input v-model="authToken" placeholder="请输入您的API令牌" style="flex-grow: 1; max-width: 400px; margin-right: 20px;"></el-input>
+        <el-button type="primary" @click="authLogin">登录</el-button>
+      </div>
+    </el-dialog>
 
     <!-- SMS Login Modal -->
     <el-dialog title="短信验证登录" :visible.sync="showSmsLoginModal" width="30%">
@@ -87,6 +94,7 @@ export default {
       faceOption: {},
       authToken: '',
       clientIP: '',
+      showAuthLoginModal: false,
       showSmsLoginModal: false,
       smsLoginForm: {
         phone: '',
@@ -156,6 +164,7 @@ export default {
           localStorage.setItem("user_id", res.data.fid);
           this.$message.success(res.data.msg);
           this.$router.push("/home");
+          this.showAuthLoginModal = false;
         } else {
           this.$message.error(res.data.msg);
         }
@@ -221,7 +230,11 @@ export default {
 
 <style>
 @import "./index.css";
-.sms-login {
+.sms-login, .auth-login {
   padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
 </style>
