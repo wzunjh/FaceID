@@ -35,27 +35,7 @@
         <div class="auth-token" style="display: flex; justify-content: center; align-items: center; gap: 20px;">
           <el-input v-model="authToken" placeholder="请输入您的API令牌" style="flex-grow: 1; max-width: 400px;"></el-input>
           <el-button type="primary" @click="authLogin"><i class="el-icon-key"></i>一键登录</el-button>
-          <el-button type="primary" @click="showSmsLogin = true">短信验证登录</el-button>
-        </div>
-
-        <!-- SMS Login Section -->
-        <div class="sms-login" v-if="showSmsLogin">
-          <el-form :model="smsLoginForm" :rules="smsLoginRules" ref="smsLoginForm">
-            <el-form-item label="手机号码" prop="phone">
-              <el-input v-model="smsLoginForm.phone" placeholder="请输入手机号码"></el-input>
-            </el-form-item>
-            <el-form-item label="验证码" prop="code">
-              <el-input v-model="smsLoginForm.code" placeholder="请输入验证码">
-                <template slot="append">
-                  <el-button :disabled="smsCodeDisabled" @click="sendSmsCode">{{ smsCodeBtnText }}</el-button>
-                </template>
-              </el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="smsLogin">确定</el-button>
-              <el-button @click="showSmsLogin = false">取消</el-button>
-            </el-form-item>
-          </el-form>
+          <el-button type="primary" @click="showSmsLoginModal = true">短信验证登录</el-button>
         </div>
 
         <div class="msg">
@@ -69,6 +49,29 @@
         <div class="shadow-bot-right"></div>
       </div>
     </div>
+
+    <!-- SMS Login Modal -->
+    <el-dialog title="短信验证登录" :visible.sync="showSmsLoginModal" width="30%">
+      <div class="sms-login">
+        <el-form :model="smsLoginForm" :rules="smsLoginRules" ref="smsLoginForm">
+          <el-form-item label="手机号码" prop="phone">
+            <el-input v-model="smsLoginForm.phone" placeholder="请输入手机号码"></el-input>
+          </el-form-item>
+          <el-form-item label="验证码" prop="code">
+            <el-input v-model="smsLoginForm.code" placeholder="请输入验证码">
+              <template slot="append">
+                <el-button :disabled="smsCodeDisabled" @click="sendSmsCode">{{ smsCodeBtnText }}</el-button>
+              </template>
+            </el-input>
+          </el-form-item>
+        </el-form>
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="showSmsLoginModal = false">取 消</el-button>
+        <el-button type="primary" @click="smsLogin">确 定</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -84,7 +87,7 @@ export default {
       faceOption: {},
       authToken: '',
       clientIP: '',
-      showSmsLogin: false,
+      showSmsLoginModal: false,
       smsLoginForm: {
         phone: '',
         code: ''
@@ -189,7 +192,7 @@ export default {
           this.$http.get('/api/smsvef', { params: { phone: this.smsLoginForm.phone, code: this.smsLoginForm.code } }).then(res => {
             if (res.data.code === 200) {
               this.$message.success(res.data.msg);
-              this.showSmsLogin = false;
+              this.showSmsLoginModal = false;
               // 保存登录信息并跳转到主页
               localStorage.setItem("face_token", res.data.token);
               localStorage.setItem("username", res.data.name);
