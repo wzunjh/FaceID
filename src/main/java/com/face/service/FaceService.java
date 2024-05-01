@@ -62,4 +62,8 @@ public interface FaceService extends IService<Face> {
 
     //Auth 验证
     ApiResult vefAuth(String Auth, Integer fid);
+
+    FaceResult phoneSend(String phone);
+
+    FaceResult phoneVefLogin(String phone, String code);
 }

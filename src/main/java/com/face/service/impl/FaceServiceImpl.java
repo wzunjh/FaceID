@@ -618,6 +618,88 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         return apiResult;
     }
 
+
+    @Override
+    public FaceResult phoneSend(String phone) {
+        List<Face> faceList = lambdaQuery().orderByDesc(Face::getVefNum).list();
+        FaceResult faceResult = new FaceResult();
+
+        if (phone.isEmpty()) {
+            return faceResult.setMsg("手机号不能为空");
+        } else {
+            int faceLength = faceList.size();
+            if (faceLength == 0) {
+                return FaceResult.error(FaceResult.NULL_ERROR, "空指针异常"); // Use custom error handling for an empty face list
+            }
+
+            for (Face face : faceList) {
+                if (face.getPhone().equals(phone)) {
+                    //校验手机号
+                    if (RegexUtils.isPhoneInvalid(phone)) {
+                        faceResult.setCode(400);
+                        faceResult.setMsg("手机号码格式错误");
+                        return faceResult;
+                    }
+
+                    String code = RandomUtil.randomNumbers(6);  //六位随机验证码
+                    stringRedisTemplate.opsForValue().set(phone, code, 5L, TimeUnit.MINUTES);  //将验证码存入redis，5分钟有效
+                    SmsUtils.sendSms(phone, code);   //发送验证码
+                    System.out.println(code);
+                    faceResult.setMsg("短信发送成功");
+                    faceResult.setCode(200);
+                    return faceResult;
+                }
+            }
+            // If no face matched the AuthToken
+            return FaceResult.error(FaceResult.NULL_ERROR, "手机号未绑定账号");
+        }
+    }
+
+    @Override
+    public FaceResult phoneVefLogin(String phone, String code) {
+        FaceResult faceResult = new FaceResult();
+        String codeVef = stringRedisTemplate.opsForValue().get(phone);  //从redis中取出验证码
+
+        //校验手机号
+        if (RegexUtils.isPhoneInvalid(phone)) {
+            faceResult.setCode(400);
+            faceResult.setMsg("手机号码格式错误");
+            return faceResult;
+        } else if (code == null) {
+            faceResult.setCode(400);
+            faceResult.setMsg("请先获取验证码");
+            return faceResult;
+        } else if (Objects.equals(code, codeVef)) {
+            List<Face> faceList = lambdaQuery().orderByDesc(Face::getVefNum).list();
+            int faceLength = faceList.size();
+            if (faceLength == 0) {
+                return FaceResult.error(FaceResult.NULL_ERROR, "空指针异常"); // Use custom error handling for an empty face list
+            }
+
+            for (Face face : faceList) {
+                if (face.getPhone().equals(phone)) {
+                    stringRedisTemplate.delete(phone);
+                    faceResult.setMsg(TimeUtils.timeQuantum() + "好," + face.getFaceName());
+                    faceResult.setName(face.getFaceName());
+                    faceResult.setFid(String.valueOf(face.getFid()));
+                    faceResult.setScore(Float.valueOf("100"));
+                    faceResult.setCode(200);
+                    Map<String, String> map = new HashMap<>();
+                    map.put("score", "100");
+                    map.put("faceName", faceResult.getName());
+                    faceResult.setToken(JwtUtils.genereteToken(map));
+                    faceResult.setCode(200);
+                    faceResult.setMsg("手机号登录成功");
+                    return faceResult;
+
+                }
+            }
+        }
+        faceResult.setMsg("验证码错误");
+        faceResult.setCode(208);
+        return faceResult;
+    }
+
 }
 
 
