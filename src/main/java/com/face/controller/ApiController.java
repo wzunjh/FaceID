@@ -1,6 +1,8 @@
 package com.face.controller;
 
 import com.face.bean.result.ApiResult;
+import com.face.bean.result.FaceResult;
+import com.face.service.ApiLogService;
 import com.face.service.FaceService;
 import com.face.service.impl.OTPService;
 import io.swagger.annotations.Api;
@@ -25,6 +27,9 @@ public class ApiController {
 
     @Autowired
     OTPService otpservice;
+
+    @Autowired
+    ApiLogService apiLogService;
 
 
     @PostMapping("/vef")
@@ -75,5 +80,18 @@ public class ApiController {
     }
 
 
+    @GetMapping("/sms")
+    @ApiOperation(value = "手机短信验证", notes = "根据手机号码查询用户并发送短信")
+    public FaceResult phoneSms(@RequestParam String phone) {
+        // 调用接口实现身份验证逻辑
+        return faceService.phoneSend(phone);
+    }
+
+    @GetMapping("/smsvef")
+    @ApiOperation(value = "手机核验绑定", notes = "根据验证码进行登录")
+    public FaceResult phoneVef(@RequestParam String phone,@RequestParam String code) {
+        // 调用接口实现身份验证逻辑
+        return faceService.phoneVefLogin(phone, code);
+    }
 
 }
