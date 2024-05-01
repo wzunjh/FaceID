@@ -21,7 +21,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String requestUri = request.getRequestURI();
-        if (requestUri.matches("/face/vef|/api/vef|/js/.*|/img/.*|\\/.*\\.ico|\\/.*\\.css|\\/oauth/.*")) {
+        if (requestUri.matches("/face/vef|/api/.*|/js/.*|/img/.*|\\/.*\\.ico|\\/.*\\.css|\\/oauth/.*")) {
             filterChain.doFilter(request, response);
             return;
         }
