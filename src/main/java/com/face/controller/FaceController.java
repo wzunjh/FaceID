@@ -71,10 +71,15 @@ public class FaceController {
     @PostMapping("/save")
     @ApiOperation(value = "添加")
     public FaceResult save(@RequestBody Face face){
-        face.setVefNum(0);
-        face.setCreateTime(new Date());
-        faceService.save(face);
-        return FaceResult.success("添加成功");
+        FaceResult vef = faceService.isGg(face.getFaceBase());
+        if (vef.getCode() == 200){
+            face.setVefNum(0);
+            face.setCreateTime(new Date());
+            faceService.save(face);
+            return FaceResult.success("添加成功");
+        }
+
+        return FaceResult.error(400,"图片不合格");
     }
 
     @PostMapping("/update")
