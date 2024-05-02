@@ -99,9 +99,9 @@ public class MyFaceDbServiceImpl extends ServiceImpl<MyFaceDbMapper, MyFaceDb>
                 apiLog.setFid(face.getFid());
                 apiLog.setApiTime(new Date());
                 apiLog.setApiCode(vef.getCode());
-                apiLog.setApiMsg(vef.getMsg()+"人脸姓名: "+vef.getFaceName());
+                apiLog.setApiMsg(vef.getMsg());
                 apiLogMapper.insert(apiLog);
-                faceResult.setMsg(vef.getMsg()+"人脸姓名: "+vef.getFaceName());
+                faceResult.setMsg(vef.getMsg());
                 faceResult.setCode(200);
                 return faceResult;
             }
