@@ -8,7 +8,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.face.annotation.FaceLog;
 import com.face.bean.Face;
 import com.face.bean.result.FaceResult;
+import com.face.bean.result.MyFaceResult;
 import com.face.service.FaceService;
+import com.face.service.MyFaceDbService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +28,9 @@ public class FaceController {
     @Autowired
     FaceService faceService;
 
+    @Autowired
+    MyFaceDbService myFaceDbService;
+
     @PostMapping("/vef")
     @ApiOperation(value="人脸验证", notes="根据传入的base64编码和数据的base64编码进行对比")
     @FaceLog
@@ -36,8 +41,8 @@ public class FaceController {
     @PostMapping("/vefOne")
     @ApiOperation(value="人脸API", notes="根据传入的base64编码和数据的base64编码进行对比")
     @FaceLog
-    public FaceResult faceVefOne(@RequestBody String imageBase){
-        return faceService.vefOne(imageBase);
+    public MyFaceResult faceVefOne(@RequestBody String imageBase, @RequestParam String fid){
+        return myFaceDbService.vefOne(imageBase,fid);
     }
 
 
