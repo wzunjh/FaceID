@@ -41,8 +41,12 @@ public class FaceController {
     @PostMapping("/vefOne")
     @ApiOperation(value="人脸API", notes="根据传入的base64编码和数据的base64编码进行对比")
     @FaceLog
-    public MyFaceResult faceVefOne(@RequestBody String imageBase, @RequestParam String fid){
-        return myFaceDbService.vefOne(imageBase,fid);
+    public FaceResult faceVefOne(@RequestParam String imageBase, @RequestParam String fid){
+        MyFaceResult myFaceResult = myFaceDbService.vefOne(imageBase,fid);
+        FaceResult faceResult = new FaceResult();
+        faceResult.setMsg(myFaceResult.getMsg());
+        faceResult.setCode(myFaceResult.getCode());
+        return faceResult;
     }
 
 

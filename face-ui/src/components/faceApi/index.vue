@@ -124,6 +124,7 @@ export default {
       this.imageBase2 = fileList.length > 1 ? fileList[1].url : '';
     },
     submitImages() {
+      const fid = localStorage.getItem('user_id');
       if (!this.imageBase1) {
         this.message = "第一张图片不能为空";
         this.messageType = 'error';
@@ -150,7 +151,10 @@ export default {
           this.submitting = false;
         });
       } else {
-        this.$http.post('/face/vefOne', JSON.stringify({ imageBase: this.imageBase1 }), {
+        let formData = new FormData();
+        formData.append('fid', fid);
+        formData.append('imageBase', this.imageBase1);
+        this.$http.post('/face/vefOne',formData,  {
           headers: {
             'Content-Type': 'application/json'
           }
