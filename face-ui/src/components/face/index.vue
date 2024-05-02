@@ -39,7 +39,7 @@
               </template>
             </el-table-column>
             <el-table-column prop="createTime" label="创建时间" width="200" sortable></el-table-column>
-            <el-table-column prop="vefNum" label="验证次数" sortable></el-table-column>
+            <el-table-column prop="vefNum" label="登录验证次数" sortable></el-table-column>
             <el-table-column prop="faceName" label="姓名"></el-table-column>
             <el-table-column prop="apiMin" label="API次数/Min"></el-table-column>
             <el-table-column prop="remark" label="备注"></el-table-column>
