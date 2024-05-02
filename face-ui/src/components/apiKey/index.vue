@@ -95,7 +95,7 @@ export default {
       apiNum: 0,
       apiMin: 3,
       apiTime: '',
-      apiBaseUrl: 'http://localhost:8868/api/vef',
+      apiBaseUrl: '接口一: http://localhost:8868/api/vef (两张直接对比)   接口二: http://localhost:8868/api/vefone (单张image1对比自建人脸库)',
       msg: '',
       dialogVisible: false,
       phoneAuthForm: {
