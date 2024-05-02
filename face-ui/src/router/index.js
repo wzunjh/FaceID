@@ -88,6 +88,11 @@ const routes = [
         path: '/oauthdoc',
         name: 'oauthdoc',
         component: () => import('@/components/OAuthDoc/index.vue')
+      },
+      {
+        path: '/myface',
+        name: 'myface',
+        component: () => import('@/components/myface/index.vue')
       }
     ]
   }

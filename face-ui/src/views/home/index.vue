@@ -54,33 +54,38 @@
                 身份证号码核验
               </el-menu-item>
             </router-link>
-            <router-link class="router-link-active" to="/apikey">
+            <router-link class="router-link-active" to="/myface">
               <el-menu-item index="1-6">
+                自建人脸信息库
+              </el-menu-item>
+            </router-link>
+            <router-link class="router-link-active" to="/apikey">
+              <el-menu-item index="1-7">
                 API信息中心
               </el-menu-item>
             </router-link>
             <router-link class="router-link-active" to="/faceApi">
-              <el-menu-item index="1-7">
+              <el-menu-item index="1-8">
                 API在线识别
               </el-menu-item>
             </router-link>
             <router-link class="router-link-active" to="/apiLog">
-              <el-menu-item index="1-8">
+              <el-menu-item index="1-9">
                 API请求日志
               </el-menu-item>
             </router-link>
             <router-link class="router-link-active" to="/otp">
-              <el-menu-item index="1-9">
+              <el-menu-item index="1-10">
                 OTP动态口令
               </el-menu-item>
             </router-link>
             <router-link class="router-link-active" to="/oauth">
-              <el-menu-item index="1-10">
+              <el-menu-item index="1-11">
                 OAuth2.0 授权服务
               </el-menu-item>
             </router-link>
             <router-link class="router-link-active" to="/oauthdoc">
-              <el-menu-item index="1-11">
+              <el-menu-item index="1-12">
                 如何接入授权服务
               </el-menu-item>
             </router-link>
