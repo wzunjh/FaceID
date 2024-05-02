@@ -51,7 +51,7 @@ public class MyFaceDbServiceImpl extends ServiceImpl<MyFaceDbMapper, MyFaceDb>
                     // 相似度是否大于60
                     if (faceResult.getScore() > 60) {
                         // 成功
-                        myFaceResult.setMsg("对比成功");
+                        myFaceResult.setMsg("对比成功,人脸姓名为: "+ face.getFaceName());
                         myFaceResult.setCode(200);
                         myFaceResult.setFaceName(face.getFaceName());
                         myFaceResult.setFid(String.valueOf(face.getFid()));
