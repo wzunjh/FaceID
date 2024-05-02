@@ -25,12 +25,12 @@
           </el-header>
           <el-table :data="tableData" style="width: 100%">
             <el-table-column width="100" prop="faceId" label="编号" sortable></el-table-column>
-            <el-table-column width="150" prop="date" label="人脸图片">
+            <el-table-column width="200" prop="date" label="人脸图片">
               <template v-slot:default="scope">
                 <el-button icon="el-icon-picture-outline" size="mini" @click="selectImg(scope.row.faceBase)">查看人脸</el-button>
               </template>
             </el-table-column>
-            <el-table-column prop="faceName" label="姓名"></el-table-column>
+            <el-table-column width="200" prop="faceName" label="姓名"></el-table-column>
             <el-table-column label="操作" width="230">
               <template v-slot:default="scope">
                 <el-button icon="el-icon-edit" size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
