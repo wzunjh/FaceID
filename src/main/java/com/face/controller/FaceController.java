@@ -1,6 +1,7 @@
 package com.face.controller;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -72,14 +73,18 @@ public class FaceController {
     @ApiOperation(value = "添加")
     public FaceResult save(@RequestBody Face face){
         FaceResult vef = faceService.isGg(face.getFaceBase());
-        if (vef.getCode() == 200){
+        String faceBase = face.getFaceBase();
+        JSONObject face1 = new JSONObject();
+        face1.put("imageBase", faceBase);
+        FaceResult add = faceService.vefOne(String.valueOf(face1));
+        if (vef.getCode() == 200 && add.getCode() == -3){
             face.setVefNum(0);
             face.setCreateTime(new Date());
             faceService.save(face);
             return FaceResult.success("添加成功");
         }
 
-        return FaceResult.error(400,"图片不合格");
+        return FaceResult.error(400,"图片不合格或人脸已存在");
     }
 
     @PostMapping("/update")
