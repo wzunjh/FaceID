@@ -31,7 +31,7 @@
 
             <router-link class="router-link-active" to="/faceList">
               <el-menu-item index="1-1">
-                人脸信息库
+                登录人脸信息
               </el-menu-item>
             </router-link>
             <router-link class="router-link-active" to="/faceLog">
