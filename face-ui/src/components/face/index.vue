@@ -4,7 +4,7 @@
     <!--条件搜索区域-->
     <el-row>
       <el-col :span="24">
-        <el-card header="人脸列表">
+        <el-card header="我的登录人脸信息">
           <el-form :inline="true">
             <el-form-item label="人脸名称">
               <el-input v-model="searchFace.faceName" placeholder="名称" clearable></el-input>
