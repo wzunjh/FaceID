@@ -2,10 +2,10 @@ package com.face;
 
 import com.face.bean.result.ApiResult;
 import com.face.bean.result.OtpResult;
-import com.face.mapper.OauthClientMapper;
 import com.face.server.IdAuthenticationServer;
 import com.face.service.ApiLogService;
 import com.face.service.FaceService;
+import com.face.service.MyFaceDbService;
 import com.face.service.OauthClientService;
 import com.face.service.impl.OTPService;
 import org.junit.jupiter.api.Test;
@@ -31,6 +31,9 @@ class FaceEasyApplicationTests {
 
     @Autowired
     OauthClientService  oauthClientService;
+
+    @Autowired
+    MyFaceDbService myFaceDbService;
 
 
     @Test
@@ -113,6 +116,11 @@ class FaceEasyApplicationTests {
         Integer fid = 1;
         oauthClientService.getById(1);
 
+    }
+
+    @Test
+    public void testMyDb(){
+        myFaceDbService.getById(1);
     }
 
 }
