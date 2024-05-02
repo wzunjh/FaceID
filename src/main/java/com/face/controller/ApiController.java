@@ -4,6 +4,7 @@ import com.face.bean.result.ApiResult;
 import com.face.bean.result.FaceResult;
 import com.face.service.ApiLogService;
 import com.face.service.FaceService;
+import com.face.service.MyFaceDbService;
 import com.face.service.impl.OTPService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +31,9 @@ public class ApiController {
 
     @Autowired
     ApiLogService apiLogService;
+
+    @Autowired
+    MyFaceDbService myFaceDbService;
 
 
     @PostMapping("/vef")
@@ -94,4 +98,24 @@ public class ApiController {
         return faceService.phoneVefLogin(phone, code);
     }
 
+    @PostMapping("/vefone")
+    @ApiOperation(value="人脸验证接口", notes="根据传入的两个文件进行对比")
+    public ApiResult facedbApi(@RequestParam String AuthToken, @RequestPart(required = false) MultipartFile image1) {
+        ApiResult apiResult = new ApiResult();
+        if (AuthToken == null || AuthToken.isEmpty()){
+            apiResult.setMsg("AuthToken is null");
+            apiResult.setCode(400);
+            return apiResult;
+        }
+        if(image1 == null) {
+            apiResult.setMsg("图片都不能为空");
+            apiResult.setCode(400); // Bad Request
+            return apiResult;
+        }
+
+        // 将 MultipartFile 转换为 base64 编码的字符串
+        String imageBase1 = convertMultipartFileToBase64(image1);
+
+        return myFaceDbService.vefApi(AuthToken, imageBase1);
+    }
 }

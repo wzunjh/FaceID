@@ -1,15 +1,22 @@
 package com.face.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.face.bean.ApiLog;
+import com.face.bean.Face;
 import com.face.bean.MyFaceDb;
+import com.face.bean.result.ApiResult;
 import com.face.bean.result.FaceResult;
 import com.face.bean.result.MyFaceResult;
+import com.face.mapper.ApiLogMapper;
 import com.face.mapper.MyFaceDbMapper;
 import com.face.server.FaceContrastServer;
+import com.face.service.ApiLogService;
+import com.face.service.FaceService;
 import com.face.service.MyFaceDbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,6 +25,15 @@ public class MyFaceDbServiceImpl extends ServiceImpl<MyFaceDbMapper, MyFaceDb>
 
     @Autowired
     FaceContrastServer faceContrastServer;
+
+    @Autowired
+    FaceService faceService;
+
+    @Autowired
+    ApiLogService apiLogService;
+
+    @Autowired
+    ApiLogMapper apiLogMapper;
 
     @Override
     public MyFaceResult vefOne(String imageBase, String fid) {
@@ -59,5 +75,50 @@ public class MyFaceDbServiceImpl extends ServiceImpl<MyFaceDbMapper, MyFaceDb>
             }
         }
         return MyFaceResult.error(400, "识别失败");
+    }
+
+
+    @Override
+    public ApiResult vefApi(String AuthToken, String imageBase) {
+        List<Face> faceList = faceService.lambdaQuery().list();
+        ApiResult faceResult = new ApiResult();
+        int faceLength = faceList.size();
+        if (faceLength == 0) {
+            return ApiResult.error(FaceResult.NULL_ERROR, "空指针异常"); // Use custom error handling for an empty face list
+        }
+
+        for (Face face : faceList) {
+            if (face.getApiKey().equals(AuthToken)) {
+                // Check if the request limit is exceeded
+                if (isRequestLimitExceeded(face)) {
+                    return ApiResult.error(FaceResult.NULL_ERROR, "请求次数超出限制");
+                }
+
+                MyFaceResult vef = vefOne(imageBase, String.valueOf(face.getFid()));
+                ApiLog apiLog = new ApiLog();
+                apiLog.setFid(face.getFid());
+                apiLog.setApiTime(new Date());
+                apiLog.setApiCode(vef.getCode());
+                apiLog.setApiMsg(vef.getMsg()+"人脸姓名: "+vef.getFaceName());
+                apiLogMapper.insert(apiLog);
+                faceResult.setMsg(vef.getMsg()+"人脸姓名: "+vef.getFaceName());
+                faceResult.setCode(200);
+                return faceResult;
+            }
+        }
+
+        // If no face matched the AuthToken
+        return ApiResult.error(FaceResult.NULL_ERROR, "Auth令牌错误或失效");
+    }
+
+    private boolean isRequestLimitExceeded(Face face) {
+        long currentTime = System.currentTimeMillis();
+        long lastMinuteStartTime = currentTime - (currentTime % (60 * 1000));
+        int requestCountInLastMinute = apiLogService.lambdaQuery()
+                .eq(ApiLog::getFid, face.getFid())
+                .ge(ApiLog::getApiTime, new Date(lastMinuteStartTime))
+                .lt(ApiLog::getApiTime, new Date(currentTime))
+                .count();
+        return requestCountInLastMinute >= face.getApiMin();
     }
 }
