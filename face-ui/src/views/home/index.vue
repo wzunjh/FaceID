@@ -56,7 +56,7 @@
             </router-link>
             <router-link class="router-link-active" to="/myface">
               <el-menu-item index="1-6">
-                自建人脸信息库
+                我的人脸信息库
               </el-menu-item>
             </router-link>
             <router-link class="router-link-active" to="/apikey">
