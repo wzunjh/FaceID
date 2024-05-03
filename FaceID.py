@@ -237,7 +237,7 @@ def compare_facesApi():
         if similarity_score > 100:
             similarity_score = 100
         similarity_score_int = int(similarity_score)  # 转换为整数
-
+        print(similarity_score_int)
         return jsonify({
             "similarity_score": similarity_score_int,
             "sex1": sex1,
