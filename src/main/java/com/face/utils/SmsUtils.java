@@ -17,7 +17,7 @@ public class SmsUtils {
 
 
     private static IAcsClient initializeClient() {
-        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI5tBAxmhWHCJhkjjqtyMx", "KusWsHR9kvuRfZ2Jhr2XI5wKTuRWXq");
+        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "阿里云ID", "阿里云key");
         return new DefaultAcsClient(profile);
     }
 
