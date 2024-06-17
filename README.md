@@ -5,5 +5,8 @@
 </p>
 <h1 align="center">Face-ID</h1>
 
-Face-ID 基于前后端分离Web端项目，主要实现了网页版的人脸登录，通过调取前端摄像头拍照，传入后台进行跟数据库人脸库的相似度比对，技术的用点：Springboot，Mysql，JWT，InsightFace，VUE 2.X 等等技术实现，主要功能点：人脸列表CRUD，日志列表CRUD，基于自建人脸库通过base64编码方式存储人脸图片，通过调用基于InsightFace搭建的python人脸对比API场景实现
+Face-ID 基于前后端分离Web端项目，主要实现了网页版的人脸登录，通过调取前端摄像头拍照，传入后台进行跟数据库人脸库的相似度比对，技术的用点：Springboot，Mysql，JWT，InsightFace，OAuth2授权，VUE 2.X 等等技术实现，主要功能点：人脸列表CRUD，日志列表CRUD，基于自建人脸库通过base64编码方式存储人脸图片，通过调用基于InsightFace搭建的python人脸对比API场景实现。第三方授权方服务实现，OTP动态口令。
+
+
+<img width="452" alt="image" src="https://github.com/wzunjh/FaceID/assets/120587094/08cef458-4f62-41fb-9312-b9ff0430c028">
 
