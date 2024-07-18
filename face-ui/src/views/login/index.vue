@@ -39,7 +39,7 @@
 
         <div class="msg">
           <div class="server-msg">{{ msg }}</div>
-          <div class="welcome">欢迎使用FaceID身份认证系统</div>
+          <div class="welcome">FaceID身份认证与API开放平台</div>
         </div>
 
       </div>

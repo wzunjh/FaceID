@@ -5,7 +5,7 @@
     <el-header>
       <div>
         <img :src="imageLogo" style="width: 40px;height: 40px;margin-left: 20px">
-        <router-link to="/desktop" class="logo-title">&nbsp;&nbsp;FaceID 身份认证系统</router-link>
+        <router-link to="/desktop" class="logo-title">&nbsp;&nbsp;FaceID身份认证与API开放平台</router-link>
       </div>
       <el-dropdown>
         <span class="el-dropdown-link" >
