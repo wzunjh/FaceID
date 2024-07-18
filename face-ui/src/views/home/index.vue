@@ -22,78 +22,77 @@
 
       <!--侧边栏-->
       <el-aside style="width: 200px">
-        <el-menu text-color="#008390" active-text-color="#ade2e0" class="el-menu-vertical-demo" default-openeds="['1']">
+        <el-menu text-color="#008390" active-text-color="#ade2e0" class="el-menu-vertical-demo" :default-openeds="['1', '2', '3', '4']">
+
+          <!-- 第一个主菜单 -->
           <el-submenu index="1">
             <template slot="title">
-              <i class="el-icon-user" style="color: #008390"></i>
-              <span slot="title">Auth身份鉴权中心</span>
+              <i class="el-icon-info" style="color: #008390"></i>
+              <span slot="title">基础信息管理</span>
             </template>
+            <router-link to="/faceList" style="text-decoration: none;">
+              <el-menu-item index="1-1">登录人脸信息</el-menu-item>
+            </router-link>
+            <router-link to="/faceLog" style="text-decoration: none;">
+              <el-menu-item index="1-2">识别登录日志</el-menu-item>
+            </router-link>
+            <router-link to="/ip" style="text-decoration: none;">
+              <el-menu-item index="1-3">IP安全登录</el-menu-item>
+            </router-link>
+          </el-submenu>
 
-            <router-link class="router-link-active" to="/faceList">
-              <el-menu-item index="1-1">
-                登录人脸信息
-              </el-menu-item>
+          <!-- 第二个主菜单 -->
+          <el-submenu index="2">
+            <template slot="title">
+              <i class="el-icon-mobile" style="color: #008390"></i>
+              <span slot="title">移动安全</span>
+            </template>
+            <router-link to="/phone" style="text-decoration: none;">
+              <el-menu-item index="2-1">手机号绑定</el-menu-item>
             </router-link>
-            <router-link class="router-link-active" to="/faceLog">
-              <el-menu-item index="1-2">
-                识别登录日志
-              </el-menu-item>
+            <router-link to="/auth" style="text-decoration: none;">
+              <el-menu-item index="2-2">身份证号码核验</el-menu-item>
             </router-link>
-            <router-link class="router-link-active" to="/ip">
-              <el-menu-item index="1-3">
-                IP安全登录
-              </el-menu-item>
+          </el-submenu>
+
+          <!-- 第三个主菜单 -->
+          <el-submenu index="3">
+            <template slot="title">
+              <i class="el-icon-setting" style="color: #008390"></i>
+              <span slot="title">API 管理与监控</span>
+            </template>
+            <router-link to="/myface" style="text-decoration: none;">
+              <el-menu-item index="3-1">我的人脸数据库</el-menu-item>
             </router-link>
-            <router-link class="router-link-active" to="/phone">
-              <el-menu-item index="1-4">
-                手机号绑定
-              </el-menu-item>
+            <router-link to="/apikey" style="text-decoration: none;">
+              <el-menu-item index="3-2">API信息中心</el-menu-item>
             </router-link>
-            <router-link class="router-link-active" to="/auth">
-              <el-menu-item index="1-5">
-                身份证号码核验
-              </el-menu-item>
+            <router-link to="/faceApi" style="text-decoration: none;">
+              <el-menu-item index="3-3">API在线识别</el-menu-item>
             </router-link>
-            <router-link class="router-link-active" to="/myface">
-              <el-menu-item index="1-6">
-                我的人脸数据库
-              </el-menu-item>
+            <router-link to="/apiLog" style="text-decoration: none;">
+              <el-menu-item index="3-4">API请求日志</el-menu-item>
             </router-link>
-            <router-link class="router-link-active" to="/apikey">
-              <el-menu-item index="1-7">
-                API信息中心
-              </el-menu-item>
+          </el-submenu>
+
+          <!-- 第四个主菜单 -->
+          <el-submenu index="4">
+            <template slot="title">
+              <i class="el-icon-key" style="color: #008390"></i>
+              <span slot="title">高级认证与文档</span>
+            </template>
+            <router-link to="/otp" style="text-decoration: none;">
+              <el-menu-item index="4-1">OTP动态口令</el-menu-item>
             </router-link>
-            <router-link class="router-link-active" to="/faceApi">
-              <el-menu-item index="1-8">
-                API在线识别
-              </el-menu-item>
+            <router-link to="/oauth" style="text-decoration: none;">
+              <el-menu-item index="4-2">OAuth2.0 授权服务</el-menu-item>
             </router-link>
-            <router-link class="router-link-active" to="/apiLog">
-              <el-menu-item index="1-9">
-                API请求日志
-              </el-menu-item>
-            </router-link>
-            <router-link class="router-link-active" to="/otp">
-              <el-menu-item index="1-10">
-                OTP动态口令
-              </el-menu-item>
-            </router-link>
-            <router-link class="router-link-active" to="/oauth">
-              <el-menu-item index="1-11">
-                OAuth2.0 授权服务
-              </el-menu-item>
-            </router-link>
-            <router-link class="router-link-active" to="/oauthdoc">
-              <el-menu-item index="1-12">
-                如何接入授权服务
-              </el-menu-item>
+            <router-link to="/oauthdoc" style="text-decoration: none;">
+              <el-menu-item index="4-3">如何接入授权服务</el-menu-item>
             </router-link>
           </el-submenu>
         </el-menu>
       </el-aside>
-
-
 
 
       <!--右侧内容主体-->
