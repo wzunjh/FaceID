@@ -28,7 +28,7 @@
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-info" style="color: #008390"></i>
-              <span slot="title">基础信息管理</span>
+              <span slot="title">用户信息管理</span>
             </template>
             <router-link to="/faceList" style="text-decoration: none;">
               <el-menu-item index="1-1">登录人脸信息</el-menu-item>
@@ -45,7 +45,7 @@
           <el-submenu index="2">
             <template slot="title">
               <i class="el-icon-mobile" style="color: #008390"></i>
-              <span slot="title">移动安全</span>
+              <span slot="title">多因素身份认证</span>
             </template>
             <router-link to="/phone" style="text-decoration: none;">
               <el-menu-item index="2-1">手机号绑定</el-menu-item>
@@ -59,7 +59,7 @@
           <el-submenu index="3">
             <template slot="title">
               <i class="el-icon-setting" style="color: #008390"></i>
-              <span slot="title">API 管理与监控</span>
+              <span slot="title">人脸API开放平台</span>
             </template>
             <router-link to="/myface" style="text-decoration: none;">
               <el-menu-item index="3-1">我的人脸数据库</el-menu-item>
@@ -79,7 +79,7 @@
           <el-submenu index="4">
             <template slot="title">
               <i class="el-icon-key" style="color: #008390"></i>
-              <span slot="title">高级认证与文档</span>
+              <span slot="title">OAuth2 授权中心</span>
             </template>
             <router-link to="/otp" style="text-decoration: none;">
               <el-menu-item index="4-1">OTP动态口令</el-menu-item>
