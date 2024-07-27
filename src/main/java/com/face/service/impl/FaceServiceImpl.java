@@ -14,6 +14,8 @@ import com.face.server.IdAuthenticationServer;
 import com.face.service.ApiLogService;
 import com.face.service.FaceService;
 import com.face.utils.*;
+import io.minio.MakeBucketArgs;
+import io.minio.MinioClient;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -41,6 +43,9 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+
+    @Resource
+    private MinioClient minioClient;
 
     @Override
     public FaceResult vef(String imageBase) {
@@ -88,7 +93,11 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
                         if (faceLength == 1){
                             // 判断当前人脸是否被禁用，如被禁用，提示被禁用
                             // 禁用优先级大于 没有检测到人脸
-                            return faceState != null?faceState:RegFace(imageBase);
+                            try {
+                                return faceState != null?faceState:RegFace(imageBase);
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                         faceLength --;
                     }
@@ -185,7 +194,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         return faceResult;
     }
 
-    public FaceResult RegFace(String imageBase){
+    public FaceResult RegFace(String imageBase) throws Exception{
         FaceResult faceResult = new FaceResult();
         Face face = new Face();
         face.setFaceBase(imageBase);
@@ -194,6 +203,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         face.setFaceStatus(0);
         boolean save = save(face);
         faceResult.setCode(FaceResult.INIT_FACE);
+        minioClient.makeBucket(MakeBucketArgs.builder().bucket("facedb-"+face.getFid()).build());
         faceResult.setMsg("人脸初始化"+(save?"成功":"失败")+","+(save?"请验证登录":"请稍后再试"));
         return faceResult;
     }
