@@ -39,7 +39,7 @@ public class MyFaceDbServiceImpl extends ServiceImpl<MyFaceDbMapper, MyFaceDb>
     public MyFaceResult vefOne(String imageBase, String fid) {
         List<MyFaceDb> faceList = lambdaQuery().orderByDesc(MyFaceDb::getFaceId).eq(MyFaceDb::getFid, fid).list();
         MyFaceResult myFaceResult = new MyFaceResult();
-        // 如果人脸库为空,则第一次登录为录入人脸
+        // 判断人脸库是否为空
         if (faceList.isEmpty()) {
             return MyFaceResult.error(204, "自建人脸库为空");
         } else {
@@ -64,10 +64,8 @@ public class MyFaceDbServiceImpl extends ServiceImpl<MyFaceDbMapper, MyFaceDb>
                         faceLength--;
                     }
                 } else {
-                    // 人脸库没有检测到人脸
+                    // 人脸库没有检测到合适人脸
                     if (faceLength == 1) {
-                        // 判断当前人脸是否被禁用，如被禁用，提示被禁用
-                        // 禁用优先级大于 没有检测到人脸
                         return MyFaceResult.error(400, "人脸库不存在该人脸");
                     }
                     faceLength--;
