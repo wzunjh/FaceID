@@ -8,6 +8,7 @@ import com.face.bean.result.ApiResult;
 import com.face.bean.result.FaceResult;
 import com.face.bean.result.MyFaceResult;
 import com.face.mapper.ApiLogMapper;
+import com.face.mapper.FaceMapper;
 import com.face.mapper.MyFaceDbMapper;
 import com.face.server.FaceContrastServer;
 import com.face.service.ApiLogService;
@@ -44,6 +45,9 @@ public class MyFaceDbServiceImpl extends ServiceImpl<MyFaceDbMapper, MyFaceDb>
 
     @Autowired
     ApiLogMapper apiLogMapper;
+
+    @Autowired
+    FaceMapper faceMapper;
 
     @Resource
     private MinioClient minioClient;
@@ -123,6 +127,10 @@ public class MyFaceDbServiceImpl extends ServiceImpl<MyFaceDbMapper, MyFaceDb>
                 apiLog.setApiCode(vef.getCode());
                 apiLog.setApiMsg(vef.getMsg());
                 apiLogMapper.insert(apiLog);
+                // 使用 faceMapper 更新 Face 实例
+                face.setApiNum(face.getApiNum() + 1);
+                face.setApiTime(new Date());
+                faceMapper.updateById(face);
                 faceResult.setMsg(vef.getMsg());
                 faceResult.setCode(200);
                 return faceResult;

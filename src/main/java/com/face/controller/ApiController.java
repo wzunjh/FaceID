@@ -102,7 +102,7 @@ public class ApiController {
     }
 
     @PostMapping("/vefone")
-    @ApiOperation(value="人脸验证接口", notes="根据传入的两个文件进行对比")
+    @ApiOperation(value="人脸验证接口", notes="根据传入的单个文件进行人脸库对比")
     public ApiResult facedbApi(@RequestParam String AuthToken, @RequestPart(required = false) MultipartFile image1) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         ApiResult apiResult = new ApiResult();
         if (AuthToken == null || AuthToken.isEmpty()){
