@@ -267,12 +267,12 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
     public FaceResult orAuth(Integer fid) {
         FaceResult faceResult = new FaceResult();
         Face face = lambdaQuery().eq(Face::getFid, fid).one();
-        if (face.getId2Status().equals("1")) {
-            faceResult.setCode(200);
-            faceResult.setMsg("已认证");
-        }else {
+        if (face.getId2Status() == null || face.getId2Status().isEmpty()) {
             faceResult.setCode(208);
             faceResult.setMsg("未认证");
+        }else if (face.getId2Status().equals("1")) {
+            faceResult.setCode(200);
+            faceResult.setMsg("已认证");
         }
         return faceResult;
     }
@@ -557,7 +557,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         faceResult.setCode(200);
         faceResult.setIp(face.getIp());
         faceResult.setIpList(face.getIpList());
-        if(face.getIpList().isEmpty()){
+        if (face.getIpList() == null || face.getIpList().isEmpty()) {
             faceResult.setApiNum(10086);
         }
         return faceResult;
