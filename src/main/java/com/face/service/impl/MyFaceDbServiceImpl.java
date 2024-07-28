@@ -13,9 +13,19 @@ import com.face.server.FaceContrastServer;
 import com.face.service.ApiLogService;
 import com.face.service.FaceService;
 import com.face.service.MyFaceDbService;
+import io.minio.GetObjectArgs;
+import io.minio.MinioClient;
+import io.minio.errors.*;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -35,8 +45,11 @@ public class MyFaceDbServiceImpl extends ServiceImpl<MyFaceDbMapper, MyFaceDb>
     @Autowired
     ApiLogMapper apiLogMapper;
 
+    @Resource
+    private MinioClient minioClient;
+
     @Override
-    public MyFaceResult vefOne(String imageBase, String fid) {
+    public MyFaceResult vefOne(String imageBase, String fid) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         List<MyFaceDb> faceList = lambdaQuery().orderByDesc(MyFaceDb::getFaceId).eq(MyFaceDb::getFid, fid).list();
         MyFaceResult myFaceResult = new MyFaceResult();
         // 判断人脸库是否为空
@@ -45,7 +58,18 @@ public class MyFaceDbServiceImpl extends ServiceImpl<MyFaceDbMapper, MyFaceDb>
         } else {
             int faceLength = faceList.size();
             for (MyFaceDb face : faceList) {
-                FaceResult faceResult = faceContrastServer.faceContrastApi(face.getFaceBase(), imageBase);
+                // 从 MinIO 获取对象
+                InputStream inputStream = minioClient.getObject(GetObjectArgs.builder()
+                        .bucket("facedb-"+face.getFid())
+                        .object("face"+face.getFaceId()+".jpg")
+                        .build()
+                );
+                // 将输入流转换为字节数组
+                byte[] imageBytes = IOUtils.toByteArray(inputStream);
+
+                // 编码为 Base64 字符串并添加前缀
+                String base64String = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytes);
+                FaceResult faceResult = faceContrastServer.faceContrastApi(base64String, imageBase);
                 // 是否比对成功
                 if (faceResult.getCode() == FaceResult.SUCCESS_CODE) {
                     // 相似度是否大于60
@@ -77,7 +101,7 @@ public class MyFaceDbServiceImpl extends ServiceImpl<MyFaceDbMapper, MyFaceDb>
 
 
     @Override
-    public ApiResult vefApi(String AuthToken, String imageBase) {
+    public ApiResult vefApi(String AuthToken, String imageBase) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         List<Face> faceList = faceService.lambdaQuery().list();
         ApiResult faceResult = new ApiResult();
         int faceLength = faceList.size();

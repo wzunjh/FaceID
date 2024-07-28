@@ -11,11 +11,16 @@ import com.face.bean.result.FaceResult;
 import com.face.bean.result.MyFaceResult;
 import com.face.service.FaceService;
 import com.face.service.MyFaceDbService;
+import io.minio.errors.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 
@@ -41,7 +46,7 @@ public class FaceController {
     @PostMapping("/vefOne")
     @ApiOperation(value="人脸API", notes="根据传入的base64编码和数据的base64编码进行对比")
     @FaceLog
-    public FaceResult faceVefOne(@RequestParam String imageBase, @RequestParam String fid){
+    public FaceResult faceVefOne(@RequestParam String imageBase, @RequestParam String fid) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         MyFaceResult myFaceResult = myFaceDbService.vefOne(imageBase,fid);
         FaceResult faceResult = new FaceResult();
         faceResult.setMsg(myFaceResult.getMsg());

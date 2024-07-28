@@ -6,6 +6,7 @@ import com.face.service.ApiLogService;
 import com.face.service.FaceService;
 import com.face.service.MyFaceDbService;
 import com.face.service.impl.OTPService;
+import io.minio.errors.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 
@@ -100,7 +103,7 @@ public class ApiController {
 
     @PostMapping("/vefone")
     @ApiOperation(value="人脸验证接口", notes="根据传入的两个文件进行对比")
-    public ApiResult facedbApi(@RequestParam String AuthToken, @RequestPart(required = false) MultipartFile image1) {
+    public ApiResult facedbApi(@RequestParam String AuthToken, @RequestPart(required = false) MultipartFile image1) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         ApiResult apiResult = new ApiResult();
         if (AuthToken == null || AuthToken.isEmpty()){
             apiResult.setMsg("AuthToken is null");
