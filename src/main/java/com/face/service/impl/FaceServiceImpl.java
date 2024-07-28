@@ -469,6 +469,9 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             }
 
             for (Face face : faceList) {
+                if (face.getApiKey() == null || face.getApiKey().isEmpty()) {
+                    continue; // 跳过当前 face，进入下一个循环
+                }
                 if (face.getApiKey().equals(AuthToken)) {
 
                     if (!face.getIpList().isEmpty() && !IPValidator.isIPInList(ip, face.getIpList())){
@@ -507,6 +510,9 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         }
 
         for (Face face : faceList) {
+            if (face.getApiKey() == null || face.getApiKey().isEmpty()) {
+                continue; // 跳过当前 face，进入下一个循环
+            }
             if (face.getApiKey().equals(AuthToken)) {
                 // Check if the request limit is exceeded
                 if (isRequestLimitExceeded(face)) {
@@ -651,6 +657,9 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             }
 
             for (Face face : faceList) {
+                if (face.getPhone() == null || face.getPhone().isEmpty()) {
+                    continue; // 跳过当前 face，进入下一个循环
+                }
                 if (face.getPhone().equals(phone)) {
                     //校验手机号
                     if (RegexUtils.isPhoneInvalid(phone)) {
@@ -695,6 +704,9 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             }
 
             for (Face face : faceList) {
+                if (face.getPhone() == null || face.getPhone().isEmpty()) {
+                    continue; // 跳过当前 face，进入下一个循环
+                }
                 if (face.getPhone().equals(phone)) {
                     stringRedisTemplate.delete(phone);
                     faceResult.setMsg(TimeUtils.timeQuantum() + "好," + face.getFaceName());
