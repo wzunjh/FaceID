@@ -8,12 +8,20 @@ import com.face.bean.Face;
 import com.face.bean.LogData;
 import com.face.service.ApiLogService;
 import com.face.service.FaceService;
+import io.minio.GetPresignedObjectUrlArgs;
+import io.minio.MinioClient;
+import io.minio.PutObjectArgs;
+import io.minio.http.Method;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.annotation.Resource;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
 class EasyExcelTests {
@@ -23,6 +31,9 @@ class EasyExcelTests {
 
     @Autowired
     ApiLogService apiLogService;
+
+    @Resource
+    private MinioClient minioClient;
 
     String PATH = "D:\\easyexcel\\";
 
@@ -53,4 +64,29 @@ class EasyExcelTests {
         // 如果这里想使用03 则 传入excelType参数即可
         EasyExcel.write(fileName, LogData.class).sheet("API请求日志").doWrite(data(1));
     }
+
+    @Test
+    public void minioWrite() throws Exception {
+        // 使用 EasyExcel 将数据写入 ByteArrayOutputStream 并上传到 MinIO
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            EasyExcel.write(outputStream, LogData.class)
+                    .sheet("API请求日志")
+                    .doWrite(data(1));
+
+            minioClient.putObject(PutObjectArgs.builder()
+                    .bucket("excel")
+                    .object("LogData"+1+".xlsx")
+                    .stream(new ByteArrayInputStream(outputStream.toByteArray()), outputStream.size(), -1)
+                    .build());
+            String objectUrl = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
+                    .bucket("excel")
+                    .object("LogData"+1+".xlsx")
+                    .expiry(3, TimeUnit.DAYS)
+                    .method(Method.GET)
+                    .build()
+            );
+            System.out.println(objectUrl);
+        }
+    }
+
 }
