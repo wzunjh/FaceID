@@ -17,6 +17,7 @@
             </el-form-item>
             <el-form-item>
               <el-button icon="el-icon-search" @click="getApiLogList">搜索</el-button>
+              <el-button type="primary" @click="exportApiLog">导出日志</el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -115,6 +116,18 @@ export default {
         this.current = res.data.data.current;
         this.total = res.data.data.total;
       })
+    },
+    exportApiLog() {
+      this.$http.get(`/mydb/excel/${this.fid}`)
+          .then(res => {
+            const url = res.data.url;
+            // 使用 window.open 打开导出的 Excel 文件
+            window.open(url);
+          })
+          .catch(err => {
+            console.error("导出失败:", err);
+            this.$message.error("导出失败，请重试！");
+          });
     },
     statusFormatter(row, column, value) {
       return value === 200 ? '请求成功:200' : '请求错误';
