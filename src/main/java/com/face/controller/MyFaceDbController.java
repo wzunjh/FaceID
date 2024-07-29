@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.face.bean.MyFaceDb;
 import com.face.bean.result.FaceResult;
 import com.face.bean.result.MyFaceResult;
+import com.face.service.ExcelService;
 import com.face.service.FaceService;
 import com.face.service.MyFaceDbService;
 import io.minio.MinioClient;
@@ -16,12 +17,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/mydb")
@@ -37,6 +42,9 @@ public class MyFaceDbController {
 
     @Resource
     private MinioClient minioClient;
+
+    @Autowired
+    ExcelService excelService;
 
     @GetMapping("/faceList")
     @ApiOperation(value = "人脸列表",notes = "查询所有的人脸信息")
@@ -132,6 +140,19 @@ public class MyFaceDbController {
             return MyFaceResult.success("修改成功");
         }
         return MyFaceResult.error(400,"图片不合格");
+    }
+
+    @GetMapping("/excel/{fid}")
+    @ApiOperation(value = "Excel导出", notes = "根据fid导出日志信息")
+    public ResponseEntity<Map<String, String>> excel(@PathVariable Integer fid) {
+        String url = excelService.minioExcel(fid);
+
+        // 创建一个 JSON 对象来封装响应
+        Map<String, String> response = new HashMap<>();
+        response.put("url", url);
+
+        // 返回 JSON 响应和 HTTP 状态码
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }
