@@ -73,15 +73,16 @@ class EasyExcelTests {
                     .sheet("API请求日志")
                     .doWrite(data(1));
 
+            String objectName = "LogData" + 1 + ".xlsx";
             minioClient.putObject(PutObjectArgs.builder()
                     .bucket("excel")
-                    .object("LogData"+1+".xlsx")
+                    .object(objectName)
                     .stream(new ByteArrayInputStream(outputStream.toByteArray()), outputStream.size(), -1)
                     .build());
             String objectUrl = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
                     .bucket("excel")
-                    .object("LogData"+1+".xlsx")
-                    .expiry(3, TimeUnit.DAYS)
+                    .object(objectName)
+                    .expiry(1, TimeUnit.DAYS)
                     .method(Method.GET)
                     .build()
             );
