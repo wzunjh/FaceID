@@ -366,11 +366,11 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
             if (faceResult.getCode() == FaceResult.SUCCESS_CODE) {
                 if (faceResult.getScore() > FaceResult.SATISFY_SCORE) {
                     // 相似度大于70%，认为是同一个人
-                    faceResult.setMsg("匹配成功,相似度为:" + faceResult.getScore()+" 性别:"+ getSex(faceResult.getSex1())+" 图一年龄:" + faceResult.getAge1() + " 图二年龄:" + faceResult.getAge2());
+                    faceResult.setMsg("双图人脸信息对比: 匹配成功,相似度为:" + faceResult.getScore()+" 性别:"+ getSex(faceResult.getSex1())+" 图一年龄:" + faceResult.getAge1() + " 图二年龄:" + faceResult.getAge2());
                     faceResult.setCode(200);
                 } else {
                     // 相似度小于70%，认为不是同一个人
-                    faceResult.setMsg("匹配失败,相似度为:" + faceResult.getScore()+" 图一性别:"+ getSex(faceResult.getSex1())+" 图二性别:"+getSex(faceResult.getSex2())+" 图一年龄:" + faceResult.getAge1() + " 图二年龄:" + faceResult.getAge2());
+                    faceResult.setMsg("双图人脸信息对比: 匹配失败,相似度为:" + faceResult.getScore()+" 图一性别:"+ getSex(faceResult.getSex1())+" 图二性别:"+getSex(faceResult.getSex2())+" 图一年龄:" + faceResult.getAge1() + " 图二年龄:" + faceResult.getAge2());
                     faceResult.setCode(200);
                 }
             }

@@ -58,7 +58,7 @@ public class MyFaceDbServiceImpl extends ServiceImpl<MyFaceDbMapper, MyFaceDb>
         MyFaceResult myFaceResult = new MyFaceResult();
         // 判断人脸库是否为空
         if (faceList.isEmpty()) {
-            return MyFaceResult.error(204, "自建人脸库为空");
+            return MyFaceResult.error(204, "单图人脸库对比: 自建人脸库为空");
         } else {
             int faceLength = faceList.size();
             for (MyFaceDb face : faceList) {
@@ -79,7 +79,7 @@ public class MyFaceDbServiceImpl extends ServiceImpl<MyFaceDbMapper, MyFaceDb>
                     // 相似度是否大于60
                     if (faceResult.getScore() > 60) {
                         // 成功
-                        myFaceResult.setMsg("对比成功,人脸姓名为: "+ face.getFaceName());
+                        myFaceResult.setMsg("单图人脸库对比: 对比成功,人脸姓名为 "+ face.getFaceName());
                         myFaceResult.setCode(200);
                         myFaceResult.setFaceName(face.getFaceName());
                         myFaceResult.setFid(String.valueOf(face.getFid()));
@@ -87,14 +87,14 @@ public class MyFaceDbServiceImpl extends ServiceImpl<MyFaceDbMapper, MyFaceDb>
                     } else {
 
                         if (faceLength == 1) {
-                            return MyFaceResult.error(400, "人脸库不存在该人脸");
+                            return MyFaceResult.error(400, "单图人脸库对比: 人脸库不存在该人脸");
                         }
                         faceLength--;
                     }
                 } else {
                     // 人脸库没有检测到合适人脸
                     if (faceLength == 1) {
-                        return MyFaceResult.error(400, "人脸库不存在该人脸");
+                        return MyFaceResult.error(400, "单图人脸库对比: 人脸库不存在该人脸");
                     }
                     faceLength--;
                 }
