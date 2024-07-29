@@ -7,6 +7,7 @@ import com.face.bean.ApiLog;
 import com.face.bean.Face;
 import com.face.bean.LogData;
 import com.face.service.ApiLogService;
+import com.face.service.ExcelService;
 import com.face.service.FaceService;
 import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.MinioClient;
@@ -34,6 +35,9 @@ class EasyExcelTests {
 
     @Resource
     private MinioClient minioClient;
+
+    @Autowired
+    ExcelService excelService;
 
     String PATH = "D:\\easyexcel\\";
 
@@ -88,6 +92,13 @@ class EasyExcelTests {
             );
             System.out.println(objectUrl);
         }
+    }
+
+    @Test
+    public void test007(){
+
+        String url = excelService.minioExcel(1);
+        System.out.println(url);
     }
 
 }
