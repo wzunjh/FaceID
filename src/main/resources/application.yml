@@ -7,6 +7,12 @@ python:
     id: wzunjh
     key: GcJypclbi1t1lTFzCQ
 
+minio:
+  service:
+    endpoint: http://127.0.0.1:9000
+    username: username
+    password: password
+
 idenauth:
   service:
     url: https://idenauthen.market.alicloudapi.com/idenAuthentication
