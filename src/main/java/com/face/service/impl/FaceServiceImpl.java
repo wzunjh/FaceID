@@ -202,6 +202,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         face.setFaceName("未命名");
         face.setVefNum(0);
         face.setFaceStatus(0);
+        face.setApiMin(5);
         boolean save = save(face);
         faceResult.setCode(FaceResult.INIT_FACE);
         minioClient.makeBucket(MakeBucketArgs.builder().bucket("facedb-"+face.getFid()).build());
