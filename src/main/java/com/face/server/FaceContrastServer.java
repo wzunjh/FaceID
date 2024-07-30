@@ -3,6 +3,7 @@ package com.face.server;
 import com.face.bean.result.FaceResult;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -31,10 +32,12 @@ public class FaceContrastServer {
     @Value("${python.service.key}")
     private String serviceSecretKey;
 
+    @Autowired
+    private RestTemplate restTemplate; // 使用注入的RestTemplate
+
     public FaceResult faceContrast(String imageA, String imageB) {
         FaceResult faceResult = new FaceResult();
         try {
-            RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.set("Secret-ID", serviceSecretId);
@@ -65,7 +68,6 @@ public class FaceContrastServer {
     public FaceResult faceContrastApi(String imageA, String imageB) {
         FaceResult faceResult = new FaceResult();
         try {
-            RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.set("Secret-ID", serviceSecretId);
@@ -100,7 +102,6 @@ public class FaceContrastServer {
     public FaceResult idVerification(String image) {
         FaceResult result = new FaceResult();
         try {
-            RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.set("Secret-ID", serviceSecretId);
