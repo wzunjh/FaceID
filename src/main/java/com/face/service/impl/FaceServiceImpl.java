@@ -199,6 +199,7 @@ public class FaceServiceImpl extends ServiceImpl<FaceMapper, Face>
         Face face = new Face();
         face.setFaceBase(imageBase);
         face.setCreateTime(new Date());
+        face.setFaceName("未命名");
         face.setVefNum(0);
         face.setFaceStatus(0);
         boolean save = save(face);
