@@ -1,6 +1,7 @@
 package com.face;
 
 
+import cn.hutool.extra.qrcode.QrCodeUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.util.ListUtils;
 import com.face.bean.ApiLog;
@@ -20,6 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.annotation.Resource;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -99,6 +101,11 @@ class EasyExcelTests {
 
         String url = excelService.minioExcel(1);
         System.out.println(url);
+    }
+
+    @Test
+    public void hutool001(){
+        QrCodeUtil.generate("http://www.9fai.com",500,500,new File("C://Users//27877//Desktop//qr.jpg"));
     }
 
 }
