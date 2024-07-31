@@ -18,12 +18,12 @@ public class AliPayServiceImpl implements AliPayService {
     private final Config config;
 
     @Override
-    public String createPayQRCode(String subject, String outTradeNo, String totalAmount) throws Exception {
+    public String createPayQRCode(String subject, Integer outTradeNo, Double totalAmount) throws Exception {
 
         Factory.setOptions(config);
 
         AlipayTradePrecreateResponse response = Factory.Payment.FaceToFace()
-                .preCreate(subject, outTradeNo, totalAmount);
+                .preCreate(subject, outTradeNo.toString(), totalAmount.toString());
 
         // 解析
         String httpBody = response.getHttpBody();
