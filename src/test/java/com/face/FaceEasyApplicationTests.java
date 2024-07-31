@@ -269,7 +269,7 @@ class FaceEasyApplicationTests {
 
     @Test
     void testPay001() throws Exception {
-        String qrCode = aliPayService.createPaymentQRCode("iphone15", "92313377", "12999");
+        String qrCode = aliPayService.createPayQRCode("iphone15", "92313377", "12999");
         System.out.println(qrCode);
     }
 

@@ -18,7 +18,7 @@ public class AliPayServiceImpl implements AliPayService {
     private final Config config;
 
     @Override
-    public String createPaymentQRCode(String subject, String outTradeNo, String totalAmount) throws Exception {
+    public String createPayQRCode(String subject, String outTradeNo, String totalAmount) throws Exception {
 
         Factory.setOptions(config);
 
