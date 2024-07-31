@@ -29,7 +29,7 @@ public class EasyPayController {
         Factory.setOptions(config);
 
         AlipayTradePrecreateResponse response = Factory.Payment.FaceToFace()
-                .preCreate("iphone 15 128G", "12312312312123", "5999");
+                .preCreate("iphone 15 pro max 1T", "973917231923", "12999");
 
         //解析
         String httpBody = response.getHttpBody();
