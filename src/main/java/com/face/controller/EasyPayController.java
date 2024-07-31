@@ -5,6 +5,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.alipay.easysdk.factory.Factory;
 import com.alipay.easysdk.kernel.Config;
+import com.alipay.easysdk.payment.common.models.AlipayTradeQueryResponse;
 import com.alipay.easysdk.payment.facetoface.models.AlipayTradePrecreateResponse;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
@@ -44,6 +45,7 @@ public class EasyPayController {
 
     }
 
+//    支付宝通知
     @PostMapping("/notify")
     public String notify(HttpServletRequest request) {
         log.info("收到支付成功通知");
@@ -52,6 +54,14 @@ public class EasyPayController {
         return "success";
 
     }
+
+//  主动查询
+   @GetMapping("/notify")
+   public String query() throws Exception {
+        Factory.setOptions(config);
+       AlipayTradeQueryResponse alipayTradeQueryResponse = Factory.Payment.Common().query("973917231923");
+       return alipayTradeQueryResponse.getHttpBody();
+   }
 
 
 }
