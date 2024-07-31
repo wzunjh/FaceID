@@ -3,10 +3,7 @@ package com.face;
 import com.face.bean.result.ApiResult;
 import com.face.bean.result.OtpResult;
 import com.face.server.IdAuthenticationServer;
-import com.face.service.ApiLogService;
-import com.face.service.FaceService;
-import com.face.service.MyFaceDbService;
-import com.face.service.OauthClientService;
+import com.face.service.*;
 import com.face.service.impl.OTPService;
 import io.minio.*;
 import io.minio.errors.*;
@@ -54,6 +51,9 @@ class FaceEasyApplicationTests {
 
     @Resource
     private MinioClient minioClient;
+
+    @Autowired
+    private AliPayService aliPayService;
 
 
     @Test
@@ -266,5 +266,11 @@ class FaceEasyApplicationTests {
         minioClient.removeObject(RemoveObjectArgs.builder().bucket("myfile").object("up1.jpg").build());
     }
 
+
+    @Test
+    void testPay001() throws Exception {
+        String qrCode = aliPayService.createPaymentQRCode("iphone15", "92313377", "12999");
+        System.out.println(qrCode);
+    }
 
 }
