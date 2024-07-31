@@ -1,5 +1,7 @@
 package com.face;
 
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.face.bean.Goods;
 import com.face.bean.result.ApiResult;
 import com.face.bean.result.OtpResult;
 import com.face.server.IdAuthenticationServer;
@@ -279,7 +281,8 @@ class FaceEasyApplicationTests {
     @Test
     void testGoods(){
 
-        goodsService.count();
+        LambdaQueryChainWrapper<Goods> eq = goodsService.lambdaQuery().eq(Goods::getGoodsId, 1001);
+        System.out.println(eq);
 
     }
 
