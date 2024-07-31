@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.face.mapper.GoodsMapper">
+
+    <resultMap id="BaseResultMap" type="com.face.bean.Goods">
+            <id property="goodsId" column="goods_id" jdbcType="INTEGER"/>
+            <result property="goodsName" column="goods_name" jdbcType="VARCHAR"/>
+            <result property="goodsQuantity" column="goods_quantity" jdbcType="INTEGER"/>
+            <result property="goodsPrice" column="goods_price" jdbcType="DOUBLE"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        goods_id,goods_name,goods_quantity,
+        goods_price
+    </sql>
+</mapper>

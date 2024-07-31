@@ -55,6 +55,9 @@ class FaceEasyApplicationTests {
     @Autowired
     private AliPayService aliPayService;
 
+    @Autowired
+    private GoodsService goodsService;
+
 
     @Test
     void contextLoads() {
@@ -271,6 +274,13 @@ class FaceEasyApplicationTests {
     void testPay001() throws Exception {
         String qrCode = aliPayService.createPayQRCode("iphone15", "92313377", "12999");
         System.out.println(qrCode);
+    }
+
+    @Test
+    void testGoods(){
+
+        goodsService.count();
+
     }
 
 }
