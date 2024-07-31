@@ -11,6 +11,8 @@ import com.face.service.AliPayService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+
 @Service
 @AllArgsConstructor
 public class AliPayServiceImpl implements AliPayService {
@@ -29,6 +31,8 @@ public class AliPayServiceImpl implements AliPayService {
         String httpBody = response.getHttpBody();
         JSONObject jsonObject = JSONUtil.parseObj(httpBody);
         String qrUrl = jsonObject.getJSONObject("alipay_trade_precreate_response").get("qr_code").toString();
+        //打印模拟器扫码测试
+        QrCodeUtil.generate(qrUrl,300,300,new File("C://Users//27877//Documents//MuMu共享文件夹//Pictures//pay.png"));
 
         // 生成二维码并转换为Base64
         QrConfig qrConfig = new QrConfig(300, 300); // 设置二维码配置
