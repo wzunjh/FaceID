@@ -30,7 +30,7 @@ public class EasyPayController {
         Factory.setOptions(config);
 
         AlipayTradePrecreateResponse response = Factory.Payment.FaceToFace()
-                .preCreate("iphone 15 pro max 1T", "973917231923", "12999");
+                .preCreate("iphone 15 pro max 1T", "973917199", "12999");
 
         //解析
         String httpBody = response.getHttpBody();
@@ -40,6 +40,8 @@ public class EasyPayController {
         String qrUrl = jsonObject.getJSONObject("alipay_trade_precreate_response").get("qr_code").toString();
 
         QrCodeUtil.generate(qrUrl,300,300,new File("C://Users//27877//Desktop//pay.jpg"));
+
+        System.out.println(jsonObject);
 
         return httpBody;
 
