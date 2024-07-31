@@ -41,9 +41,7 @@ implements OrderService{
         orders.setGoodsId(GoodsId);
         orders.setPayStatus(0);
         save(orders);
-        String payQRCode = aliPayService.createPayQRCode(orders.getOrderSubject(), orders.getOrderId(), orders.getOrderAmount());
-        System.out.println(payQRCode);
-        return payQRCode;
+        return aliPayService.createPayQRCode(orders.getOrderSubject(), orders.getOrderId(), orders.getOrderAmount());
     }
 
 
