@@ -2,7 +2,7 @@ package com.face;
 
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.face.bean.Goods;
-import com.face.bean.Order;
+import com.face.bean.Orders;
 import com.face.bean.result.ApiResult;
 import com.face.bean.result.OtpResult;
 import com.face.server.IdAuthenticationServer;
@@ -278,15 +278,14 @@ class FaceEasyApplicationTests {
 
     @Test
     void testPay001() throws Exception {
-        String qrCode = aliPayService.createPayQRCode("iphone15", "92313377", "12999");
-        System.out.println(qrCode);
+       orderService.payCode(1001,1);
     }
 
     @Test
     void testGoods(){
 
         LambdaQueryChainWrapper<Goods> eq = goodsService.lambdaQuery().eq(Goods::getGoodsId, 1001);
-        LambdaQueryChainWrapper<Order> eq1 = orderService.lambdaQuery().eq(Order::getOrderId, 10001);
+        LambdaQueryChainWrapper<Orders> eq1 = orderService.lambdaQuery().eq(Orders::getOrderId, 10001);
         System.out.println(eq);
         System.out.println(eq1);
 

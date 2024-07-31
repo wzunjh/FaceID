@@ -1,6 +1,6 @@
 package com.face.mapper;
 
-import com.face.bean.Order;
+import com.face.bean.Orders;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @createDate 2024-07-31 15:11:43
 * @Entity com.face.bean.Order
 */
-public interface OrderMapper extends BaseMapper<Order> {
+public interface OrderMapper extends BaseMapper<Orders> {
 
 
 }

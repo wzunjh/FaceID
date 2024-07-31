@@ -11,9 +11,9 @@ import lombok.Data;
  * 
  * @TableName order
  */
-@TableName(value ="order")
+@TableName(value ="orders")
 @Data
-public class Order implements Serializable {
+public class Orders implements Serializable {
     /**
      * 
      */

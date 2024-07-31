@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.face.mapper.OrderMapper">
 
-    <resultMap id="BaseResultMap" type="com.face.bean.Order">
+    <resultMap id="BaseResultMap" type="com.face.bean.Orders">
             <id property="orderId" column="order_id" jdbcType="INTEGER"/>
             <result property="orderAmount" column="order_amount" jdbcType="DOUBLE"/>
             <result property="orderSubject" column="order_subject" jdbcType="VARCHAR"/>
