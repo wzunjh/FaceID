@@ -23,7 +23,7 @@ public class WebConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/face/vef", "/api/**", "/js/**", "/img/**", "/*.ico", "/*.css", "/oauth/**")
+                .antMatchers("/face/vef", "/api/**", "/js/**", "/img/**", "/*.ico", "/*.css", "/oauth/**","/notify")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
