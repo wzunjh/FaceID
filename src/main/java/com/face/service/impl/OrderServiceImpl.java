@@ -1,10 +1,17 @@
 package com.face.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.face.bean.Order;
+import com.face.bean.Goods;
+import com.face.bean.Orders;
+import com.face.service.AliPayService;
+import com.face.service.GoodsService;
 import com.face.service.OrderService;
 import com.face.mapper.OrderMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.Random;
 
 /**
 * @author 27877
@@ -12,7 +19,43 @@ import org.springframework.stereotype.Service;
 * @createDate 2024-07-31 15:11:43
 */
 @Service
-public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>
+public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders>
 implements OrderService{
+
+    @Autowired
+    private GoodsService goodsService;
+
+    @Autowired
+    private AliPayService aliPayService;
+
+    @Override
+    public String payCode(Integer GoodsId, Integer fid) throws Exception {
+        Goods good = goodsService.lambdaQuery().eq(Goods::getGoodsId, GoodsId).one();
+        Orders orders = new Orders();
+        int randomNum = generateRandomNumber();
+        orders.setOrderId(randomNum);
+        orders.setOrderAmount(good.getGoodsPrice());
+        orders.setOrderSubject(good.getGoodsName());
+        orders.setOrderDate(new Date());
+        orders.setFid(fid);
+        orders.setGoodsId(GoodsId);
+        orders.setPayStatus(0);
+        save(orders);
+        String payQRCode = aliPayService.createPayQRCode(orders.getOrderSubject(), orders.getOrderId(), orders.getOrderAmount());
+        System.out.println(payQRCode);
+        return payQRCode;
+    }
+
+
+
+    // 私有方法，生成一个10位的以9开头的数字
+    private int generateRandomNumber() {
+        Random random = new Random();
+        // 生成8位随机数
+        int randomNumber = random.nextInt(100000000); // 0到99999999
+        // 拼接9开头
+        String result = "9" + String.format("%08d", randomNumber);
+        return Integer.parseInt(result); // 将字符串转换为int
+    }
 
 }

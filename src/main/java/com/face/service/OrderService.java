@@ -1,6 +1,6 @@
 package com.face.service;
 
-import com.face.bean.Order;
+import com.face.bean.Orders;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @description 针对表【order】的数据库操作Service
 * @createDate 2024-07-31 15:11:43
 */
-public interface OrderService extends IService<Order> {
+public interface OrderService extends IService<Orders> {
+
+    String payCode(Integer GoodsId,Integer fid) throws Exception;
 
 }
