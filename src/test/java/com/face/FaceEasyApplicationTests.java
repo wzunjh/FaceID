@@ -2,6 +2,7 @@ package com.face;
 
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.face.bean.Goods;
+import com.face.bean.Order;
 import com.face.bean.result.ApiResult;
 import com.face.bean.result.OtpResult;
 import com.face.server.IdAuthenticationServer;
@@ -59,6 +60,9 @@ class FaceEasyApplicationTests {
 
     @Autowired
     private GoodsService goodsService;
+
+    @Autowired
+    private OrderService orderService;
 
 
     @Test
@@ -282,7 +286,9 @@ class FaceEasyApplicationTests {
     void testGoods(){
 
         LambdaQueryChainWrapper<Goods> eq = goodsService.lambdaQuery().eq(Goods::getGoodsId, 1001);
+        LambdaQueryChainWrapper<Order> eq1 = orderService.lambdaQuery().eq(Order::getOrderId, 10001);
         System.out.println(eq);
+        System.out.println(eq1);
 
     }
 

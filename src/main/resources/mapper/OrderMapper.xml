@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.face.mapper.OrderMapper">
+
+    <resultMap id="BaseResultMap" type="com.face.bean.Order">
+            <id property="orderId" column="order_id" jdbcType="INTEGER"/>
+            <result property="orderAmount" column="order_amount" jdbcType="DOUBLE"/>
+            <result property="orderSubject" column="order_subject" jdbcType="VARCHAR"/>
+            <result property="fid" column="fid" jdbcType="INTEGER"/>
+            <result property="goodsId" column="goods_id" jdbcType="INTEGER"/>
+            <result property="orderDate" column="order_date" jdbcType="TIMESTAMP"/>
+            <result property="payStatus" column="pay_status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        order_id,order_amount,order_subject,
+        fid,goods_id,order_date,
+        pay_status
+    </sql>
+</mapper>
