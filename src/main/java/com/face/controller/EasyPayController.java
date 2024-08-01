@@ -1,16 +1,20 @@
 package com.face.controller;
 
-import com.alipay.easysdk.factory.Factory;
-import com.alipay.easysdk.kernel.Config;
-import com.alipay.easysdk.payment.common.models.AlipayTradeQueryResponse;
+import com.face.bean.Orders;
+import com.face.bean.result.PayResult;
+import com.face.service.AliPayService;
+import com.face.service.OrderService;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @Api("支付接口")
@@ -18,27 +22,54 @@ import javax.servlet.http.HttpServletRequest;
 @AllArgsConstructor
 public class EasyPayController {
 
-    private final Config config;
+    @Autowired
+    OrderService orderService;
+
+    @Autowired
+    AliPayService aliPayService;
 
 
-//    支付宝通知
+//    商品查询
+    @GetMapping("/order")
+    public List<Orders> getOrderlist() {
+        return orderService.list();
+    }
+
+//  下订单请求
+    @GetMapping("/payment")
+    public PayResult qrcode(@RequestParam Integer fid, @RequestParam Integer GoodsId) throws Exception {
+
+        return orderService.payCode(GoodsId, fid);  //返回响应体
+    }
+
+
+//    支付宝回调通知
     @PostMapping("/notify")
     public String notify(HttpServletRequest request) {
         log.info("收到支付成功通知");
         String out_trade_no = request.getParameter("out_trade_no");
-        System.out.println(request);
         log.info("流水号：{}",out_trade_no);
-        return "success";
-
+        orderService.isPaid(Integer.valueOf(out_trade_no));
+        return "payment success";
     }
 
-//  主动查询
+//  主动查询是否支付成功
    @GetMapping("/notify")
-   public String query() throws Exception {
-        Factory.setOptions(config);
-       AlipayTradeQueryResponse alipayTradeQueryResponse = Factory.Payment.Common().query("973917231923");
-       return alipayTradeQueryResponse.getHttpBody();
-   }
+   public PayResult query(@RequestParam Integer outTradeNo) throws Exception {
 
+        PayResult payResult = new PayResult();
+
+        if (aliPayService.isPaid(outTradeNo)){
+            orderService.isPaid(outTradeNo);
+            payResult.setCode(200);
+            payResult.setOrderId(outTradeNo);
+            payResult.setOrderStatus("payment success");
+            return payResult;
+        }
+       payResult.setCode(201);
+       payResult.setOrderId(outTradeNo);
+       payResult.setOrderStatus("payment failure");
+        return payResult;
+   }
 
 }

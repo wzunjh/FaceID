@@ -3,6 +3,7 @@ package com.face.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.face.bean.Goods;
 import com.face.bean.Orders;
+import com.face.bean.result.PayResult;
 import com.face.service.AliPayService;
 import com.face.service.GoodsService;
 import com.face.service.OrderService;
@@ -29,9 +30,10 @@ implements OrderService{
     private AliPayService aliPayService;
 
     @Override
-    public String payCode(Integer GoodsId, Integer fid) throws Exception {
+    public PayResult payCode(Integer GoodsId, Integer fid) throws Exception {
         Goods good = goodsService.lambdaQuery().eq(Goods::getGoodsId, GoodsId).one();
         Orders orders = new Orders();
+        PayResult payResult = new PayResult();
         int randomNum = generateRandomNumber();
         orders.setOrderId(randomNum);
         orders.setOrderAmount(good.getGoodsPrice());
@@ -41,9 +43,18 @@ implements OrderService{
         orders.setGoodsId(GoodsId);
         orders.setPayStatus(0);
         save(orders);
-        return aliPayService.createPayQRCode(orders.getOrderSubject(), orders.getOrderId(), orders.getOrderAmount());
+        String payQRCode = aliPayService.createPayQRCode(orders.getOrderSubject(), orders.getOrderId(), orders.getOrderAmount());
+        payResult.setQrBase64(payQRCode);
+        payResult.setCode(200);
+        payResult.setOrderId(orders.getOrderId());
+        payResult.setOrderDate(orders.getOrderDate());
+        return payResult;
     }
 
+    @Override
+    public void isPaid(Integer OrderId) {
+        lambdaUpdate().set(Orders::getPayStatus,1).eq(Orders::getOrderId,OrderId).update();
+    }
 
 
     // 私有方法，生成一个10位的以9开头的数字

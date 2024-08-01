@@ -2,6 +2,7 @@ package com.face.service;
 
 import com.face.bean.Orders;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.face.bean.result.PayResult;
 
 /**
 * @author 27877
@@ -10,6 +11,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface OrderService extends IService<Orders> {
 
-    String payCode(Integer GoodsId,Integer fid) throws Exception;
+    PayResult payCode(Integer GoodsId, Integer fid) throws Exception;
+
+    void isPaid(Integer OrderId);
 
 }
