@@ -30,7 +30,7 @@ public class EasyPayController {
 
 
 //    商品查询
-    @GetMapping("/order")
+    @GetMapping("/orders")
     public List<Orders> getOrderlist() {
         return orderService.list();
     }
