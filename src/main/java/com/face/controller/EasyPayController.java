@@ -57,9 +57,18 @@ public class EasyPayController {
    @GetMapping("/notify")
    public PayResult query(@RequestParam Integer outTradeNo) throws Exception {
 
-        PayResult payResult = new PayResult();
+       PayResult payResult = new PayResult();
+       Orders orders = orderService.lambdaQuery().eq(Orders::getOrderId, outTradeNo)
+               .eq(Orders::getPayStatus, 1).one();
 
-        if (aliPayService.isPaid(outTradeNo)){
+       if (orders !=null){
+           System.out.println("查询到已支付订单");
+           payResult.setCode(200);
+           payResult.setOrderId(outTradeNo);
+           payResult.setOrderStatus("payment success");
+           return payResult;
+       }
+       else if (aliPayService.isPaid(outTradeNo)){
             orderService.isPaid(outTradeNo);
             payResult.setCode(200);
             payResult.setOrderId(outTradeNo);
