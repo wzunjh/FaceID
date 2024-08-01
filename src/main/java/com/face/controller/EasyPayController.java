@@ -43,8 +43,11 @@ public class EasyPayController {
 
 //    订单查询
     @GetMapping("/orders")
-    public List<Orders> getOrderlist() {
-        return orderService.list();
+    public List<Orders> getOrderlist(@RequestParam Integer fid) {
+        if (fid == 1){
+            return orderService.list();
+        }
+        return orderService.lambdaQuery().eq(Orders::getFid,fid).list();
     }
 
 //  下订单请求
