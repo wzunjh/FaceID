@@ -69,7 +69,7 @@ public class EasyPayController {
        payResult.setCode(201);
        payResult.setOrderId(outTradeNo);
        payResult.setOrderStatus("payment failure");
-        return payResult;
+       return payResult;
    }
 
 }
