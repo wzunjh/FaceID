@@ -95,9 +95,9 @@ const routes = [
         component: () => import('@/components/myface/index.vue')
       },
       {
-        path: '/order',
-        name: 'order',
-        component: () => import('@/components/order/index.vue')
+        path: '/goods',
+        name: 'goods',
+        component: () => import('@/components/good/index.vue')
       }
     ]
   }

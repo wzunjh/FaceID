@@ -98,7 +98,7 @@
               <i class="el-icon-mobile" style="color: #008390"></i>
               <span slot="title">商品中心</span>
             </template>
-            <router-link to="/order" style="text-decoration: none;">
+            <router-link to="/goods" style="text-decoration: none;">
               <el-menu-item index="5-1">套餐购买</el-menu-item>
             </router-link>
           </el-submenu>
