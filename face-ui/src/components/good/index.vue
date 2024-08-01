@@ -22,7 +22,7 @@
           <template v-if="paymentStatus === '支付成功'">
             <el-result class="result" icon="success" title="支付成功" sub-title="感谢您的支付！">
               <template slot="extra">
-                <el-button type="primary" size="medium" @click="selectedGoods = null">返回</el-button>
+                <el-button type="primary" size="medium" @click="goToOrders">返回</el-button>
               </template>
             </el-result>
           </template>
@@ -57,6 +57,9 @@ export default {
     this.loadGoods();
   },
   methods: {
+    goToOrders() {
+      this.$router.push('/orders');
+    },
     loadGoods() {
       this.$http.get('/goods').then(response => {
         this.goodsList = response.data;
