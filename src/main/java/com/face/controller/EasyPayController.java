@@ -45,9 +45,9 @@ public class EasyPayController {
     @GetMapping("/orders")
     public List<Orders> getOrderlist(@RequestParam Integer fid) {
         if (fid == 1){
-            return orderService.list();
+            return orderService.lambdaQuery().orderByDesc(Orders::getOrderDate).list();
         }
-        return orderService.lambdaQuery().eq(Orders::getFid,fid).list();
+        return orderService.lambdaQuery().eq(Orders::getFid,fid).orderByDesc(Orders::getOrderDate).list();
     }
 
 //  下订单请求
