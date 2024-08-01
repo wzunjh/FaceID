@@ -116,7 +116,7 @@ export default {
 .goods-card {
   /* 增加顶部外边距 */
   /* 为每个卡片增加底部间距 */
-  margin: 0px 0 20px;
+  margin: 30px 0 20px;
   border-radius: 10px; /* 增加圆角 */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
   transition: transform 0.2s; /* 增加过渡效果 */

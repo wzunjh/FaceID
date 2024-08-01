@@ -101,6 +101,9 @@
             <router-link to="/goods" style="text-decoration: none;">
               <el-menu-item index="5-1">套餐购买</el-menu-item>
             </router-link>
+            <router-link to="/orders" style="text-decoration: none;">
+              <el-menu-item index="5-2">账单列表</el-menu-item>
+            </router-link>
           </el-submenu>
         </el-menu>
       </el-aside>
