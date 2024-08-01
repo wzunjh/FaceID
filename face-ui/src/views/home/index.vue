@@ -22,7 +22,7 @@
 
       <!--侧边栏-->
       <el-aside style="width: 200px">
-        <el-menu text-color="#008390" active-text-color="#ade2e0" class="el-menu-vertical-demo" :default-openeds="['1', '2', '3', '4']">
+        <el-menu text-color="#008390" active-text-color="#ade2e0" class="el-menu-vertical-demo" :default-openeds="['1', '2', '3', '4','5']">
 
           <!-- 第一个主菜单 -->
           <el-submenu index="1">
@@ -89,6 +89,17 @@
             </router-link>
             <router-link to="/oauthdoc" style="text-decoration: none;">
               <el-menu-item index="4-3">如何接入授权服务</el-menu-item>
+            </router-link>
+          </el-submenu>
+
+          <!-- 第五个主菜单 -->
+          <el-submenu index="5">
+            <template slot="title">
+              <i class="el-icon-mobile" style="color: #008390"></i>
+              <span slot="title">商品中心</span>
+            </template>
+            <router-link to="/order" style="text-decoration: none;">
+              <el-menu-item index="5-1">套餐购买</el-menu-item>
             </router-link>
           </el-submenu>
         </el-menu>
