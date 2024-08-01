@@ -22,7 +22,7 @@
 
       <!--侧边栏-->
       <el-aside style="width: 200px">
-        <el-menu text-color="#008390" active-text-color="#ade2e0" class="el-menu-vertical-demo" :default-openeds="['1','3','5']">
+        <el-menu text-color="#008390" active-text-color="#ade2e0" class="el-menu-vertical-demo" >
 
           <!-- 第一个主菜单 -->
           <el-submenu index="1">
