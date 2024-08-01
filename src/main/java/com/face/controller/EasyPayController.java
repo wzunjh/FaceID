@@ -1,8 +1,10 @@
 package com.face.controller;
 
+import com.face.bean.Goods;
 import com.face.bean.Orders;
 import com.face.bean.result.PayResult;
 import com.face.service.AliPayService;
+import com.face.service.GoodsService;
 import com.face.service.OrderService;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
@@ -28,8 +30,18 @@ public class EasyPayController {
     @Autowired
     AliPayService aliPayService;
 
+    @Autowired
+    GoodsService goodsService;
 
-//    商品查询
+
+
+//    商品列表查询
+    @GetMapping("/goods")
+    public List<Goods> getGoodlist() {
+        return goodsService.list();
+    }
+
+//    订单查询
     @GetMapping("/orders")
     public List<Orders> getOrderlist() {
         return orderService.list();
