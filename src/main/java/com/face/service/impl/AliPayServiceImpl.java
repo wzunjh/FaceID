@@ -6,6 +6,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.alipay.easysdk.factory.Factory;
 import com.alipay.easysdk.kernel.Config;
+import com.alipay.easysdk.payment.common.models.AlipayTradeQueryResponse;
 import com.alipay.easysdk.payment.facetoface.models.AlipayTradePrecreateResponse;
 import com.face.service.AliPayService;
 import lombok.AllArgsConstructor;
@@ -38,4 +39,22 @@ public class AliPayServiceImpl implements AliPayService {
         QrConfig qrConfig = new QrConfig(300, 300); // 设置二维码配置
         return QrCodeUtil.generateAsBase64(qrUrl, qrConfig, "png");
     }
+
+    @Override
+    public Boolean isPaid(Integer outTradeNo) throws Exception {
+        Factory.setOptions(config);
+        AlipayTradeQueryResponse alipayTradeQueryResponse = Factory.Payment.Common().query(String.valueOf(outTradeNo));
+        String httpBody = alipayTradeQueryResponse.getHttpBody();
+        if (httpBody != null){
+            JSONObject jsonObject = JSONUtil.parseObj(httpBody);
+            System.out.println(jsonObject);
+            if (jsonObject.getJSONObject("alipay_trade_query_response").get("code").toString().equals("10000")){
+                String status = jsonObject.getJSONObject("alipay_trade_query_response").get("trade_status").toString();
+                return status.equals("TRADE_SUCCESS");
+            }
+            return false;
+        }
+        return false;
+    }
+
 }
