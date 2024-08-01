@@ -27,7 +27,7 @@
           <!-- 第一个主菜单 -->
           <el-submenu index="1">
             <template slot="title">
-              <i class="el-icon-info" style="color: #008390"></i>
+              <i class="el-icon-user" style="color: #008390"></i>
               <span slot="title">用户信息管理</span>
             </template>
             <router-link to="/faceList" style="text-decoration: none;">
@@ -95,8 +95,8 @@
           <!-- 第五个主菜单 -->
           <el-submenu index="5">
             <template slot="title">
-              <i class="el-icon-mobile" style="color: #008390"></i>
-              <span slot="title">商品中心</span>
+              <i class="el-icon-goods" style="color: #008390"></i>
+              <span slot="title">会员中心</span>
             </template>
             <router-link to="/goods" style="text-decoration: none;">
               <el-menu-item index="5-1">套餐购买</el-menu-item>
