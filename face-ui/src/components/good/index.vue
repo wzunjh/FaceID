@@ -7,10 +7,10 @@
             <el-row>
               <el-col :span="12">
                 <span class="goods-name">{{ item.goodsName }}</span>
-                <el-tag class="goods-price" type="info">{{ item.goodsPrice }} 元</el-tag>
+                <el-tag class="goods-price" type="success">{{ item.goodsPrice }} 元</el-tag>
               </el-col>
               <el-col :span="12" class="text-right">
-                <el-button type="primary" @click="selectGoods(item.goodsId)">下单</el-button>
+                <el-button type="primary" @click="selectGoods(item.goodsId)">购买</el-button>
               </el-col>
             </el-row>
           </el-card>
@@ -103,9 +103,10 @@ export default {
 
 <style>
 #app {
-  max-width: 600px;
+  max-width: 1000px; /* 增加容器的最大宽度 */
   margin: 0 auto;
   text-align: center;
+  overflow-x: hidden; /* 隐藏横向滚动条 */
 }
 
 .el-list-item {
@@ -113,11 +114,14 @@ export default {
 }
 
 .goods-card {
-  margin-bottom: 10px; /* 为每个卡片增加底部间距 */
+  /* 增加顶部外边距 */
+  /* 为每个卡片增加底部间距 */
+  margin: 40px 0 20px;
   border-radius: 10px; /* 增加圆角 */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
   transition: transform 0.2s; /* 增加过渡效果 */
   background-color: #ffffff; /* 设置背景色 */
+  width: 90%; /* 设置卡片宽度为100% */
 }
 
 .goods-card:hover {
@@ -135,7 +139,7 @@ export default {
 }
 
 .goods-price {
-  margin-left: 10px; /* 标签与商品名称之间的间距 */
+  margin-left: 30px; /* 增加标签与商品名称之间的间距 */
   vertical-align: middle; /* 垂直对齐 */
 }
 
@@ -151,6 +155,13 @@ export default {
 }
 
 .result {
-  width: 100%; /* 让 el-result 占满弹窗的宽度 */
+  width: 80%; /* 让 el-result 占满弹窗的宽度 */
+}
+
+/* 隐藏左右滑动条 */
+.el-list {
+  overflow-x: hidden; /* 隐藏横向滚动条 */
+  white-space: nowrap; /* 防止内容换行 */
 }
 </style>
+
