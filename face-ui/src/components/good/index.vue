@@ -1,17 +1,19 @@
 <template>
   <el-container id="app">
-    <el-header>
-      <h1>商品列表</h1>
-    </el-header>
     <el-main>
       <el-list>
-        <el-list-item v-for="item in goodsList" :key="item.goodsId">
-          <el-col :span="12">
-            <span>{{ item.goodsName }} - {{ item.goodsPrice }} 元</span>
-          </el-col>
-          <el-col :span="12" class="text-right">
-            <el-button type="primary" @click="selectGoods(item.goodsId)">下单</el-button>
-          </el-col>
+        <el-list-item v-for="item in goodsList" :key="item.goodsId" header="套餐信息">
+          <el-card class="goods-card" :body-style="{ padding: '20px' }">
+            <el-row>
+              <el-col :span="12">
+                <span class="goods-name">{{ item.goodsName }}</span>
+                <el-tag class="goods-price" type="info">{{ item.goodsPrice }} 元</el-tag>
+              </el-col>
+              <el-col :span="12" class="text-right">
+                <el-button type="primary" @click="selectGoods(item.goodsId)">下单</el-button>
+              </el-col>
+            </el-row>
+          </el-card>
         </el-list-item>
       </el-list>
 
@@ -108,6 +110,33 @@ export default {
 
 .el-list-item {
   margin: 10px 0;
+}
+
+.goods-card {
+  margin-bottom: 10px; /* 为每个卡片增加底部间距 */
+  border-radius: 10px; /* 增加圆角 */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+  transition: transform 0.2s; /* 增加过渡效果 */
+  background-color: #ffffff; /* 设置背景色 */
+}
+
+.goods-card:hover {
+  transform: scale(1.02); /* 鼠标悬停时放大效果 */
+}
+
+.goods-card .el-row {
+  padding: 20px; /* 增加内边距 */
+}
+
+.goods-name {
+  font-size: 18px; /* 调整商品名称字体大小 */
+  display: inline-block; /* 使得标签和价格在同一行 */
+  vertical-align: middle; /* 垂直对齐 */
+}
+
+.goods-price {
+  margin-left: 10px; /* 标签与商品名称之间的间距 */
+  vertical-align: middle; /* 垂直对齐 */
 }
 
 .dialog-content {
