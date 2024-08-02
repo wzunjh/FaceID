@@ -15,4 +15,6 @@ public interface OrderService extends IService<Orders> {
 
     void isPaid(Integer OrderId);
 
+    PayResult payCodeAgain(Integer OrderId) throws Exception;
+
 }

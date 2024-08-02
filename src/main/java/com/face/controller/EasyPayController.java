@@ -58,6 +58,11 @@ public class EasyPayController {
     }
 
 
+    @GetMapping("/payagain")
+    public PayResult paycode(@RequestParam Integer outTradeNo) throws Exception {
+        return orderService.payCodeAgain(outTradeNo);
+    }
+
 //    支付宝回调通知
     @PostMapping("/notify")
     public String notify(HttpServletRequest request) {

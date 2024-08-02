@@ -56,6 +56,18 @@ implements OrderService{
         lambdaUpdate().set(Orders::getPayStatus,1).eq(Orders::getOrderId,OrderId).update();
     }
 
+    @Override
+    public PayResult payCodeAgain(Integer OrderId) throws Exception {
+        Orders orders = lambdaQuery().eq(Orders::getOrderId, OrderId).one();
+        String payQRCode = aliPayService.createPayQRCode(orders.getOrderSubject(), orders.getOrderId(), orders.getOrderAmount());
+        PayResult payResult = new PayResult();
+        payResult.setQrBase64(payQRCode);
+        payResult.setCode(200);
+        payResult.setOrderId(orders.getOrderId());
+        payResult.setOrderDate(orders.getOrderDate());
+        return payResult;
+    }
+
 
     // 私有方法，生成一个10位的以9开头的数字
     private int generateRandomNumber() {
