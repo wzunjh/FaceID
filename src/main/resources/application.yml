@@ -24,6 +24,7 @@ alipay:
     alipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr+2/Xyj4pNM7VtADQ5/IiVp/XA4P4KBc5nNTUMKuv8ymRD37z33xJLRnh0LpXnKz7UtukjftibphhDKhNsJqE79nIFfhh5SdpaRUA2gKlpouw7hieRxqViD4aGPph5/6yY8DOQjrlbBv1QIZv9Qwvn9IDhWIjOPpSkx9SwI1ce6r1doj0IfpkZdgG/05S2Qnzeq8JejebCXEY8bKI9cv+P9wogF8xX1Nr5SAEbCfjIovJzwH1w2izHZu25JDStCp64zQJFsAFoD/hzCOq8CeDyfKThC4w0Hf8JxRkXcZusrTYL4FnxU8ol+nLOEFI7/w67pubRGNtxwRCrwveu931wIDAQAB
     notifyUrl:  http://gb6gfp.natappfree.cc/notify
 
+# 阿里云短信服务的Id与Key配置信息
 aliyun:
   sms:
     accessKeyId: LTAI5tJwDHNF5mkk6x1HRj7p
