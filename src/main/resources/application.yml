@@ -1,12 +1,14 @@
 server:
   port: 8868
 
+# 人脸识别的InsightFace远程调用接口
 python:
   service:
     url: http://127.0.0.1:2024
     id: wzunjh
     key: GcJypclbi1t1lTFzCQ
 
+# Minio对象存储的地址与信息配置
 minio:
   service:
     endpoint: http://127.0.0.1:9000
@@ -30,13 +32,13 @@ aliyun:
     accessKeyId: LTAI5tJwDHNF5mkk6x1HRj7p
     accessKeySecret: DUsWg6VfCheN9RqA3kgghX4YLeKlS6
 
-
+# 身份证二要素请求验证地址与APIkey配置信息
 idenauth:
   service:
     url: https://idenauthen.market.alicloudapi.com/idenAuthentication
     appcode: 03f04ace87a44e548cfab16f04a9743c
 
-
+# 数据库与redis配置信息
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/faceDB?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
