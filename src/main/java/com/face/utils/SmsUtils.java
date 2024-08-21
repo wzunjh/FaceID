@@ -8,16 +8,29 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
 /**
  * Utility class for sending SMS using Aliyun (Alibaba Cloud SMS Service).
  */
+@Component
 public class SmsUtils {
+
+    private static ApplicationContext applicationContext;
+
+    @Autowired
+    public void setApplicationContext(ApplicationContext context) {
+        applicationContext = context;
+    }
 
 
     private static IAcsClient initializeClient() {
-        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI5tJwDHNF5mkk6x1HRj7p",
-                "DUsWg6VfCheN9RqA3kgghX4YLeKlS6");
+        String accessKeyId = applicationContext.getEnvironment().getProperty("aliyun.sms.accessKeyId");
+        String accessKeySecret = applicationContext.getEnvironment().getProperty("aliyun.sms.accessKeySecret");
+        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId,
+                accessKeySecret);
         return new DefaultAcsClient(profile);
     }
 
