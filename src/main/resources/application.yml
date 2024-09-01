@@ -29,8 +29,8 @@ alipay:
 # 阿里云短信服务的Id与Key配置信息
 aliyun:
   sms:
-    accessKeyId: LTAI5tJwDHNF5mkk6x1HRj7p
-    accessKeySecret: DUsWg6VfCheN9RqA3kgghX4YLeKlS6
+    accessKeyId:
+    accessKeySecret:
 
 # 身份证二要素请求验证地址与APIkey配置信息
 idenauth:
